@@ -1,7 +1,7 @@
 // @ts-check
 /** @type {import('vovk').VovkConfig} */
 const config = {
-  origin: "http://localhost:3000",
+  origin: process.env.VERCEL_URL ?? "http://localhost:3000",
   imports: {
     validateOnClient: "vovk-ajv",
     createRPC: "vovk-react-query",
