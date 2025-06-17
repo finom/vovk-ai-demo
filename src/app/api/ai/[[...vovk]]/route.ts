@@ -1,7 +1,7 @@
 import AiSdkController from "@/modules/ai/ai-sdk/AiSdkController";
 import { initVovk } from "vovk";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 const controllers = {
     AiSdkRPC: AiSdkController,
