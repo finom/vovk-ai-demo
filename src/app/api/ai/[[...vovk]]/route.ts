@@ -1,7 +1,7 @@
 import { initVovk } from "vovk";
 import AiSdkController from "@/modules/ai/AiSdkController";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export const maxDuration = 60;
 
