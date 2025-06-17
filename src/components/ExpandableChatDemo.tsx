@@ -47,7 +47,7 @@ export default function Page() {
 export function ExpandableChatDemo() {
   const { messages, input, handleSubmit, handleInputChange, status, error } =
     useChat({
-      api: "/api/ai/function-calling",
+      api: "/api/ai/ai-sdk/function-calling",
       onToolCall: (toolCall) => {
         console.log("Tool call initiated:", toolCall);
       },
