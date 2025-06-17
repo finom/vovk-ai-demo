@@ -5,9 +5,9 @@ import {
   KnownAny,
   post,
   prefix,
+  openapi,
   type VovkRequest,
 } from "vovk";
-import { openapi } from "vovk-openapi";
 import { jsonSchema, streamText, tool, type CoreMessage } from "ai";
 import { openai } from "@ai-sdk/openai";
 import UserController from "../user/UserController";
