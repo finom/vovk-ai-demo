@@ -26,7 +26,7 @@ export default class AiSdkController {
     const LIMIT = 20;
     const { functions } = createLLMFunctions({
       modules: { UserController, TaskController },
-      onSuccess: (d) => console.log("Success", d),
+      onExecute: (_d, { handlerName }) => console.log("Success", handlerName),
       onError: (e) => console.error("Error", e),
     });
 
