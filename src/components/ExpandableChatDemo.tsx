@@ -80,9 +80,9 @@ export function ExpandableChatDemo() {
           </div>}
       >
         <ExpandableChatHeader className="flex-col text-center justify-center">
-          <h1 className="text-xl font-semibold">Chat with AI ✨</h1>
+          <h1 className="text-xl font-semibold">AI-powered UI ✨</h1>
           <p className="text-sm text-muted-foreground">
-            Run CRUD operations, create tasks and users.
+            Tell it what you want to do: create user, assign tasks etc
           </p>
         </ExpandableChatHeader>
         <ExpandableChatBody>
