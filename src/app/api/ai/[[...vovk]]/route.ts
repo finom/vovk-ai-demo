@@ -3,6 +3,8 @@ import AiSdkController from "@/modules/ai/AiSdkController";
 
 export const runtime = "edge";
 
+export const maxDuration = 60;
+
 const controllers = {
   AiSdkRPC: AiSdkController,
 };
