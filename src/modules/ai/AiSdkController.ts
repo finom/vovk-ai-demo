@@ -53,7 +53,7 @@ export default class AiSdkController {
     return streamText({
       model: openai("gpt-4.1"),
       toolCallStreaming: true,
-      maxSteps: 10,
+      maxSteps: 20,
       system: "You execute functions sequentially, one by one.",
       messages,
       tools,
