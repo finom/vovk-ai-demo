@@ -1,17 +1,16 @@
+import AiSdkController from "@/modules/ai/ai-sdk/AiSdkController";
 import { initVovk } from "vovk";
-import UserController from "../../../modules/user/UserController";
-import TaskController from "../../../modules/task/TaskController";
 
 export const runtime = "edge";
 
 const controllers = {
-  UserRPC: UserController,
-  TaskRPC: TaskController,
+    AiSdkRPC: AiSdkController,
 };
 
 export type Controllers = typeof controllers;
 
 export const { GET, POST, PATCH, PUT, HEAD, OPTIONS, DELETE } = initVovk({
-  emitSchema: true,
+  segmentName: "ai",
+  emitSchema: false,
   controllers,
 });
