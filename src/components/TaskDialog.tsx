@@ -66,7 +66,7 @@ const TaskDialog = ({ taskId, children }: Props) => {
       >
         {children}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]" container={document.body}>
+      <DialogContent className="sm:max-w-[425px]" container={typeof document !== 'undefined' ? document?.body : undefined}>
         <form
           onSubmit={handleSubmit(
             async (body) => {
