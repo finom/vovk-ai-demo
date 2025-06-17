@@ -2,7 +2,7 @@ import { initVovk } from "vovk";
 import UserController from "../../../modules/user/UserController";
 import TaskController from "../../../modules/task/TaskController";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 const controllers = {
   UserRPC: UserController,

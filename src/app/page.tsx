@@ -5,7 +5,7 @@ import type { TaskModelType, UserModelType } from "@/registry";
 import UserKanban from "@/components/UserKanban";
 import TaskController from "@/modules/task/TaskController";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export default async function Home() {
   const [usersInitialData, tasksInitialData] = await Promise.all([
