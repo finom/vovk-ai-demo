@@ -17,13 +17,13 @@ export default class PrismaService {
     if (this.#client) {
       return this.#client;
     }
-    this.#client = this.getClient();
+    this.#client = this.#getClient();
     return this.#client;
   }
 
   static #client: PrismaClient | null = null;
 
-  static getClient() {
+  static #getClient() {
     if (
       !(process.env.POSTGRES_PRISMA_URL as string).includes(
         "postgres:password@localhost:",
