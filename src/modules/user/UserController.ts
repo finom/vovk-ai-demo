@@ -12,7 +12,7 @@ export default class UserController {
     description: "Retrieves a list of all users.",
   })
   @get()
-  static getUsers = UserService.getUsers;
+  static getUsers = withZod({ handle: UserService.getUsers });
 
   @openapi({
     summary: "Find users by ID, full name, or email",

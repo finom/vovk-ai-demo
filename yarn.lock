@@ -6490,18 +6490,18 @@ vovk-validate-client-ajv@^0.0.0-beta.3:
     ajv "^8.17.1"
     ajv-formats "^3.0.1"
 
-vovk-zod@^1.0.0-draft.111:
-  version "1.0.0-draft.111"
-  resolved "https://registry.yarnpkg.com/vovk-zod/-/vovk-zod-1.0.0-draft.111.tgz#2f0f1ad694917090dceadbed1e58b63922e8f526"
-  integrity sha512-rmaZ0Xkidan+4ItXgqe7LOIVXIDp1dXIPsVIrkPUnNkVKY6AO+i15aV9nsLEopiuMCcwHzDtsmwnVG//XDuTLg==
+vovk-zod@^1.0.0-draft.112:
+  version "1.0.0-draft.112"
+  resolved "https://registry.yarnpkg.com/vovk-zod/-/vovk-zod-1.0.0-draft.112.tgz#461a03c3be8d0d0b20417b23e2e0b2fe4eb019e3"
+  integrity sha512-r04oc+39pH7DnBnjpl65HAvdIyW//LOB1pBqiKM8xRPHj6VtU2vJ6QDgnXsJFZLoXzJVzVTNshLnrcuNKCR3kg==
   dependencies:
     vovk-validate-client-ajv "^0.0.0-beta.3"
     zod-to-json-schema "^3.24.5"
 
-vovk@^3.0.0-draft.211:
-  version "3.0.0-draft.211"
-  resolved "https://registry.yarnpkg.com/vovk/-/vovk-3.0.0-draft.211.tgz#5307c0677a544cb52cec49f7e6532dc860b9dcb4"
-  integrity sha512-RBsVeEqS0mm4mKhfPeLiwVTS6yiWjXagI+92Ai+fK/LqnJjW6P/LR4PebhrUUfzwdlZMfx7oDXTuZxthezFBqg==
+vovk@^3.0.0-draft.214:
+  version "3.0.0-draft.214"
+  resolved "https://registry.yarnpkg.com/vovk/-/vovk-3.0.0-draft.214.tgz#f5d49061fb1a381a9aac88cc6a3db4f42c566a34"
+  integrity sha512-CL3rsZarGChd5sJYDDccpFQJ3KaZ0fNms7o7r2EC48fSgDN7/TXaEJ7+pYVnE0SC9gO4IertvWVJS5TLfUpxhQ==
   dependencies:
     "@standard-schema/spec" "^1.0.0"
     "@stoplight/json-schema-sampler" "^0.3.0"

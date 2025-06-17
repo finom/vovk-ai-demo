@@ -12,7 +12,7 @@ export default class TaskController {
     description: "Retrieves a list of all tasks.",
   })
   @get()
-  static getTasks = TaskService.getTasks;
+  static getTasks = withZod({ handle: TaskService.getTasks });
 
   @openapi({
     summary: "Find tasks by ID, title or description",
