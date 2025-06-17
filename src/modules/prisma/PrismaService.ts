@@ -14,19 +14,15 @@ if (!process.env.VERCEL_ENV) {
 
 export default class PrismaService {
   static get client() {
-    if (this.#client) {
-      return this.#client;
-    }
-    this.#client = this.#getClient();
-    return this.#client;
+    return this.#client ??= this.#getClient();
   }
 
   static #client: PrismaClient | null = null;
 
   static #getClient() {
     if (
-      !(process.env.POSTGRES_PRISMA_URL as string).includes(
-        "postgres:password@localhost:",
+      !(process.env.DATABASE_URL as string)?.includes(
+        "@localhost:",
       ) &&
       process.env.NODE_ENV !== "production"
     ) {
@@ -34,7 +30,7 @@ export default class PrismaService {
     }
 
     const adapter = new PrismaNeon({
-      connectionString: `${process.env.POSTGRES_PRISMA_URL}`,
+      connectionString: `${process.env.DATABASE_URL}`,
     });
     const prisma = new PrismaClient({ adapter });
 
