@@ -7,8 +7,10 @@ import UserKanban from "@/components/UserKanban";
 import TaskController from "@/modules/task/TaskController";
 
 export default async function Home() {
-  const usersInitialData = await UserController.getUsers.fn<UserModelType[]>();
-  const tasksInitialData = await TaskController.getTasks.fn<TaskModelType[]>();
+  const [usersInitialData, tasksInitialData] = await Promise.all([
+    UserController.getUsers.fn<UserModelType[]>(),
+    TaskController.getTasks.fn<TaskModelType[]>(),
+  ]);
 
   return (
     <>
