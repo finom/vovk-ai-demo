@@ -1,17 +1,15 @@
-import AiSdkController from "@/modules/ai/ai-sdk/AiSdkController";
 import { initVovk } from "vovk";
+import AiSdkController from "@/modules/ai/AiSdkController";
 
-export const runtime = "nodejs"; // to fix the 1MB limitation for an edge function in free plan
-export const maxDuration = 60;
+export const runtime = "edge";
 
 const controllers = {
-    AiSdkRPC: AiSdkController,
+  AiSdkRPC: AiSdkController,
 };
 
 export type Controllers = typeof controllers;
 
 export const { GET, POST, PATCH, PUT, HEAD, OPTIONS, DELETE } = initVovk({
-  segmentName: "ai",
-  emitSchema: false, // the RPC is never used on front-end
+  emitSchema: false,
   controllers,
 });
