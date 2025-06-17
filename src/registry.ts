@@ -1,5 +1,5 @@
 import { EntityType } from "@prisma/client";
-import { z } from "zod";
+import { z } from "zod/v3";
 import { create } from "zustand";
 import fastDeepEqual from "fast-deep-equal";
 import { TaskModel, UserModel } from "./zod";
