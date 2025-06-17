@@ -3,7 +3,7 @@ import { withZod } from "vovk-zod/v3";
 import UserService from "./UserService";
 import { UserModel } from "@/zod";
 import { z } from "zod/v3";
-import { BASE_FIELDS } from "@/registry";
+import { BASE_FIELDS } from "@/constants";
 
 @prefix("users")
 export default class UserController {

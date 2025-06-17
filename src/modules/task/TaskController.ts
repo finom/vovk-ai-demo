@@ -3,7 +3,7 @@ import { withZod } from "vovk-zod/v3";
 import TaskService from "./TaskService";
 import { TaskModel } from "@/zod";
 import { z } from "zod/v3";
-import { BASE_FIELDS } from "@/registry";
+import { BASE_FIELDS } from "@/constants";
 
 @prefix("tasks")
 export default class TaskController {
