@@ -1,22 +1,6 @@
 {
   "$schema": "https://vovk.dev/api/spec/v3/segment.json",
-  "emitSchema": true,
+  "emitSchema": false,
   "segmentName": "ai",
-  "controllers": {
-    "AiSdkRPC": {
-      "rpcModuleName": "AiSdkRPC",
-      "originalControllerName": "AiSdkController",
-      "prefix": "ai-sdk",
-      "handlers": {
-        "functionCalling": {
-          "path": "function-calling",
-          "httpMethod": "POST",
-          "openapi": {
-            "summary": "Function Calling",
-            "description": "Uses [@ai-sdk/openai](https://www.npmjs.com/package/@ai-sdk/openai) and ai packages to call a function"
-          }
-        }
-      }
-    }
-  }
+  "controllers": {}
 }
