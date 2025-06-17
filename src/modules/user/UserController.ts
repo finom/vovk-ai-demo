@@ -2,7 +2,7 @@ import { prefix, get, put, post, del, openapi } from "vovk";
 import { withZod } from "vovk-zod/v3";
 import UserService from "./UserService";
 import { UserModel } from "@/zod";
-import { z } from "zod";
+import { z } from "zod/v3";
 import { BASE_FIELDS } from "@/registry";
 
 @prefix("users")
