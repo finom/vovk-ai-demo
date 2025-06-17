@@ -1,0 +1,10 @@
+{
+  "config": {
+    "$schema": "https://vovk.dev/api/spec/v3/config.json",
+    "libs": {
+      "ajv": {
+        "target": "draft-07"
+      }
+    }
+  }
+}

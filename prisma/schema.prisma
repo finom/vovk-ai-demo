@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+generator zod {
+  provider      = "zod-prisma"
+  output        = "../src/zod"
+  relationModel = false
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+  id         String     @id @default(uuid()) /// @zod.custom(z.string().uuid().transform((val) => val as string & { e: typeof EntityType.users }))
+  entityType EntityType @default(users) /// @zod.custom(z.literal(EntityType.users))
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @default(now()) @updatedAt
+
+  fullName   String
+  email      String    @unique
+  imageUrl   String?
+
+  tasks      Task[]
+}
+
+model Task {
+  id         String     @id @default(uuid()) /// @zod.custom(z.string().uuid().transform((val) => val as string & { e: typeof EntityType.tasks }))
+  entityType EntityType @default(tasks) /// @zod.custom(z.literal(EntityType.tasks))
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @default(now()) @updatedAt
+
+  title      String
+  description String
+  status     TaskStatus @default(TODO)
+  /// @zod.custom(z.string().uuid().transform((val) => val as string & { e: typeof EntityType.users }))
+  userId     String
+
+  user       User       @relation(fields: [userId], references: [id])
+}
+
+enum EntityType {
+  users
+  tasks
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  IN_REVIEW
+  DONE
+}
