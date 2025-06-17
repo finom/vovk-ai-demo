@@ -78,7 +78,7 @@ export function ExpandableChatDemo() {
         <ExpandableChatHeader className="flex-col text-center justify-center">
           <h1 className="text-xl font-semibold">Chat with AI ✨</h1>
           <p className="text-sm text-muted-foreground">
-            Ask me anything about the components
+            Run CRUD operations, create tasks and users.
           </p>
         </ExpandableChatHeader>
         <ExpandableChatBody>
@@ -130,6 +130,12 @@ export function ExpandableChatDemo() {
             <ChatInput
               value={input}
               onChange={handleInputChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey && input.trim()) {
+                  e.preventDefault();
+                  handleSubmit(e);
+                }
+              }}
               placeholder="Type your message..."
               className="min-h-12 resize-none rounded-lg bg-background border-0 p-3 shadow-none focus-visible:ring-0"
             />
