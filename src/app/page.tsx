@@ -1,17 +1,19 @@
 "use server";
-import Board from "@/components/Board";
 import { ExpandableChatDemo } from "@/components/ExpandableChatDemo";
 import UserList from "@/components/UserList";
 import UserController from "@/modules/user/UserController";
-import type{ UserModelType } from "@/registry";
+import type { TaskModelType, UserModelType } from "@/registry";
+import UserKanban from "@/components/UserKanban";
+import TaskController from "@/modules/task/TaskController";
 
 export default async function Home() {
-  const initialData = await UserController.getUsers.fn<UserModelType[]>();
+  const usersInitialData = await UserController.getUsers.fn<UserModelType[]>();
+  const tasksInitialData = await TaskController.getTasks.fn<TaskModelType[]>();
 
   return (
     <>
-      <UserList initialData={initialData} />
-      <Board />
+      <UserList initialData={usersInitialData} />
+      <UserKanban initialData={tasksInitialData} />
       <ExpandableChatDemo />
     </>
   );

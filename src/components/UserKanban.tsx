@@ -223,8 +223,12 @@ export const KanbanProvider = ({
   );
 };
 
-const UserKanban = () => {
-  TaskRPC.getTasks.useQuery({});
+interface Props {
+  initialData: TaskModelType[];
+}
+
+const UserKanban = ({ initialData }: Props) => {
+  TaskRPC.getTasks.useQuery(undefined, { initialData });
   const tasks = useRegistry(useShallow((state) => Object.values(state.tasks)));
   const statuses = useMemo(() => Object.values(TaskStatus), []);
 
@@ -261,6 +265,7 @@ const UserKanban = () => {
   }, [statuses, tasks]);
 
   return (
+    <div className="p-6 max-w-7xl mx-auto">
     <div className={cn("w-full space-y-6")}>
       <div className="space-y-4">
         <h2 className="text-lg font-semibold text-foreground">Task Board</h2>
@@ -290,15 +295,8 @@ const UserKanban = () => {
         </KanbanProvider>
       </div>
     </div>
-  );
-};
-
-const Board = () => {
-  return (
-    <div className="p-6 max-w-7xl mx-auto">
-      <UserKanban />
     </div>
   );
 };
 
-export default Board;
+export default UserKanban;

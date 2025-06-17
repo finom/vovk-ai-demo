@@ -39,7 +39,7 @@
     "vovk-ajv": "^0.0.0-draft.63",
     "vovk-client": "^0.0.4-draft.101",
     "vovk-openapi": "^0.0.1-draft.112",
-    "vovk-react-query": "^0.0.1-draft.83",
+    "vovk-react-query": "^0.0.1-draft.84",
     "vovk-zod": "^1.0.0-draft.112",
     "zod": "^3.25.64",
     "zod-prisma": "^0.5.4",

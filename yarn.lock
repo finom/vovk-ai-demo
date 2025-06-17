@@ -6477,10 +6477,10 @@ vovk-python@^0.0.1-draft.39:
   resolved "https://registry.yarnpkg.com/vovk-python/-/vovk-python-0.0.1-draft.40.tgz#8a8f8c99cc8333307070dc2ef5683c181d2dc6c0"
   integrity sha512-x2tE10aQODlOzS2WD3MJKQkjwPifi5sQd44Vsbt31HfBIMApwD5ucypmgjRcKV/PuZgcGp3r7w2PpBlCeTqYkg==
 
-vovk-react-query@^0.0.1-draft.83:
-  version "0.0.1-draft.83"
-  resolved "https://registry.yarnpkg.com/vovk-react-query/-/vovk-react-query-0.0.1-draft.83.tgz#e003f3590223b2ac0a980597587b000f17a97aac"
-  integrity sha512-k7Q2ERqXyJab8YZEqko7awwA3vsMUjsweGKfaY18VKqJ0h6MXRtWe1DvgrEJooAmBPpqAmDefTOarlAqOJyP2g==
+vovk-react-query@^0.0.1-draft.84:
+  version "0.0.1-draft.84"
+  resolved "https://registry.yarnpkg.com/vovk-react-query/-/vovk-react-query-0.0.1-draft.84.tgz#168e7090a732459b75cd2fd35ebd9f6a27f3fbc3"
+  integrity sha512-VTZbhu91tFG8GPNgYsykg+OBgynQ64015MQXj3gd8GEh5wupUeQjtjXLhv5SifNFyeYN2f2UDYgBqCEJ18V1Ig==
 
 vovk-validate-client-ajv@^0.0.0-beta.3:
   version "0.0.0-beta.3"
