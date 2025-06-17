@@ -65,4 +65,3 @@ export const useRegistry = create<Registry>((set) => ({
     return entities;
   },
 }));
-

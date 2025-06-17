@@ -6,15 +6,18 @@ import UserDialog from "./UserDialog";
 import { useRegistry, type UserModelType } from "@/registry";
 import { Button } from "./ui/button";
 import { Pencil } from "lucide-react";
+import { useEffect } from "react";
 
 interface Props {
   initialData: UserModelType[];
 }
 
 const UserList = ({ initialData }: Props) => {
-  UserRPC.getUsers.useQuery({}, { initialData });
+  UserRPC.getUsers.useQuery();
   const users = useRegistry(useShallow((state) => Object.values(state.users)));
-  console.log("users", users);
+  useEffect(() => {
+    useRegistry.getState().parse(initialData);
+  }, [initialData]);
   return (
     <div className="space-y-4 p-6 max-w-7xl mx-auto">
       <h2 className="text-lg font-semibold text-foreground flex gap-4 items-center">

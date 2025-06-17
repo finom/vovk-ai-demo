@@ -10,7 +10,7 @@ import {
 } from "@dnd-kit/core";
 import type { DragEndEvent } from "@dnd-kit/core";
 import type { ReactNode } from "react";
-import { useMemo, useId } from "react";
+import { useMemo, useId, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { TaskRPC } from "vovk-client";
@@ -229,8 +229,13 @@ interface Props {
 
 const UserKanban = ({ initialData }: Props) => {
   TaskRPC.getTasks.useQuery(undefined, { initialData });
+
   const tasks = useRegistry(useShallow((state) => Object.values(state.tasks)));
   const statuses = useMemo(() => Object.values(TaskStatus), []);
+
+  useEffect(() => {
+    useRegistry.getState().parse(initialData);
+  }, [initialData]);
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -266,35 +271,35 @@ const UserKanban = ({ initialData }: Props) => {
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
-    <div className={cn("w-full space-y-6")}>
-      <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-foreground">Task Board</h2>
-        <div className="flex gap-2 mb-4">
-          <TaskDialog taskId={null}>
-            <Button className="flex items-center gap-1">
-              <Plus className="h-4 w-4" /> Add Task
-            </Button>
-          </TaskDialog>
+      <div className={cn("w-full space-y-6")}>
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-foreground">Task Board</h2>
+          <div className="flex gap-2 mb-4">
+            <TaskDialog taskId={null}>
+              <Button className="flex items-center gap-1">
+                <Plus className="h-4 w-4" /> Add Task
+              </Button>
+            </TaskDialog>
+          </div>
+          <KanbanProvider onDragEnd={handleDragEnd}>
+            {statuses.map((status) => (
+              <KanbanBoard key={status} id={status}>
+                <KanbanHeader status={status} />
+                <KanbanCards>
+                  {tasksByStatus[status]?.map((task, index) => (
+                    <KanbanCard
+                      key={task.id}
+                      task={task}
+                      parent={status}
+                      index={index}
+                    />
+                  ))}
+                </KanbanCards>
+              </KanbanBoard>
+            ))}
+          </KanbanProvider>
         </div>
-        <KanbanProvider onDragEnd={handleDragEnd}>
-          {statuses.map((status) => (
-            <KanbanBoard key={status} id={status}>
-              <KanbanHeader status={status} />
-              <KanbanCards>
-                {tasksByStatus[status]?.map((task, index) => (
-                  <KanbanCard
-                    key={task.id}
-                    task={task}
-                    parent={status}
-                    index={index}
-                  />
-                ))}
-              </KanbanCards>
-            </KanbanBoard>
-          ))}
-        </KanbanProvider>
       </div>
-    </div>
     </div>
   );
 };

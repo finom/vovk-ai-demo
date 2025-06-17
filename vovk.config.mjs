@@ -1,6 +1,6 @@
 // @ts-check
 // import _ from 'lodash';
-import 'dotenv/config';
+import "dotenv/config";
 
 // const { camelCase, startCase } = _;
 
@@ -8,7 +8,7 @@ import 'dotenv/config';
 const config = {
   origin: process.env.VERCEL_ENV
     ? `https://vovk-ai-demo.vercel.app`
-    : 'http://localhost:3000',
+    : "http://localhost:3000",
   imports: {
     validateOnClient: "vovk-ajv",
     createRPC: "vovk-react-query",
