@@ -10,7 +10,7 @@ import {
 } from "@dnd-kit/core";
 import type { DragEndEvent } from "@dnd-kit/core";
 import type { ReactNode } from "react";
-import { useMemo, useId, useEffect } from "react";
+import { useMemo, useId } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { TaskRPC } from "vovk-client";
@@ -18,7 +18,6 @@ import { TaskModelType, useRegistry, UserModelType } from "@/registry";
 import { useShallow } from "zustand/shallow";
 import { TaskStatus } from "@prisma/client";
 import TaskDialog from "./TaskDialog";
-import { isEmpty } from "lodash";
 
 // Utils function
 function cn(...classes: (string | undefined | null | boolean)[]): string {
@@ -229,15 +228,11 @@ interface Props {
 }
 
 const UserKanban = ({ initialData }: Props) => {
-  const tasks = useRegistry(
-    useShallow((state) =>
-      isEmpty(state.tasks) ? Object.values(state.tasks) : initialData,
-    ),
-  );
-  useEffect(() => {
-    useRegistry.getState().parse(initialData);
-  }, [initialData]);
+  TaskRPC.getTasks.useQuery(undefined, { initialData });
+
+  const tasks = useRegistry(useShallow((state) => Object.values(state.tasks)));
   const statuses = useMemo(() => Object.values(TaskStatus), []);
+
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 

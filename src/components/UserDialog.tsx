@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ErrorMessage } from "@hookform/error-message";
+import { omit } from "lodash";
 import {
   Dialog,
   DialogClose,
@@ -13,18 +14,25 @@ import {
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { type UserModelType } from "@/registry";
+import { useRegistry, type UserModelType } from "@/registry";
 import { UserRPC } from "vovk-client";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useShallow } from "zustand/shallow";
+import { BASE_KEYS } from "@/constants";
 
 interface Props {
-  user: UserModelType | null;
+  userId: UserModelType["id"] | null;
   children?: React.ReactNode;
 }
 
-const UserDialog = ({ user, children }: Props) => {
+const UserDialog = ({ userId, children }: Props) => {
+  const user = useRegistry(
+    useShallow((state) =>
+      userId ? omit(state.users[userId], BASE_KEYS) : null,
+    ),
+  );
   const {
     register,
     handleSubmit,
@@ -44,8 +52,8 @@ const UserDialog = ({ user, children }: Props) => {
               setIsLoading(true);
 
               try {
-                if (user) {
-                  await UserRPC.updateUser({ body, params: { id: user.id } });
+                if (userId) {
+                  await UserRPC.updateUser({ body, params: { id: userId } });
                 } else {
                   await UserRPC.createUser({ body });
                 }
