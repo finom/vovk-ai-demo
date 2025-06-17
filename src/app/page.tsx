@@ -1,10 +1,11 @@
-"use server";
 import { ExpandableChatDemo } from "@/components/ExpandableChatDemo";
 import UserList from "@/components/UserList";
 import UserController from "@/modules/user/UserController";
 import type { TaskModelType, UserModelType } from "@/registry";
 import UserKanban from "@/components/UserKanban";
 import TaskController from "@/modules/task/TaskController";
+
+export const runtime = 'edge';
 
 export default async function Home() {
   const [usersInitialData, tasksInitialData] = await Promise.all([

@@ -14,7 +14,7 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { TaskModelType, useRegistry } from "@/registry";
+import { type TaskModelType, useRegistry } from "@/registry";
 import { TaskRPC } from "vovk-client";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
