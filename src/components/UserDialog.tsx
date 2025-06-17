@@ -14,12 +14,13 @@ import {
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { BASE_KEYS, useRegistry, type UserModelType } from "@/registry";
+import { useRegistry, type UserModelType } from "@/registry";
 import { UserRPC } from "vovk-client";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useShallow } from "zustand/shallow";
+import { BASE_KEYS } from "@/constants";
 
 interface Props {
   userId: UserModelType["id"] | null;
