@@ -1,8 +1,8 @@
 // @ts-check
 /** @type {import('vovk').VovkConfig} */
 const config = {
-  origin:process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
+  origin:process.env.VERCEL_ENV
+    ? `https://vovk-ai-demo.vercel.app`
     : 'http://localhost:3000',
   imports: {
     validateOnClient: "vovk-ajv",
