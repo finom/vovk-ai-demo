@@ -20,7 +20,7 @@ export default class UserService {
     PrismaService.client.user.create({
       data: {
         ...data,
-        imageUrl: `https://api.dicebear.com/7.x/adventurer-neutral/svg?seed=${data.email}`,
+        imageUrl: `https://i.pravatar.cc/300?u=${data.email}`,
       },
     });
 

@@ -8,6 +8,7 @@ import {
   openapi,
   type VovkRequest,
 } from "vovk";
+// import { GithubReposRPC } from 'vovk-client';
 import { jsonSchema, streamText, tool, type CoreMessage } from "ai";
 import { openai } from "@ai-sdk/openai";
 import UserController from "../user/UserController";
@@ -29,6 +30,8 @@ export default class AiSdkController {
       onExecute: (_d, { handlerName }) => console.log("Success", handlerName),
       onError: (e) => console.error("Error", e),
     });
+
+    // GithubReposRPC
 
     if (messages.filter(({ role }) => role === "user").length > LIMIT) {
       throw new HttpException(

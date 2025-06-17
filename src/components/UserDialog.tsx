@@ -49,7 +49,6 @@ const UserDialog = ({ userId, children }: Props) => {
         <form
           onSubmit={handleSubmit(
             async (body) => {
-              alert();
               setIsLoading(true);
 
               try {
