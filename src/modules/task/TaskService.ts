@@ -25,7 +25,6 @@ export default class TaskService {
     id: VovkParams<typeof TaskController.updateTask>["id"],
     data: VovkBody<typeof TaskController.updateTask>,
   ) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate delay
     return PrismaService.client.task.update({
       where: { id },
       data,
