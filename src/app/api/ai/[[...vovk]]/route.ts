@@ -2,6 +2,7 @@ import AiSdkController from "@/modules/ai/ai-sdk/AiSdkController";
 import { initVovk } from "vovk";
 
 export const runtime = "nodejs"; // to fix the 1MB limitation for an edge function in free plan
+export const maxDuration = 60;
 
 const controllers = {
     AiSdkRPC: AiSdkController,
