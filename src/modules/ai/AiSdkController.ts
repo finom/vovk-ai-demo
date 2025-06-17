@@ -10,8 +10,8 @@ import {
 } from "vovk";
 import { jsonSchema, streamText, tool, type CoreMessage } from "ai";
 import { openai } from "@ai-sdk/openai";
-import UserController from "../../user/UserController";
-import TaskController from "../../task/TaskController";
+import UserController from "../user/UserController";
+import TaskController from "../task/TaskController";
 
 @prefix("ai-sdk")
 export default class AiSdkController {
