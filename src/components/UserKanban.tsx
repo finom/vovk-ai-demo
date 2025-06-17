@@ -18,6 +18,7 @@ import { TaskModelType, useRegistry, UserModelType } from "@/registry";
 import { useShallow } from "zustand/shallow";
 import { TaskStatus } from "@prisma/client";
 import TaskDialog from "./TaskDialog";
+import { isEmpty } from "lodash";
 
 // Utils function
 function cn(...classes: (string | undefined | null | boolean)[]): string {
@@ -228,15 +229,15 @@ interface Props {
 }
 
 const UserKanban = ({ initialData }: Props) => {
-  TaskRPC.getTasks.useQuery(undefined, { initialData });
-
-  const tasks = useRegistry(useShallow((state) => Object.values(state.tasks)));
-  const statuses = useMemo(() => Object.values(TaskStatus), []);
-
+  const tasks = useRegistry(
+    useShallow((state) =>
+      isEmpty(state.tasks) ? Object.values(state.tasks) : initialData,
+    ),
+  );
   useEffect(() => {
     useRegistry.getState().parse(initialData);
   }, [initialData]);
-
+  const statuses = useMemo(() => Object.values(TaskStatus), []);
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 

@@ -1,20 +1,19 @@
 "use client";
 import { useShallow } from "zustand/shallow";
-import { UserRPC } from "vovk-client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import UserDialog from "./UserDialog";
 import { useRegistry, type UserModelType } from "@/registry";
 import { Button } from "./ui/button";
 import { Pencil } from "lucide-react";
 import { useEffect } from "react";
+import { isEmpty } from "lodash";
 
 interface Props {
   initialData: UserModelType[];
 }
 
 const UserList = ({ initialData }: Props) => {
-  UserRPC.getUsers.useQuery();
-  const users = useRegistry(useShallow((state) => Object.values(state.users)));
+  const users = useRegistry(useShallow((state) => isEmpty(state.users) ? Object.values(state.users ) : initialData));
   useEffect(() => {
     useRegistry.getState().parse(initialData);
   }, [initialData]);
