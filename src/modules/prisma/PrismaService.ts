@@ -14,8 +14,14 @@ if (!process.env.VERCEL_ENV) {
 
 export default class PrismaService {
   static get client() {
-    return this.getClient();
+    if (this.#client) {
+      return this.#client;
+    }
+    this.#client = this.getClient();
+    return this.#client;
   }
+
+  static #client: PrismaClient | null = null;
 
   static getClient() {
     if (
