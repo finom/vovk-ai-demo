@@ -6497,10 +6497,10 @@ vovk-ajv@^0.0.0-draft.63:
     ajv-formats "^3.0.1"
     ajv-i18n "^4.2.0"
 
-vovk-cli@^0.0.1-draft.219:
-  version "0.0.1-draft.219"
-  resolved "https://registry.yarnpkg.com/vovk-cli/-/vovk-cli-0.0.1-draft.219.tgz#43299755ef30077e97cbcec79c1eebef3a5a44f0"
-  integrity sha512-auRZDcxfq87jkcuoqLWPNWmz8CM1QDvdcx+7dXGmp3FJ13+867SjregSg7ao5oQcoksKTLxq8T7tmdeC11+YAA==
+vovk-cli@^0.0.1-draft.241:
+  version "0.0.1-draft.241"
+  resolved "https://registry.yarnpkg.com/vovk-cli/-/vovk-cli-0.0.1-draft.241.tgz#133370ff4c9e69913f09e280917141cfb0bdb2ba"
+  integrity sha512-DGisbDczUIUgj/jO+HzpWYl8rgHSqe2hBfseQr+SnCBXOeZ1eNC++wIs3ZTRKrRNSZFl4dKodlwA8dNs400Uow==
   dependencies:
     "@iarna/toml" "^2.2.5"
     "@inquirer/prompts" "^7.5.3"
@@ -6536,7 +6536,7 @@ vovk-cli@^0.0.1-draft.219:
     vovk-openapi "^0.0.1-draft.112"
     yaml "^2.8.0"
   optionalDependencies:
-    vovk-python "^0.0.1-draft.39"
+    vovk-python "^0.0.1-draft.40"
 
 vovk-client@^0.0.4-draft.101:
   version "0.0.4-draft.101"
@@ -6552,7 +6552,7 @@ vovk-openapi@^0.0.1-draft.112:
     openapi3-ts "^4.4.0"
     type-fest "^4.41.0"
 
-vovk-python@^0.0.1-draft.39:
+vovk-python@^0.0.1-draft.40:
   version "0.0.1-draft.40"
   resolved "https://registry.yarnpkg.com/vovk-python/-/vovk-python-0.0.1-draft.40.tgz#8a8f8c99cc8333307070dc2ef5683c181d2dc6c0"
   integrity sha512-x2tE10aQODlOzS2WD3MJKQkjwPifi5sQd44Vsbt31HfBIMApwD5ucypmgjRcKV/PuZgcGp3r7w2PpBlCeTqYkg==
@@ -6578,10 +6578,10 @@ vovk-zod@^1.0.0-draft.112:
     vovk-validate-client-ajv "^0.0.0-beta.3"
     zod-to-json-schema "^3.24.5"
 
-vovk@^3.0.0-draft.215:
-  version "3.0.0-draft.215"
-  resolved "https://registry.yarnpkg.com/vovk/-/vovk-3.0.0-draft.215.tgz#b467ecdd497661796f8e14c71e24609ce03c8140"
-  integrity sha512-oWHmPcmKWo96rpPWfMTRXqlyCt9WxN4P3zM29GmCx2nzQdXNX5YshAILkFH48clWLHollnapmwBnsbXZop3YxA==
+vovk@^3.0.0-draft.228:
+  version "3.0.0-draft.228"
+  resolved "https://registry.yarnpkg.com/vovk/-/vovk-3.0.0-draft.228.tgz#c116abe1795ad4c56146a469b175f155aa405f9d"
+  integrity sha512-dnREr0HPV9a1Ye4VARccwM2nz+hii2RK2r8lKumSfIiyJC6MRrkFd3GtKnK4jmXjenx3n/F2tUvEOUSsoYqWSQ==
   dependencies:
     "@standard-schema/spec" "^1.0.0"
     "@stoplight/json-schema-sampler" "^0.3.0"

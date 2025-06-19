@@ -1,5 +1,11 @@
 "use client";
-import { Bot, Paperclip, Mic, CornerDownLeft, MoveDownRight } from "lucide-react";
+import {
+  Bot,
+  Paperclip,
+  Mic,
+  CornerDownLeft,
+  MoveDownRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useChat } from "@ai-sdk/react";
 import {
@@ -73,11 +79,15 @@ export function ExpandableChatDemo() {
       <ExpandableChat
         size="lg"
         position="bottom-right"
-        icon={<div>
-            <div className="absolute text-red-600 -left-18 -top-12 rotate-315 text-lg text-semibold">Start Here</div>
+        icon={
+          <div>
+            <div className="absolute text-red-600 -left-18 -top-12 rotate-315 text-lg text-semibold">
+              Start Here
+            </div>
             <MoveDownRight className="absolute text-red-600 scale-200 -left-4 -top-4" />
             <Bot className="h-6 w-6" />
-          </div>}
+          </div>
+        }
       >
         <ExpandableChatHeader className="flex-col text-center justify-center">
           <h1 className="text-xl font-semibold">AI-powered UI ✨</h1>

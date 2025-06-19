@@ -19,7 +19,10 @@ const UserList = ({ initialData }: Props) => {
       <h2 className="text-lg font-semibold text-foreground flex gap-4 items-center">
         Team Members
         <UserDialog userId={null}>
-          <Button variant="outline"><Plus className="h-4 w-4" />Add a Team Member</Button>
+          <Button variant="outline">
+            <Plus className="h-4 w-4" />
+            Add a Team Member
+          </Button>
         </UserDialog>
       </h2>
       <div className="flex flex-wrap gap-4">

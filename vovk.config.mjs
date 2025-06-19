@@ -1,8 +1,8 @@
 // @ts-check
-// import _ from 'lodash';
+import _ from "lodash";
 import "dotenv/config";
 
-// const { camelCase, startCase } = _;
+const { camelCase, startCase } = _;
 
 /** @type {import('vovk').VovkConfig} */
 const config = {
@@ -23,20 +23,28 @@ const config = {
       target: "draft-07",
     },
   },
-  /* extendClientWithOpenAPI: {
-    rootModules: [{
-      source: { url: 'https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json' },
-      getModuleName: ({ operationObject }) => {
-        const [operationNs] = operationObject.operationId?.split('/') ?? ['GithubRPC'];
-        return `Github${startCase(camelCase(operationNs)).replace(/ /g, '')}RPC`;
-      }
-      ,
-      getMethodName: ({ operationObject }) => {
-        const [, operationName] = operationObject.operationId?.split('/') ?? ['', 'ERROR'];
-        return camelCase(operationName);
+  extendClientWithOpenAPI: {
+    extensionModules: [
+      {
+        source: {
+          url: "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json",
+        },
+        getModuleName: ({ operationObject }) => {
+          const [operationNs] = operationObject.operationId?.split("/") ?? [
+            "GithubRPC",
+          ];
+          return `Github${startCase(camelCase(operationNs)).replace(/ /g, "")}RPC`;
+        },
+        getMethodName: ({ operationObject }) => {
+          const [, operationName] = operationObject.operationId?.split("/") ?? [
+            "",
+            "ERROR",
+          ];
+          return camelCase(operationName);
+        },
       },
-    }],
-  } */
+    ],
+  },
 };
 
 export default config;
