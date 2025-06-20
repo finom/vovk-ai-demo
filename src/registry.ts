@@ -8,10 +8,25 @@ import { BaseEntity } from "./types";
 export type UserModelType = z.infer<typeof UserModel>;
 export type TaskModelType = z.infer<typeof TaskModel>;
 
+// Utility type to convert record to array
+type RecordsToArrays<T> = {
+  [K in keyof T]: T[K] extends Record<string, infer V> ? V[] : T[K];
+};
+
 interface Registry {
   parse: (data: unknown) => Partial<{
     [key in EntityType]: BaseEntity[];
   }>;
+  sync: (
+    initialData: Partial<
+      RecordsToArrays<Omit<Registry, "parse" | "sync" | "values">>
+    >,
+  ) => boolean;
+  values: (
+    initialData?: Partial<
+      RecordsToArrays<Omit<Registry, "parse" | "sync" | "values">>
+    >,
+  ) => RecordsToArrays<Omit<Registry, "parse" | "sync" | "values">>;
   [EntityType.users]: Record<UserModelType["id"], UserModelType>;
   [EntityType.tasks]: Record<TaskModelType["id"], TaskModelType>;
 }
@@ -35,10 +50,12 @@ function getEntitiesFromResponse(
   return entities;
 }
 
-export const useRegistry = create<Registry>((set) => ({
+const synced: Partial<Record<EntityType, boolean>> = {};
+
+export const useRegistry = create<Registry>((set, get) => ({
   [EntityType.users]: {},
   [EntityType.tasks]: {},
-  parse: (data: unknown) => {
+  parse: (data) => {
     const entities = getEntitiesFromResponse(data);
     set((state) => {
       const newState: Record<string, unknown> = {};
@@ -63,5 +80,45 @@ export const useRegistry = create<Registry>((set) => ({
       return resultState;
     });
     return entities;
+  },
+  sync: (initialData) => {
+    const toBeParsed: Partial<{
+      [key in EntityType]: BaseEntity[];
+    }> = {};
+    const state = get();
+
+    Object.entries(initialData).forEach(([entityType, entities]) => {
+      const type = entityType as EntityType;
+      if (!synced[type]) {
+        toBeParsed[type] = entities;
+        synced[type] = true;
+      }
+    });
+
+    // Parse the entities to update the state
+    if (Object.keys(toBeParsed).length > 0) {
+      state.parse(toBeParsed);
+      return true;
+    }
+
+    return false;
+  },
+  values: (initialData = {}) => {
+    const state = get();
+    const result: Partial<
+      RecordsToArrays<Omit<Registry, "parse" | "sync" | "values">>
+    > = {};
+    Object.keys(EntityType).forEach((key) => {
+      const entityType = key as EntityType;
+      if (synced[entityType]) {
+        result[entityType] = Object.values(state[entityType]);
+      } else {
+        result[entityType] =
+          initialData[entityType] || Object.values(state[entityType]);
+      }
+    });
+    return result as RecordsToArrays<
+      Omit<Registry, "parse" | "sync" | "values">
+    >;
   },
 }));

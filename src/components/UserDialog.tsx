@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRegistry, type UserModelType } from "@/registry";
 import { UserRPC } from "vovk-client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useShallow } from "zustand/shallow";
@@ -36,11 +36,16 @@ const UserDialog = ({ userId, children }: Props) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: user ?? {},
   });
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    reset(user ?? {});
+  }, [user, reset]);
 
   return (
     <Dialog>

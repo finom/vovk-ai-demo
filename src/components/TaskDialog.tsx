@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { type TaskModelType, useRegistry } from "@/registry";
 import { TaskRPC } from "vovk-client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useShallow } from "zustand/shallow";
@@ -48,6 +48,7 @@ const TaskDialog = ({ taskId, children }: Props) => {
   const {
     control,
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -55,6 +56,10 @@ const TaskDialog = ({ taskId, children }: Props) => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    reset(task ?? {});
+  }, [task, reset]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

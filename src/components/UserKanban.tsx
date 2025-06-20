@@ -10,7 +10,7 @@ import {
 } from "@dnd-kit/core";
 import type { DragEndEvent } from "@dnd-kit/core";
 import type { ReactNode } from "react";
-import { useMemo, useId } from "react";
+import { useMemo, useId, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { TaskRPC } from "vovk-client";
@@ -228,9 +228,12 @@ interface Props {
 }
 
 const UserKanban = ({ initialData }: Props) => {
-  TaskRPC.getTasks.useQuery(undefined, { initialData });
-
-  const tasks = useRegistry(useShallow((state) => Object.values(state.tasks)));
+  const tasks = useRegistry(
+    useShallow((state) => state.values({ tasks: initialData }).tasks),
+  );
+  useEffect(() => {
+    useRegistry.getState().sync({ tasks: initialData });
+  }, [initialData]);
   const statuses = useMemo(() => Object.values(TaskStatus), []);
 
   const handleDragEnd = (event: DragEndEvent) => {
