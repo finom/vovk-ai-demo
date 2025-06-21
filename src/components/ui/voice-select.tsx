@@ -8,8 +8,8 @@ import {
 import { Label } from "@/components/ui/label";
 
 interface VoiceSelectorProps {
-  value:  "ash" | "ballad" | "coral" | "sage" | "verse";
-  onValueChange: (value:  "ash" | "ballad" | "coral" | "sage" | "verse") => void;
+  value: "ash" | "ballad" | "coral" | "sage" | "verse";
+  onValueChange: (value: "ash" | "ballad" | "coral" | "sage" | "verse") => void;
 }
 
 export function VoiceSelector({ value, onValueChange }: VoiceSelectorProps) {

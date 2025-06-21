@@ -1,8 +1,16 @@
-import { PhoneCallIcon, MicIcon, AudioLines} from 'lucide-react';
-import React  from 'react';
-import { motion } from 'framer-motion';
- 
-const Floaty = ({ isActive, volumeLevel, handleClick }: { isActive: boolean, volumeLevel: number, handleClick: () => void }) => {
+import { PhoneCallIcon, MicIcon, AudioLines, MoveUpRight } from "lucide-react";
+import React from "react";
+import { motion } from "framer-motion";
+
+const Floaty = ({
+  isActive,
+  volumeLevel,
+  handleClick,
+}: {
+  isActive: boolean;
+  volumeLevel: number;
+  handleClick: () => void;
+}) => {
   const getIcon = () => {
     if (!isActive) {
       return <PhoneCallIcon className="text-secondary" />;
@@ -12,9 +20,15 @@ const Floaty = ({ isActive, volumeLevel, handleClick }: { isActive: boolean, vol
       return <MicIcon className="text-secondary" />;
     }
   };
- 
+
   return (
     <div className="fixed top-5 right-5 z-50">
+      <div>
+        <MoveUpRight className="absolute text-red-600 scale-150 -left-6 top-14" />
+        <div className="absolute text-red-600 -left-20 top-20 rotate-45 text-lg text-semibold">
+          Voice Here
+        </div>
+      </div>
       <div className="relative flex items-center justify-center w-16 h-16">
         {isActive && volumeLevel > 0 && (
           <>
@@ -38,7 +52,7 @@ const Floaty = ({ isActive, volumeLevel, handleClick }: { isActive: boolean, vol
             />
           </>
         )}
-        <div 
+        <div
           className="relative flex items-center justify-center w-16 h-16 rounded-full shadow-xl cursor-pointer z-10 bg-foreground"
           onClick={handleClick}
         >
@@ -48,7 +62,7 @@ const Floaty = ({ isActive, volumeLevel, handleClick }: { isActive: boolean, vol
     </div>
   );
 };
- /*
+/*
 const FloatyExample = () => {
   const [showCircle, setShowCircle] = useState(false);
   const { currentVolume, isSessionActive, handleStartStopClick } = useWebRTCAudioSession('ash');

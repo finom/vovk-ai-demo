@@ -82,7 +82,7 @@ export function ExpandableChatDemo() {
         icon={
           <div>
             <div className="absolute text-red-600 -left-18 -top-12 rotate-315 text-lg text-semibold">
-              Start Here
+              Chat Here
             </div>
             <MoveDownRight className="absolute text-red-600 scale-200 -left-4 -top-4" />
             <Bot className="h-6 w-6 scale-150" />

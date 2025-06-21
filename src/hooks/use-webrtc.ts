@@ -314,7 +314,7 @@ export default function useWebRTCAudioSession(
     try {
       const data = await RealtimeRPC.session({
         query: {
-          voice
+          voice,
         },
         disableClientValidation: true,
       });
