@@ -85,7 +85,7 @@ export function ExpandableChatDemo() {
               Start Here
             </div>
             <MoveDownRight className="absolute text-red-600 scale-200 -left-4 -top-4" />
-            <Bot className="h-6 w-6" />
+            <Bot className="h-6 w-6 scale-150" />
           </div>
         }
       >
