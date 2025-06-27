@@ -103,7 +103,7 @@ export default class TelegramService {
         );
 
         // Download the voice file
-        const voiceBuffer = await this.downloadTelegramFile(fileInfo.file_path);
+        const voiceBuffer = await this.downloadTelegramFile(fileInfo.file_path!);
 
         // Create a File object for OpenAI
         const voiceFile = new File([voiceBuffer], "voice.ogg", {
