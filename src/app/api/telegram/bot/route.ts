@@ -265,7 +265,7 @@ async function processTextMessage(
     });
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4.1",
       messages: messages,
       max_tokens: 500,
     });
