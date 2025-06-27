@@ -67,6 +67,6 @@
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.4",
     "typescript": "^5",
-    "vovk-cli": "^0.0.1-draft.248"
+    "vovk-cli": "^0.0.1-draft.249"
   }
 }

@@ -6138,10 +6138,10 @@ vovk-ajv@^0.0.0-draft.66:
     ajv-formats "^3.0.1"
     ajv-i18n "^4.2.0"
 
-vovk-cli@^0.0.1-draft.248:
-  version "0.0.1-draft.248"
-  resolved "https://registry.npmjs.org/vovk-cli/-/vovk-cli-0.0.1-draft.248.tgz"
-  integrity sha512-cvPcZVIBtFBNlrunmcr6nQL8uWb0/ocM/RBkquPb8lwQUc+hpr9865zuOkVPOVR2kopQsaWqFdSsYr2+/oKHOw==
+vovk-cli@^0.0.1-draft.249:
+  version "0.0.1-draft.249"
+  resolved "https://registry.npmjs.org/vovk-cli/-/vovk-cli-0.0.1-draft.249.tgz"
+  integrity sha512-rcl6fYVW31FIdNcmMlQyV9WZdQPLR2GTR8n8JBOKpejCPKK5JaA1eW+EER+TlrnsXrINEovu1PHuFKvQ41z2fg==
   dependencies:
     "@iarna/toml" "^2.2.5"
     "@inquirer/prompts" "^7.5.3"
@@ -6177,7 +6177,7 @@ vovk-cli@^0.0.1-draft.248:
     vovk-openapi "^0.0.1-draft.112"
     yaml "^2.8.0"
   optionalDependencies:
-    vovk-python "^0.0.1-draft.40"
+    vovk-python "^0.0.1-draft.41"
 
 vovk-client@^0.0.4-draft.102:
   version "0.0.4-draft.102"
@@ -6193,7 +6193,7 @@ vovk-openapi@^0.0.1-draft.112:
     openapi3-ts "^4.4.0"
     type-fest "^4.41.0"
 
-vovk-python@^0.0.1-draft.40, vovk-python@^0.0.1-draft.41:
+vovk-python@^0.0.1-draft.41:
   version "0.0.1-draft.41"
   resolved "https://registry.npmjs.org/vovk-python/-/vovk-python-0.0.1-draft.41.tgz"
   integrity sha512-3nW12VIRFsUcThnhLN2Pghd2ky+lD+8WmvoC/pJNO66kDEsEGDvgvyVIylLAMjhrtsETAFJAmwi1Gq/tFKPghA==
