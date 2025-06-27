@@ -9,7 +9,7 @@ const redis = createClient({
 });
 
 // Ensure Redis connection
-redis.on('error', (err) => console.error('Redis Client Error', err));
+redis.on("error", (err) => console.error("Redis Client Error", err));
 redis.connect().catch(console.error);
 
 // Environment variables
@@ -30,7 +30,7 @@ const MAX_HISTORY_LENGTH = 50;
 const HISTORY_TTL = 60 * 60 * 24 * 7; // 7 days in seconds
 
 interface ChatMessage {
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
   timestamp: number;
 }
@@ -49,37 +49,49 @@ export default class TelegramService {
   }
 
   // Save chat history to Redis
-  private static async saveChatHistory(chatId: number, history: ChatMessage[]): Promise<void> {
+  private static async saveChatHistory(
+    chatId: number,
+    history: ChatMessage[],
+  ): Promise<void> {
     const key = this.getChatHistoryKey(chatId);
-    
+
     // Keep only the last MAX_HISTORY_LENGTH messages
     const trimmedHistory = history.slice(-MAX_HISTORY_LENGTH);
-    
+
     await redis.set(key, JSON.stringify(trimmedHistory), {
       expiration: {
-        type: 'EX',
+        type: "EX",
         value: HISTORY_TTL, // Set TTL to 7 days
-      }
+      },
     });
   }
 
   // Add message to chat history
-  private static async addToHistory(chatId: number, role: 'user' | 'assistant', content: string): Promise<void> {
+  private static async addToHistory(
+    chatId: number,
+    role: "user" | "assistant",
+    content: string,
+  ): Promise<void> {
     const history = await this.getChatHistory(chatId);
     history.push({
       role,
       content,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
     await this.saveChatHistory(chatId, history);
   }
 
   // Convert chat history to OpenAI format
-  private static formatHistoryForOpenAI(history: ChatMessage[]): ChatCompletionMessageParam[] {
-    return history.map(msg => ({
-      role: msg.role,
-      content: msg.content
-    } as const))
+  private static formatHistoryForOpenAI(
+    history: ChatMessage[],
+  ): ChatCompletionMessageParam[] {
+    return history.map(
+      (msg) =>
+        ({
+          role: msg.role,
+          content: msg.content,
+        }) as const,
+    );
   }
 
   // Helper function to download file from Telegram
@@ -105,15 +117,16 @@ export default class TelegramService {
       const userMessage = update.message.text;
 
       // Handle special commands
-      if (userMessage === '/clear' || userMessage === '/start') {
+      if (userMessage === "/clear" || userMessage === "/start") {
         const key = this.getChatHistoryKey(chatId);
         await redis.del(key);
         await TelegramRPC.sendMessage({
           body: {
             chat_id: chatId,
-            text: userMessage === '/clear' 
-              ? "Chat history cleared! 🧹" 
-              : "Hello! I'm your AI assistant. Send me a message or voice note to get started! 👋"
+            text:
+              userMessage === "/clear"
+                ? "Chat history cleared! 🧹"
+                : "Hello! I'm your AI assistant. Send me a message or voice note to get started! 👋",
           },
           apiRoot,
         });
@@ -130,13 +143,13 @@ export default class TelegramService {
       });
 
       // Add user message to history
-      await this.addToHistory(chatId, 'user', userMessage);
+      await this.addToHistory(chatId, "user", userMessage);
 
       // Get chat history
       const history = await this.getChatHistory(chatId);
       const messages = this.formatHistoryForOpenAI(history);
 
-      console.log('messages', messages);
+      console.log("messages", messages);
 
       // Generate a response using OpenAI with context
       const completion = await openai.chat.completions.create({
@@ -144,9 +157,10 @@ export default class TelegramService {
         messages: [
           {
             role: "system",
-            content: "You are a helpful assistant in a Telegram chat. You have access to the conversation history to maintain context."
+            content:
+              "You are a helpful assistant in a Telegram chat. You have access to the conversation history to maintain context.",
           },
-          ...messages
+          ...messages,
         ],
         max_tokens: 1000,
         temperature: 0.7,
@@ -157,7 +171,7 @@ export default class TelegramService {
         "I couldn't generate a response.";
 
       // Add assistant response to history
-      await this.addToHistory(chatId, 'assistant', botResponse);
+      await this.addToHistory(chatId, "assistant", botResponse);
 
       // Send the response back to the user
       await TelegramRPC.sendMessage({
@@ -213,13 +227,12 @@ export default class TelegramService {
         }
 
         // Add transcribed voice message to history
-        await this.addToHistory(chatId, 'user', transcription.text);
+        await this.addToHistory(chatId, "user", transcription.text);
 
         // Get chat history
         const history = await this.getChatHistory(chatId);
         const messages = this.formatHistoryForOpenAI(history);
-              console.log('messages', messages);
-
+        console.log("messages", messages);
 
         // Generate a response using the transcribed text with context
         const completion = await openai.chat.completions.create({
@@ -227,9 +240,10 @@ export default class TelegramService {
           messages: [
             {
               role: "system",
-              content: "You are a helpful assistant in a Telegram chat. The user just sent a voice message. You have access to the conversation history to maintain context."
+              content:
+                "You are a helpful assistant in a Telegram chat. The user just sent a voice message. You have access to the conversation history to maintain context.",
             },
-            ...messages
+            ...messages,
           ],
           max_tokens: 1000,
           temperature: 0.7,
@@ -240,7 +254,7 @@ export default class TelegramService {
           "I couldn't generate a response.";
 
         // Add assistant response to history
-        await this.addToHistory(chatId, 'assistant', botResponse);
+        await this.addToHistory(chatId, "assistant", botResponse);
 
         // Send the response with transcription info
         const responseText = `🎤 I heard: "${transcription.text}"\n\n${botResponse}`;
