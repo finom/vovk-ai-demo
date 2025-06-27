@@ -56,7 +56,10 @@ export default class TelegramService {
     const trimmedHistory = history.slice(-MAX_HISTORY_LENGTH);
     
     await redis.set(key, JSON.stringify(trimmedHistory), {
-      EX: HISTORY_TTL
+      expiration: {
+        type: 'EX',
+        value: HISTORY_TTL, // Set TTL to 7 days
+      }
     });
   }
 
@@ -132,6 +135,8 @@ export default class TelegramService {
       // Get chat history
       const history = await this.getChatHistory(chatId);
       const messages = this.formatHistoryForOpenAI(history);
+
+      console.log('messages', messages);
 
       // Generate a response using OpenAI with context
       const completion = await openai.chat.completions.create({
@@ -213,6 +218,8 @@ export default class TelegramService {
         // Get chat history
         const history = await this.getChatHistory(chatId);
         const messages = this.formatHistoryForOpenAI(history);
+              console.log('messages', messages);
+
 
         // Generate a response using the transcribed text with context
         const completion = await openai.chat.completions.create({
