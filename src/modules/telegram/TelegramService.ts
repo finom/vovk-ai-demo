@@ -45,6 +45,7 @@ export default class TelegramService {
   private static async getChatHistory(chatId: number): Promise<ChatMessage[]> {
     const key = this.getChatHistoryKey(chatId);
     const history = await redis.get(key);
+    console.log("Chat history for chatId", chatId, ":", history);
     return history ? JSON.parse(history) : [];
   }
 
@@ -236,7 +237,7 @@ export default class TelegramService {
 
         // Generate a response using the transcribed text with context
         const completion = await openai.chat.completions.create({
-          model: "gpt-3.5-turbo",
+          model: "gpt-4.1",
           messages: [
             {
               role: "system",
