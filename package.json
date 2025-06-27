@@ -39,6 +39,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.58.0",
+    "redis": "^5.5.6",
     "tailwind-merge": "^3.3.1",
     "uuid": "^11.1.0",
     "vovk": "^3.0.0-draft.241",
