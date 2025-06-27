@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
+import { TelegramRPC } from "vovk-client";
 
 // Environment variables
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
@@ -15,6 +16,7 @@ const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
 export default class TelegramService {
   // Helper function to download file from Telegram
   static async downloadTelegramFile(filePath: string): Promise<Buffer> {
+    
     const fileUrl = `https://api.telegram.org/file/bot${TELEGRAM_BOT_TOKEN}/${filePath}`;
     const response = await fetch(fileUrl);
     if (!response.ok) {
@@ -25,6 +27,9 @@ export default class TelegramService {
 
   // Helper function to get file info from Telegram
   static async getTelegramFile(fileId: string) {
+    const file = await TelegramRPC.getFile({
+        body: { file_id: fileId },
+    });
     const response = await fetch(
       `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getFile?file_id=${fileId}`,
     );
@@ -32,7 +37,7 @@ export default class TelegramService {
     if (!data.ok) {
       throw new Error("Failed to get file info from Telegram");
     }
-    return data.result;
+    return file.result;
   }
 
   // Helper function to send message via Telegram
