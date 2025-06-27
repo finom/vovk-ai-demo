@@ -25,34 +25,6 @@ export default class TelegramService {
     return Buffer.from(await response.arrayBuffer());
   }
 
-  // Helper function to get file info from Telegram
-  static async getTelegramFile(fileId: string) {
-    const file = await TelegramRPC.getFile({
-        body: { file_id: fileId },
-    });
-    const response = await fetch(
-      `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getFile?file_id=${fileId}`,
-    );
-    const data = await response.json();
-    if (!data.ok) {
-      throw new Error("Failed to get file info from Telegram");
-    }
-    return file.result;
-  }
-
-  // Helper function to send message via Telegram
-  static async sendTelegramMessage(chatId: number, text: string) {
-    const telegramApiUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-    await fetch(telegramApiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: text,
-      }),
-    });
-  }
-
   // Helper function to send typing action
   static async sendTypingAction(chatId: number) {
     const telegramApiUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendChatAction`;
@@ -91,16 +63,22 @@ export default class TelegramService {
         "I couldn't generate a response.";
 
       // Send the response back to the user
-      await this.sendTelegramMessage(chatId, botResponse);
+      await TelegramRPC.sendMessage({
+        body: {
+            chat_id: chatId,
+            text: botResponse,
+        },
+    });
+      
     } else if (update.message?.voice) {
       try {
         // Show typing indicator
         await this.sendTypingAction(chatId);
 
         // Get file info from Telegram
-        const fileInfo = await this.getTelegramFile(
-          update.message.voice.file_id,
-        );
+        const { result: fileInfo } = await TelegramRPC.getFile({
+            body: { file_id: update.message.voice.file_id },
+        });
 
         // Download the voice file
         const voiceBuffer = await this.downloadTelegramFile(fileInfo.file_path!);
@@ -119,10 +97,12 @@ export default class TelegramService {
 
         // Check if transcription is empty
         if (!transcription.text || transcription.text.trim() === "") {
-          await this.sendTelegramMessage(
-            chatId,
-            "I couldn't understand the voice message. Please try again.",
-          );
+            await TelegramRPC.sendMessage({
+        body: {
+            chat_id: chatId,
+            text: "I couldn't understand the voice message. Please try again.",
+        },
+    });
           return NextResponse.json({ success: true });
         }
 
@@ -147,20 +127,30 @@ export default class TelegramService {
 
         // Send the response with transcription info
         const responseText = `🎤 I heard: "${transcription.text}"\n\n${botResponse}`;
-        await this.sendTelegramMessage(chatId, responseText);
+
+        await TelegramRPC.sendMessage({
+          body: {
+            chat_id: chatId,
+            text: responseText,
+          },
+        });
       } catch (voiceError) {
         console.error("Voice processing error:", voiceError);
-        await this.sendTelegramMessage(
-          chatId,
-          "Sorry, I had trouble processing your voice message. Please try again or send a text message instead.",
-        );
+        await TelegramRPC.sendMessage({
+          body: {
+            chat_id: chatId,
+            text: "Sorry, I had trouble processing your voice message. Please try again or send a text message instead.",
+          },
+        });
       }
     } else {
       console.log("Received unsupported message type");
-      await this.sendTelegramMessage(
-        chatId,
-        "Sorry, I can only process text and voice messages at the moment.",
-      );
+      await TelegramRPC.sendMessage({
+        body: {
+          chat_id: chatId,
+          text: "Sorry, I can only process text and voice messages at the moment.",
+        },
+      });
     }
 
     return NextResponse.json({ success: true });
