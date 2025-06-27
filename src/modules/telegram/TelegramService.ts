@@ -45,7 +45,6 @@ export default class TelegramService {
   private static async getChatHistory(chatId: number): Promise<ChatMessage[]> {
     const key = this.getChatHistoryKey(chatId);
     const history = await redis.get(key);
-    console.log("Chat history for chatId", chatId, ":", history);
     return history ? JSON.parse(history) : [];
   }
 
@@ -109,8 +108,6 @@ export default class TelegramService {
     const update = await request.json();
     const chatId = update.message?.chat.id;
 
-    console.log("update", update);
-
     if (!chatId) {
       return NextResponse.json({ success: true });
     }
@@ -152,8 +149,6 @@ export default class TelegramService {
       // Get chat history
       const history = await this.getChatHistory(chatId);
       const messages = this.formatHistoryForOpenAI(history);
-
-      console.log("messages", messages);
 
       // Generate a response using OpenAI with context
       const completion = await openai.chat.completions.create({
@@ -238,7 +233,6 @@ export default class TelegramService {
         // Get chat history
         const history = await this.getChatHistory(chatId);
         const messages = this.formatHistoryForOpenAI(history);
-        console.log("messages", messages);
 
         // Generate a response using the transcribed text with context
         const completion = await openai.chat.completions.create({
@@ -285,7 +279,7 @@ export default class TelegramService {
         });
       }
     } else {
-      console.log("Received unsupported message type");
+      console.error("Received unsupported message type");
       await TelegramRPC.sendMessage({
         body: {
           chat_id: chatId,
