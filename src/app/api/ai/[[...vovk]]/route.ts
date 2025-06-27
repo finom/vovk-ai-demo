@@ -1,4 +1,4 @@
-import { initVovk } from "vovk";
+import { initSegment } from "vovk";
 import AiSdkController from "@/modules/ai/AiSdkController";
 
 export const runtime = "nodejs";
@@ -11,7 +11,7 @@ const controllers = {
 
 export type Controllers = typeof controllers;
 
-export const { GET, POST, PATCH, PUT, HEAD, OPTIONS, DELETE } = initVovk({
+export const { GET, POST, PATCH, PUT, HEAD, OPTIONS, DELETE } = initSegment({
   emitSchema: false,
   controllers,
 });

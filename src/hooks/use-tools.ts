@@ -150,6 +150,8 @@ export const useToolsFunctions = () => {
         };
       }
 
+      console.log("xxxx scrapeResult", scrapeResult);
+
       return {
         success: true,
         message:

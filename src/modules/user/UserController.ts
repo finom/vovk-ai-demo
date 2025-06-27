@@ -40,7 +40,7 @@ export default class UserController {
     description:
       "Updates an existing user with the provided details, such as their email or name.",
   })
-  @put(":id")
+  @put("{id}")
   static updateUser = withZod({
     body: UserModel.omit(BASE_FIELDS),
     params: UserModel.pick({ id: true }),
@@ -52,7 +52,7 @@ export default class UserController {
     summary: "Delete user",
     description: "Deletes a user by ID.",
   })
-  @del(":id")
+  @del("{id}")
   static deleteUser = withZod({
     params: UserModel.pick({ id: true }),
     handle: (req) => UserService.deleteUser(req.vovk.params().id),

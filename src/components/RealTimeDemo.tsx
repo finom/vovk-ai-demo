@@ -1,3 +1,4 @@
+"use client";
 import { useToolsFunctions } from "@/hooks/use-tools";
 import useWebRTCAudioSession from "@/hooks/use-webrtc";
 import { tools } from "@/lib/tools";
@@ -10,7 +11,7 @@ const { tools: llmTools } = createLLMTools({
   modules: { TaskRPC, UserRPC },
 });
 
-const RealTime = () => {
+const RealTimeDemo = () => {
   // State for voice selection
   const [voice] = useState<"ash" | "ballad" | "coral" | "sage" | "verse">(
     "ash",
@@ -76,4 +77,4 @@ const RealTime = () => {
   );
 };
 
-export default RealTime;
+export default RealTimeDemo;

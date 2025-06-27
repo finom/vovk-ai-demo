@@ -39,8 +39,8 @@ export default class AiSdkController {
         TaskController,
         // GithubIssuesRPC: [GithubIssuesRPC, githubOptions],
       },
-      onExecute: (_d, { rpcModuleName, handlerName }) =>
-        console.log(`${rpcModuleName}.${handlerName} executed`),
+      onExecute: (_d, { moduleName, handlerName }) =>
+        console.log(`${moduleName}.${handlerName} executed`),
       onError: (e) => console.error("Error", e),
     });
 

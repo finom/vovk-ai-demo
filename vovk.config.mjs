@@ -23,27 +23,40 @@ const config = {
       target: "draft-07",
     },
   },
-  extendClientWithOpenAPI: {
-    extensionModules: [
-      {
-        source: {
-          url: "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json",
-        },
-        getModuleName: ({ operationObject }) => {
-          const [operationNs] = operationObject.operationId?.split("/") ?? [
-            "GithubRPC",
-          ];
-          return `Github${startCase(camelCase(operationNs)).replace(/ /g, "")}RPC`;
-        },
-        getMethodName: ({ operationObject }) => {
-          const [, operationName] = operationObject.operationId?.split("/") ?? [
-            "",
-            "ERROR",
-          ];
-          return camelCase(operationName);
-        },
+  openApiMixins: {
+    github: {
+      source: {
+        url: "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json",
       },
-    ],
+      getModuleName: ({ operationObject }) => {
+        const [operationNs] = operationObject.operationId?.split("/") ?? [
+          "GithubRPC",
+        ];
+        return `Github${startCase(camelCase(operationNs)).replace(/ /g, "")}RPC`;
+      },
+      getMethodName: ({ operationObject }) => {
+        const [, operationName] = operationObject.operationId?.split("/") ?? [
+          "",
+          "ERROR",
+        ];
+        return camelCase(operationName);
+      },
+    },
+    openai: {
+      source: {
+        url: "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml",
+      },
+      getModuleName: "OpenAIRPC",
+      getMethodName: "auto",
+    },
+    telegram: {
+      // TODO: Unable to handle circular references
+      source: {
+        url: "https://raw.githubusercontent.com/sys-001/telegram-bot-api-versions/refs/heads/main/files/openapi/yaml/v183.yaml",
+      },
+      getModuleName: "TelegramRPC",
+      getMethodName: ({ path }) => path.replace(/^\//, ""),
+    },
   },
 };
 

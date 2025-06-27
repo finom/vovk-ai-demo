@@ -38,7 +38,7 @@ export default class TaskController {
     description:
       "Updates an existing task with the provided details, such as its title or description.",
   })
-  @put(":id")
+  @put("{id}")
   static updateTask = withZod({
     body: TaskModel.omit(BASE_FIELDS).partial(),
     params: TaskModel.pick({ id: true }),
@@ -49,7 +49,7 @@ export default class TaskController {
     summary: "Delete task",
     description: "Deletes a task by ID.",
   })
-  @del(":id")
+  @del("{id}")
   static deleteTask = withZod({
     params: TaskModel.pick({ id: true }),
     handle: (req) => TaskService.deleteTask(req.vovk.params().id),

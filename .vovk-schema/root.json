@@ -2,6 +2,7 @@
   "$schema": "https://vovk.dev/api/spec/v3/segment.json",
   "emitSchema": true,
   "segmentName": "",
+  "segmentType": "segment",
   "controllers": {
     "UserRPC": {
       "rpcModuleName": "UserRPC",
@@ -26,9 +27,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "search"
-              ],
+              "required": ["search"],
               "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
@@ -52,16 +51,10 @@
                   "type": "string"
                 },
                 "imageUrl": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
+                  "type": ["string", "null"]
                 }
               },
-              "required": [
-                "fullName",
-                "email"
-              ],
+              "required": ["fullName", "email"],
               "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
@@ -85,16 +78,10 @@
                   "type": "string"
                 },
                 "imageUrl": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
+                  "type": ["string", "null"]
                 }
               },
-              "required": [
-                "fullName",
-                "email"
-              ],
+              "required": ["fullName", "email"],
               "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             },
@@ -106,14 +93,12 @@
                   "format": "uuid"
                 }
               },
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "path": ":id",
+          "path": "{id}",
           "httpMethod": "PUT",
           "openapi": {
             "summary": "Update user",
@@ -130,14 +115,12 @@
                   "format": "uuid"
                 }
               },
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "path": ":id",
+          "path": "{id}",
           "httpMethod": "DELETE",
           "openapi": {
             "summary": "Delete user",
@@ -169,9 +152,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "search"
-              ],
+              "required": ["search"],
               "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
@@ -196,24 +177,14 @@
                 },
                 "status": {
                   "type": "string",
-                  "enum": [
-                    "TODO",
-                    "IN_PROGRESS",
-                    "IN_REVIEW",
-                    "DONE"
-                  ]
+                  "enum": ["TODO", "IN_PROGRESS", "IN_REVIEW", "DONE"]
                 },
                 "userId": {
                   "type": "string",
                   "format": "uuid"
                 }
               },
-              "required": [
-                "title",
-                "description",
-                "status",
-                "userId"
-              ],
+              "required": ["title", "description", "status", "userId"],
               "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
@@ -238,12 +209,7 @@
                 },
                 "status": {
                   "type": "string",
-                  "enum": [
-                    "TODO",
-                    "IN_PROGRESS",
-                    "IN_REVIEW",
-                    "DONE"
-                  ]
+                  "enum": ["TODO", "IN_PROGRESS", "IN_REVIEW", "DONE"]
                 },
                 "userId": {
                   "type": "string",
@@ -261,14 +227,12 @@
                   "format": "uuid"
                 }
               },
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "path": ":id",
+          "path": "{id}",
           "httpMethod": "PUT",
           "openapi": {
             "summary": "Update task",
@@ -285,14 +249,12 @@
                   "format": "uuid"
                 }
               },
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "path": ":id",
+          "path": "{id}",
           "httpMethod": "DELETE",
           "openapi": {
             "summary": "Delete task",
@@ -314,18 +276,10 @@
               "properties": {
                 "voice": {
                   "type": "string",
-                  "enum": [
-                    "ash",
-                    "ballad",
-                    "coral",
-                    "sage",
-                    "verse"
-                  ]
+                  "enum": ["ash", "ballad", "coral", "sage", "verse"]
                 }
               },
-              "required": [
-                "voice"
-              ],
+              "required": ["voice"],
               "additionalProperties": false
             }
           },

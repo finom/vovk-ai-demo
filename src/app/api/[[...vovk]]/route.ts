@@ -1,4 +1,4 @@
-import { initVovk } from "vovk";
+import { initSegment } from "vovk";
 import UserController from "../../../modules/user/UserController";
 import TaskController from "../../../modules/task/TaskController";
 import RealtimeController from "../../../modules/realtime/RealtimeController";
@@ -13,7 +13,7 @@ const controllers = {
 
 export type Controllers = typeof controllers;
 
-export const { GET, POST, PATCH, PUT, HEAD, OPTIONS, DELETE } = initVovk({
+export const { GET, POST, PATCH, PUT, HEAD, OPTIONS, DELETE } = initSegment({
   emitSchema: true,
   controllers,
 });
