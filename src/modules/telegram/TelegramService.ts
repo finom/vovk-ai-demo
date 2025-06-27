@@ -109,6 +109,8 @@ export default class TelegramService {
     const update = await request.json();
     const chatId = update.message?.chat.id;
 
+    console.log('update', update)
+
     if (!chatId) {
       return NextResponse.json({ success: true });
     }
