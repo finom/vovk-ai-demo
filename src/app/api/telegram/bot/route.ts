@@ -52,6 +52,11 @@ const conversationHistory = new Map<number, ConversationMessage[]>();
 async function sendTelegramMessage(chatId: string | number, text: string) {
   const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 
+  console.log('SENDING', {
+      chat_id: chatId,
+      text: text,
+    });
+
   const response = await fetch(url, {
     method: "POST",
     headers: {
