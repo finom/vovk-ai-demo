@@ -1,5 +1,4 @@
 import { createMcpHandler } from "@vercel/mcp-adapter";
-import { convertJsonSchemaToZod } from "zod-from-json-schema";
 import { createLLMTools } from "vovk";
 import UserController from "@/modules/user/UserController";
 import TaskController from "@/modules/task/TaskController";
@@ -48,13 +47,14 @@ const handler = createMcpHandler(
         required: ['sides'],
         additionalProperties: false,
       }), */
-      {
+      /* {
         sides: convertJsonSchemaToZod({
           type: "number",
           minimum: 2,
           description: "Number of sides on the die",
         }),
-      },
+      }, */
+      { sides: jsonSchema({ type: "number", minimum: 2, description: "Number of sides on the die" }) },
       async ({ sides }) => {
         const value = 1 + Math.floor(Math.random() * sides);
         return {
