@@ -127,7 +127,7 @@ export default class TelegramService {
               userMessage === "/clear"
                 ? "Chat history cleared! 🧹"
                 : "Hello! I'm your AI assistant. Send me a message or voice note to get started! 👋",
-            parse_mode: "MarkdownV2",
+            parse_mode: "Markdown",
           },
           apiRoot,
         });
@@ -177,7 +177,7 @@ export default class TelegramService {
         body: {
           chat_id: chatId,
           text: botResponse,
-          parse_mode: "MarkdownV2",
+          parse_mode: "Markdown",
         },
         apiRoot,
       });
@@ -211,7 +211,6 @@ export default class TelegramService {
         const transcription = await openai.audio.transcriptions.create({
           file: voiceFile,
           model: "whisper-1",
-          language: "en", // You can remove this to auto-detect language
         });
 
         // Check if transcription is empty
@@ -220,7 +219,7 @@ export default class TelegramService {
             body: {
               chat_id: chatId,
               text: "I couldn't understand the voice message. Please try again.",
-              parse_mode: "MarkdownV2",
+              parse_mode: "Markdown",
             },
             apiRoot,
           });
@@ -263,7 +262,7 @@ export default class TelegramService {
           body: {
             chat_id: chatId,
             text: responseText,
-            parse_mode: "MarkdownV2",
+            parse_mode: "Markdown",
           },
           apiRoot,
         });
@@ -273,7 +272,7 @@ export default class TelegramService {
           body: {
             chat_id: chatId,
             text: "Sorry, I had trouble processing your voice message. Please try again or send a text message instead.",
-            parse_mode: "MarkdownV2",
+            parse_mode: "Markdown",
           },
           apiRoot,
         });
@@ -284,7 +283,7 @@ export default class TelegramService {
         body: {
           chat_id: chatId,
           text: "Sorry, I can only process text and voice messages at the moment.",
-          parse_mode: "MarkdownV2",
+          parse_mode: "Markdown",
         },
         apiRoot,
       });
