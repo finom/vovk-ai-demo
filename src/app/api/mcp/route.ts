@@ -21,15 +21,6 @@ const handler = createMcpHandler(
       server.tool(
         name,
         description,
-        // jsonSchema(parameters as KnownAny),
-        /* parameters?.properties
-          ? mapValues(parameters.properties, jsonSchema)
-          : {}, */
-        /* parameters?.properties
-          ? mapValues(parameters.properties, convertJsonSchemaToZod)
-          : {
-  type: "object",
-} as const, */
         models as KnownAny ?? {},
         execute,
       );
