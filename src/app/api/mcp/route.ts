@@ -4,6 +4,8 @@ import UserController from "@/modules/user/UserController";
 import TaskController from "@/modules/task/TaskController";
 import { convertJsonSchemaToZod } from 'zod-from-json-schema';
 
+console.log(UserController.updateUser.models)
+
 const { tools } = createLLMTools({
   meta: { isMCP: true },
   modules: {
