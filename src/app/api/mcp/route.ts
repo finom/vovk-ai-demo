@@ -18,6 +18,7 @@ const { tools } = createLLMTools({
 const handler = createMcpHandler(
   (server) => {
     tools.forEach(({ name, execute, description, parameters }) => {
+        console.log('parameters', parameters);
       server.tool(
         name,
         description,
