@@ -4,16 +4,14 @@ import UserController from "@/modules/user/UserController";
 import TaskController from "@/modules/task/TaskController";
 import { convertJsonSchemaToZod } from 'zod-from-json-schema';
 
-console.log(UserController.updateUser.models)
-
 const { tools } = createLLMTools({
   meta: { isMCP: true },
   modules: {
     UserController,
     TaskController,
   },
-  onExecute: (_d, { moduleName, handlerName }) =>
-    console.log(`${moduleName}.${handlerName} executed`),
+  onExecute: (_d, { moduleName, handlerName, body, query, params }) =>
+    console.log(`${moduleName}.${handlerName} executed with`, { body, query, params }),
   onError: (e) => console.error("Error", e),
 });
 
