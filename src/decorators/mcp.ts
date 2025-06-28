@@ -20,7 +20,7 @@ const mcp = createDecorator(
         };
         */
 
-        console.log('isMCP', isMCP, 'resp', resp);
+        console.log('isMCP', meta);
 
     if (isMCP) {
       return {
