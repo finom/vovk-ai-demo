@@ -82,6 +82,7 @@ export const KanbanCard = ({
       (state) => state.users[task.userId] as UserModelType | undefined,
     ),
   );
+  TaskRPC.getTasks.useQuery();
   return (
     <motion.div
       layout
