@@ -4,7 +4,6 @@ import UserController from "@/modules/user/UserController";
 import TaskController from "@/modules/task/TaskController";
 import { convertJsonSchemaToZod } from 'zod-from-json-schema';
 
-
 const { tools } = createLLMTools({
   meta: { isMCP: true },
   modules: {
@@ -31,7 +30,7 @@ const handler = createMcpHandler(
           : {
   type: "object",
 } as const, */
-        models as KnownAny,
+        models as KnownAny ?? {},
         execute,
       );
     });
