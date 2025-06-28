@@ -13,7 +13,7 @@ const mcp = createDecorator(
     const resp = await next();
     const meta = req.vovk.meta<{ header: { isMCP?: true }; isMCP?: true }>();
     const isMCP = meta.isMCP ?? meta.header?.isMCP ?? false;
-            console.log('isMCP', meta);
+    console.log('isMCP', meta);
     /*
     {
           content: [{ type: "text", text: `🎲 You rolled a ${value}!` }],
