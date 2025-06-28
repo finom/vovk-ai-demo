@@ -17,6 +17,7 @@ export default class UserController {
     successMessage: "Users retrieved successfully",
   })
   static getUsers = withZod({ handle: UserService.getUsers });
+
   @openapi({
     summary: "Find users by ID, full name, or email",
     description:
@@ -28,7 +29,7 @@ export default class UserController {
   })
   static findUsers = withZod({
     query: z.object({ search: z.string() }),
-    handle: async (req) => UserService.findUsers(req.vovk.query().search),
+    handle: (req) => UserService.findUsers(req.vovk.query().search),
   });
 
   @openapi({

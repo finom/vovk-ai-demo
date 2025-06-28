@@ -12,6 +12,8 @@ const mcp = createDecorator(
   ) => {
     const meta = req.vovk.meta<{ header: { isMCP?: true }; isMCP?: true }>();
     const isMCP = meta.isMCP ?? meta.header?.isMCP ?? false;
+            console.log('isMCP', meta);
+
     const resp = await next();
 
     /*
@@ -20,7 +22,6 @@ const mcp = createDecorator(
         };
         */
 
-        console.log('isMCP', meta);
 
     if (isMCP) {
       return {
