@@ -28,7 +28,7 @@ const mcp = createDecorator(
             type: "text",
             text:
               successMessage +
-              (includeResponse ? `\n\nResponse: ${YAML.stringify(resp)}` : ""),
+              (includeResponse ? `\n\nResponse:\n${YAML.stringify(resp)}` : ""),
           },
         ],
       };
