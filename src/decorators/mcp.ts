@@ -14,6 +14,14 @@ const mcp = createDecorator(
     const isMCP = meta.isMCP ?? meta.header?.isMCP ?? false;
     const resp = await next();
 
+    /*
+    {
+          content: [{ type: "text", text: `🎲 You rolled a ${value}!` }],
+        };
+        */
+
+        console.log('isMCP', isMCP, 'resp', resp);
+
     if (isMCP) {
       return {
         content: [
