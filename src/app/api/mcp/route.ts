@@ -1,9 +1,10 @@
 import { createMcpHandler } from "@vercel/mcp-adapter";
-import { createLLMTools, KnownAny } from "vovk";
+import { convertJsonSchemaToZod } from "zod-from-json-schema";
+import { createLLMTools } from "vovk";
 import UserController from "@/modules/user/UserController";
 import TaskController from "@/modules/task/TaskController";
+import { mapValues } from "lodash";
 import { jsonSchema } from "ai";
-import { z } from "zod";
 
 const { tools } = createLLMTools({
   meta: { isMCP: true },
@@ -11,19 +12,21 @@ const { tools } = createLLMTools({
     UserController,
     TaskController,
   },
-  onExecute: (_d, { moduleName, handlerName }) => console.log(`${moduleName}.${handlerName} executed`),
+  onExecute: (_d, { moduleName, handlerName }) =>
+    console.log(`${moduleName}.${handlerName} executed`),
   onError: (e) => console.error("Error", e),
 });
 
 const handler = createMcpHandler(
   (server) => {
     tools.forEach(({ name, execute, description, parameters }) => {
-      console.log('Raw parameters:', parameters);
-  console.log('After jsonSchema:', jsonSchema(parameters as KnownAny));
       server.tool(
         name,
         description,
-        jsonSchema(parameters as KnownAny),
+        // jsonSchema(parameters as KnownAny),
+        parameters?.properties
+          ? mapValues(parameters.properties, jsonSchema)
+          : {},
         execute,
       );
     });
@@ -31,7 +34,27 @@ const handler = createMcpHandler(
     server.tool(
       "roll_dice",
       "Rolls an N-sided die",
-      { sides: z.number().int().min(2) },
+      // { sides: z.number().int().min(2) },
+      /* jsonSchema({
+        $schema: 'http://json-schema.org/draft-07/schema#',
+        type: 'object',
+        properties: {
+          sides: {
+            type: 'number',
+            minimum: 2,
+            description: 'Number of sides on the die',
+          },
+        },
+        required: ['sides'],
+        additionalProperties: false,
+      }), */
+      {
+        sides: convertJsonSchemaToZod({
+          type: "number",
+          minimum: 2,
+          description: "Number of sides on the die",
+        }),
+      },
       async ({ sides }) => {
         const value = 1 + Math.floor(Math.random() * sides);
         return {
