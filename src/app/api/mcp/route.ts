@@ -1,9 +1,7 @@
 import { createMcpHandler } from "@vercel/mcp-adapter";
-import { createLLMTools } from "vovk";
+import { createLLMTools, KnownAny } from "vovk";
 import UserController from "@/modules/user/UserController";
 import TaskController from "@/modules/task/TaskController";
-import { mapValues } from "lodash";
-import { jsonSchema } from "ai";
 import { convertJsonSchemaToZod } from 'zod-from-json-schema';
 
 
@@ -20,7 +18,7 @@ const { tools } = createLLMTools({
 
 const handler = createMcpHandler(
   (server) => {
-    tools.forEach(({ name, execute, description, parameters }) => {
+    tools.forEach(({ name, execute, description, models }) => {
       server.tool(
         name,
         description,
@@ -28,9 +26,12 @@ const handler = createMcpHandler(
         /* parameters?.properties
           ? mapValues(parameters.properties, jsonSchema)
           : {}, */
-        parameters?.properties
+        /* parameters?.properties
           ? mapValues(parameters.properties, convertJsonSchemaToZod)
-          : {},
+          : {
+  type: "object",
+} as const, */
+        models as KnownAny,
         execute,
       );
     });
@@ -52,14 +53,14 @@ const handler = createMcpHandler(
         required: ['sides'],
         additionalProperties: false,
       }), */
-      /* {
+      {
         sides: convertJsonSchemaToZod({
           type: "number",
           minimum: 2,
           description: "Number of sides on the die",
         }),
-      }, */
-      { sides: jsonSchema({ type: "number", minimum: 2, description: "Number of sides on the die" }) },
+      },
+     // { sides: jsonSchema({ type: "number", minimum: 2, description: "Number of sides on the die" }) },
       async ({ sides }) => {
         const value = 1 + Math.floor(Math.random() * sides);
         return {
