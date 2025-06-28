@@ -4,6 +4,8 @@ import UserController from "@/modules/user/UserController";
 import TaskController from "@/modules/task/TaskController";
 import { mapValues } from "lodash";
 import { jsonSchema } from "ai";
+import { convertJsonSchemaToZod } from 'zod-from-json-schema';
+
 
 const { tools } = createLLMTools({
   meta: { isMCP: true },
@@ -23,8 +25,11 @@ const handler = createMcpHandler(
         name,
         description,
         // jsonSchema(parameters as KnownAny),
-        parameters?.properties
+        /* parameters?.properties
           ? mapValues(parameters.properties, jsonSchema)
+          : {}, */
+        parameters?.properties
+          ? mapValues(parameters.properties, convertJsonSchemaToZod)
           : {},
         execute,
       );
