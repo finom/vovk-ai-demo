@@ -82,7 +82,6 @@ export const KanbanCard = ({
       (state) => state.users[task.userId] as UserModelType | undefined,
     ),
   );
-  TaskRPC.getTasks.useQuery();
   return (
     <motion.div
       layout
@@ -233,8 +232,10 @@ const UserKanban = ({ initialData }: Props) => {
     useShallow((state) => state.values({ tasks: initialData }).tasks),
   );
   useEffect(() => {
-    useRegistry.getState().sync({ tasks: initialData });
+    // useRegistry.getState().sync({ tasks: initialData });
   }, [initialData]);
+  TaskRPC.getTasks.useQuery();
+
   const statuses = useMemo(() => Object.values(TaskStatus), []);
 
   const handleDragEnd = (event: DragEndEvent) => {

@@ -17,7 +17,7 @@ const UserList = ({ initialData }: Props) => {
     useShallow((state) => state.values({ users: initialData }).users),
   );
   useEffect(() => {
-    useRegistry.getState().sync({ users: initialData });
+    // useRegistry.getState().sync({ users: initialData });
   }, [initialData]);
   UserRPC.getUsers.useQuery();
   return (
