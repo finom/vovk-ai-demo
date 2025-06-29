@@ -6332,10 +6332,10 @@ vovk-zod@^1.0.0-draft.113:
     vovk-validate-client-ajv "^0.0.0-beta.3"
     zod-to-json-schema "^3.24.5"
 
-vovk@^3.0.0-beta.0, vovk@^3.0.0-draft.147, vovk@^3.0.0-draft.241, vovk@^3.0.0-draft.269:
-  version "3.0.0-draft.269"
-  resolved "https://registry.npmjs.org/vovk/-/vovk-3.0.0-draft.269.tgz"
-  integrity sha512-AvpTAwu770d5LHveJ+XCHlsNTra4dFi9tUPUI70cdU4WtrmSylRR2/C00ogUXqmtBIQavz4loQLyKeI3lEc6cg==
+vovk@^3.0.0-beta.0, vovk@^3.0.0-draft.147, vovk@^3.0.0-draft.241, vovk@^3.0.0-draft.270:
+  version "3.0.0-draft.270"
+  resolved "https://registry.npmjs.org/vovk/-/vovk-3.0.0-draft.270.tgz"
+  integrity sha512-IEF8+/P/aSCgIizdy50+m82kSBUQbGnk+5QwD8bLMyG8vNtCW8MZm24jk5kyPDjJCIU9FysTGYjl4iPVgoC3WQ==
   dependencies:
     "@standard-schema/spec" "^1.0.0"
     openapi3-ts "^4.4.0"
