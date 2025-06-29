@@ -1,8 +1,9 @@
 import { createMcpHandler } from "@vercel/mcp-adapter";
-import { createLLMTools, KnownAny } from "vovk";
+import { createLLMTools } from "vovk";
 import UserController from "@/modules/user/UserController";
 import TaskController from "@/modules/task/TaskController";
 import { convertJsonSchemaToZod } from 'zod-from-json-schema';
+import { mapValues } from "lodash";
 
 const { tools } = createLLMTools({
   meta: { isMCP: true },
@@ -17,11 +18,12 @@ const { tools } = createLLMTools({
 
 const handler = createMcpHandler(
   (server) => {
-    tools.forEach(({ name, execute, description, models }) => {
+    tools.forEach(({ name, execute, description, parameters }) => {
       server.tool(
         name,
         description,
-        models as KnownAny ?? {},
+        // models as KnownAny ?? {},
+        mapValues(parameters?.properties ?? {}, convertJsonSchemaToZod),
         execute,
       );
     });
