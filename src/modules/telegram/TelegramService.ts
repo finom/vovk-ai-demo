@@ -164,7 +164,7 @@ export default class TelegramService {
       maxSteps: 20,
       tools: Object.fromEntries(
         tools.map(({ name, execute, description, parameters }) => [
-          name,
+          (console.log(name, parameters), name),
           tool<KnownAny, KnownAny>({
             execute,
             description,
