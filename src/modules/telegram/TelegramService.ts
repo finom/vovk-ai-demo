@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 import { TelegramRPC } from "vovk-client";
 import { createClient } from "redis";
-import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
+import { openai as vercelOpenAI } from "@ai-sdk/openai";
+import { generateText } from "ai";
+import { CoreMessage } from "ai";
 
 const redis = createClient({
   url: process.env.REDIS_URL,
@@ -22,7 +24,7 @@ if (!TELEGRAM_BOT_TOKEN || !OPENAI_API_KEY) {
 
 const apiRoot = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
 
-// Initialize OpenAI
+// Initialize OpenAI (only for voice transcription)
 const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
 
 // Constants for chat history
@@ -81,16 +83,15 @@ export default class TelegramService {
     await this.saveChatHistory(chatId, history);
   }
 
-  // Convert chat history to OpenAI format
-  private static formatHistoryForOpenAI(
+  // Convert chat history to Vercel AI SDK format
+  private static formatHistoryForVercelAI(
     history: ChatMessage[],
-  ): ChatCompletionMessageParam[] {
+  ): CoreMessage[] {
     return history.map(
-      (msg) =>
-        ({
-          role: msg.role,
-          content: msg.content,
-        }) as const,
+      (msg): CoreMessage => ({
+        role: msg.role,
+        content: msg.content,
+      }),
     );
   }
 
@@ -127,7 +128,7 @@ export default class TelegramService {
     });
   }
 
-  // Generate AI response with conversation context
+  // Generate AI response with conversation context using Vercel AI SDK
   private static async generateAIResponse(
     chatId: number,
     userMessage: string,
@@ -138,25 +139,18 @@ export default class TelegramService {
 
     // Get chat history
     const history = await this.getChatHistory(chatId);
-    const messages = this.formatHistoryForOpenAI(history);
+    const messages = this.formatHistoryForVercelAI(history);
 
-    // Generate a response using OpenAI with context
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4.1",
-      messages: [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
-        ...messages,
-      ],
-      max_tokens: 1000,
+    // Generate a response using Vercel AI SDK
+    const { text } = await generateText({
+      model: vercelOpenAI("gpt-4.1"),
+      system: systemPrompt,
+      messages,
+      maxTokens: 1000,
       temperature: 0.7,
     });
 
-    const botResponse =
-      completion.choices[0].message.content ||
-      "I couldn't generate a response.";
+    const botResponse = text || "I couldn't generate a response.";
 
     // Add assistant response to history
     await this.addToHistory(chatId, "assistant", botResponse);
@@ -228,7 +222,7 @@ export default class TelegramService {
         type: "audio/ogg",
       });
 
-      // Transcribe the voice message using Whisper
+      // Transcribe the voice message using Whisper (still using OpenAI for this)
       const transcription = await openai.audio.transcriptions.create({
         file: voiceFile,
         model: "whisper-1",
