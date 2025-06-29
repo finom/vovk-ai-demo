@@ -3,8 +3,11 @@ import OpenAI from "openai";
 import { TelegramRPC } from "vovk-client";
 import { createClient } from "redis";
 import { openai as vercelOpenAI } from "@ai-sdk/openai";
-import { generateText } from "ai";
+import { generateText, jsonSchema, tool } from "ai";
 import { CoreMessage } from "ai";
+import { createLLMTools, KnownAny } from "vovk";
+import UserController from "../user/UserController";
+import TaskController from "../task/TaskController";
 
 const redis = createClient({
   url: process.env.REDIS_URL,
@@ -140,6 +143,16 @@ export default class TelegramService {
     // Get chat history
     const history = await this.getChatHistory(chatId);
     const messages = this.formatHistoryForVercelAI(history);
+    const { tools } = createLLMTools({
+      modules: {
+        UserController,
+        TaskController,
+        // GithubIssuesRPC: [GithubIssuesRPC, githubOptions],
+      },
+      onExecute: (_d, { moduleName, handlerName }) =>
+        console.log(`${moduleName}.${handlerName} executed`),
+      onError: (e) => console.error("Error", e),
+    });
 
     // Generate a response using Vercel AI SDK
     const { text } = await generateText({
@@ -148,6 +161,17 @@ export default class TelegramService {
       messages,
       maxTokens: 1000,
       temperature: 0.7,
+      maxSteps: 20,
+      tools: Object.fromEntries(
+        tools.map(({ name, execute, description, parameters }) => [
+          name,
+          tool<KnownAny, KnownAny>({
+            execute,
+            description,
+            parameters: jsonSchema(parameters as KnownAny),
+          }),
+        ]),
+      ),
     });
 
     const botResponse = text || "I couldn't generate a response.";
