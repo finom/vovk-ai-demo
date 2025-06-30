@@ -22,15 +22,25 @@ const UserList = ({ initialData }: Props) => {
   UserRPC.getUsers.useQuery();
 
   useEffect(() => {
-    void (async () => {
-      while (true) {
-        using iterable = await DatabasePollRPC.poll();
+    async function poll(retries = 0) {
+      try {
+        while (true) {
+          using iterable = await DatabasePollRPC.poll();
 
-        for await (const iteration of iterable) {
-          console.log("New DB update:", iteration);
+          for await (const iteration of iterable) {
+            console.log("New DB update:", iteration);
+          }
+        }
+      } catch (error) {
+        if (retries < 5) {
+          console.error("Polling failed, retrying...", error);
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          return poll(retries + 1);
         }
       }
-    })();
+    }
+
+    void poll();
   }, []);
 
   return (

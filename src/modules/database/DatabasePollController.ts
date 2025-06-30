@@ -9,11 +9,15 @@ import { TaskModel, UserModel } from "@/zod";
 export default class DatabasePollController {
   @get()
   static poll = withZod({
-    iteration: z.union([z.object({
-      id: z.string().uuid(),
-      entityType: z.nativeEnum(EntityType),
-      __isDeleted: z.boolean().optional(),
-    }), UserModel, TaskModel]),
+    iteration: z.union([
+      z.object({
+        id: z.string().uuid(),
+        entityType: z.nativeEnum(EntityType),
+        __isDeleted: z.boolean().optional(),
+      }),
+      UserModel,
+      TaskModel,
+    ]),
     async handle(req) {
       const response = new JSONLinesResponse<
         VovkIteration<typeof DatabasePollController.poll>
