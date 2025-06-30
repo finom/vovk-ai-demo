@@ -5,15 +5,15 @@ export const fetcher = createFetcher({
   transformResponse: (data) => {
     const state = useRegistry.getState();
     if(Symbol.asyncIterator in data) {
-      void (async () => {
+      return async function* () {
         for await (const item of data) {
-          state.parse(item); // parse JSONLines data
+          state.parse(item); // parse each item in the async iterable
+          yield item;
         }
-      })();
-    } else {
-      state.parse(data); // parse regular JSON data
-    }
-
+      }
+    } 
+    
+    state.parse(data); // parse regular JSON data
     return data;
   },
 });
