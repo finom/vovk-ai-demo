@@ -41,10 +41,10 @@ interface Props {
 const TaskDialog = ({ taskId, children }: Props) => {
   const task = useRegistry(
     useShallow((state) =>
-      taskId ? omit(state.tasks[taskId], BASE_KEYS) : null,
+      taskId ? omit(state.task[taskId], BASE_KEYS) : null,
     ),
   );
-  const users = useRegistry(useShallow((state) => Object.values(state.users)));
+  const users = useRegistry(useShallow((state) => Object.values(state.user)));
   const {
     control,
     register,

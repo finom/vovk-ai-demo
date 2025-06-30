@@ -1,12 +1,12 @@
 import type { VovkBody, VovkParams } from "vovk";
 import type TaskController from "./TaskController";
-import PrismaService from "../prisma/PrismaService";
+import DatabaseService from "../database/DatabaseService";
 
 export default class TaskService {
-  static getTasks = () => PrismaService.client.task.findMany();
+  static getTasks = () => DatabaseService.client.task.findMany();
 
   static findTasks = async (search: string) =>
-    PrismaService.client.task.findMany({
+    DatabaseService.client.task.findMany({
       where: {
         OR: [
           { id: search }, // exact match (case-sensitive if string)
@@ -17,7 +17,7 @@ export default class TaskService {
     });
 
   static createTask = (data: VovkBody<typeof TaskController.createTask>) =>
-    PrismaService.client.task.create({
+    DatabaseService.client.task.create({
       data,
     });
 
@@ -25,7 +25,7 @@ export default class TaskService {
     id: VovkParams<typeof TaskController.updateTask>["id"],
     data: VovkBody<typeof TaskController.updateTask>,
   ) => {
-    return PrismaService.client.task.update({
+    return DatabaseService.client.task.update({
       where: { id },
       data,
     });
@@ -35,7 +35,7 @@ export default class TaskService {
     id: VovkParams<typeof TaskController.deleteTask>["id"],
   ) => {
     const d = Object.assign(
-      await PrismaService.client.task.delete({ where: { id } }),
+      await DatabaseService.client.task.delete({ where: { id } }),
       { __isDeleted: true },
     );
     console.log(d);

@@ -30,7 +30,7 @@ interface Props {
 const UserDialog = ({ userId, children }: Props) => {
   const user = useRegistry(
     useShallow((state) =>
-      userId ? omit(state.users[userId], BASE_KEYS) : null,
+      userId ? omit(state.user[userId], BASE_KEYS) : null,
     ),
   );
   const {

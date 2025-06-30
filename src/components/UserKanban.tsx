@@ -78,9 +78,7 @@ export const KanbanCard = ({
       data: { index, parent },
     });
   const assignee = useRegistry(
-    useShallow(
-      (state) => state.users[task.userId] as UserModelType | undefined,
-    ),
+    useShallow((state) => state.user[task.userId] as UserModelType | undefined),
   );
   return (
     <motion.div
@@ -229,10 +227,10 @@ interface Props {
 
 const UserKanban = ({ initialData }: Props) => {
   const tasks = useRegistry(
-    useShallow((state) => state.values({ tasks: initialData }).tasks),
+    useShallow((state) => state.values({ task: initialData }).task),
   );
   useEffect(() => {
-    // useRegistry.getState().sync({ tasks: initialData });
+    useRegistry.getState().sync({ task: initialData });
   }, [initialData]);
   TaskRPC.getTasks.useQuery();
 

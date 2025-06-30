@@ -42,7 +42,10 @@ export default class UserController {
   })
   static createUser = withZod({
     body: UserModel.omit(BASE_FIELDS),
-    handle: async (req) => (console.log('META', req.vovk.meta()), UserService.createUser(await req.vovk.body())),
+    handle: async (req) => (
+      console.log("META", req.vovk.meta()),
+      UserService.createUser(await req.vovk.body())
+    ),
   });
 
   @openapi({

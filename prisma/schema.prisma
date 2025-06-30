@@ -22,8 +22,8 @@ datasource db {
 }
 
 model User {
-  id         String     @id @default(uuid()) /// @zod.custom(z.string().uuid().transform((val) => val as string & { e: typeof EntityType.users }))
-  entityType EntityType @default(users) /// @zod.custom(z.literal(EntityType.users))
+  id         String     @id @default(uuid()) /// @zod.custom(z.string().uuid().transform((val) => val as string & { e: typeof EntityType.user }))
+  entityType EntityType @default(user) /// @zod.custom(z.literal(EntityType.user))
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @default(now()) @updatedAt
 
@@ -35,23 +35,23 @@ model User {
 }
 
 model Task {
-  id         String     @id @default(uuid()) /// @zod.custom(z.string().uuid().transform((val) => val as string & { e: typeof EntityType.tasks }))
-  entityType EntityType @default(tasks) /// @zod.custom(z.literal(EntityType.tasks))
+  id         String     @id @default(uuid()) /// @zod.custom(z.string().uuid().transform((val) => val as string & { e: typeof EntityType.task }))
+  entityType EntityType @default(task) /// @zod.custom(z.literal(EntityType.task))
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @default(now()) @updatedAt
 
   title      String
   description String
   status     TaskStatus @default(TODO)
-  /// @zod.custom(z.string().uuid().transform((val) => val as string & { e: typeof EntityType.users }))
+  /// @zod.custom(z.string().uuid().transform((val) => val as string & { e: typeof EntityType.user }))
   userId     String
 
   user       User       @relation(fields: [userId], references: [id])
 }
 
 enum EntityType {
-  users
-  tasks
+  user
+  task
 }
 
 enum TaskStatus {

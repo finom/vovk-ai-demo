@@ -120,7 +120,10 @@ export default class TelegramService {
   }
 
   // Send message to user
-  private static async sendMessage(chatId: number, text: string): Promise<void> {
+  private static async sendMessage(
+    chatId: number,
+    text: string,
+  ): Promise<void> {
     await TelegramRPC.sendMessage({
       body: {
         chat_id: chatId,
@@ -190,7 +193,7 @@ export default class TelegramService {
     responsePrefix?: string,
   ): Promise<void> {
     await this.sendTypingIndicator(chatId);
-    
+
     const botResponse = await this.generateAIResponse(
       chatId,
       userMessage,
@@ -212,12 +215,12 @@ export default class TelegramService {
     if (command === "/clear" || command === "/start") {
       const key = this.getChatHistoryKey(chatId);
       await redis.del(key);
-      
+
       const responseText =
         command === "/clear"
           ? "Chat history cleared! 🧹"
           : "Hello! I'm your AI assistant. Send me a message or voice note to get started! 👋";
-      
+
       await this.sendMessage(chatId, responseText);
       return true;
     }
@@ -301,11 +304,11 @@ export default class TelegramService {
         userMessage,
         "You are a helpful assistant in a Telegram chat. You have access to the conversation history to maintain context.",
       );
-    } 
+    }
     // Handle voice messages
     else if (update.message?.voice) {
       await this.processVoiceMessage(chatId, update.message.voice.file_id);
-    } 
+    }
     // Handle unsupported message types
     else {
       console.error("Received unsupported message type");

@@ -1,12 +1,12 @@
 import type { VovkBody, VovkParams } from "vovk";
 import type UserController from "./UserController";
-import PrismaService from "../prisma/PrismaService";
+import DatabaseService from "../database/DatabaseService";
 
 export default class UserService {
-  static getUsers = () => PrismaService.client.user.findMany();
+  static getUsers = () => DatabaseService.client.user.findMany();
 
   static findUsers = async (search: string) =>
-    PrismaService.client.user.findMany({
+    DatabaseService.client.user.findMany({
       where: {
         OR: [
           { id: search },
@@ -17,7 +17,7 @@ export default class UserService {
     });
 
   static createUser = (data: VovkBody<typeof UserController.createUser>) =>
-    PrismaService.client.user.create({
+    DatabaseService.client.user.create({
       data: {
         ...data,
         imageUrl: `https://i.pravatar.cc/300?u=${data.email}`,
@@ -28,7 +28,7 @@ export default class UserService {
     id: VovkParams<typeof UserController.updateUser>["id"],
     data: VovkBody<typeof UserController.updateUser>,
   ) =>
-    PrismaService.client.user.update({
+    DatabaseService.client.user.update({
       where: { id },
       data,
     });
@@ -36,7 +36,7 @@ export default class UserService {
   static deleteUser = async (
     id: VovkParams<typeof UserController.updateUser>["id"],
   ) =>
-    Object.assign(await PrismaService.client.user.delete({ where: { id } }), {
+    Object.assign(await DatabaseService.client.user.delete({ where: { id } }), {
       __isDeleted: true,
     });
 }

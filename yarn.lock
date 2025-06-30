@@ -4345,6 +4345,11 @@ minizlib@^3.0.1:
   dependencies:
     minipass "^7.1.2"
 
+mitt@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/mitt/-/mitt-3.0.1.tgz"
+  integrity sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==
+
 mkdirp@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz"
@@ -6332,10 +6337,10 @@ vovk-zod@^1.0.0-draft.113:
     vovk-validate-client-ajv "^0.0.0-beta.3"
     zod-to-json-schema "^3.24.5"
 
-vovk@^3.0.0-beta.0, vovk@^3.0.0-draft.147, vovk@^3.0.0-draft.241, vovk@^3.0.0-draft.270:
-  version "3.0.0-draft.270"
-  resolved "https://registry.npmjs.org/vovk/-/vovk-3.0.0-draft.270.tgz"
-  integrity sha512-IEF8+/P/aSCgIizdy50+m82kSBUQbGnk+5QwD8bLMyG8vNtCW8MZm24jk5kyPDjJCIU9FysTGYjl4iPVgoC3WQ==
+vovk@^3.0.0-beta.0, vovk@^3.0.0-draft.147, vovk@^3.0.0-draft.241, vovk@^3.0.0-draft.281:
+  version "3.0.0-draft.281"
+  resolved "https://registry.npmjs.org/vovk/-/vovk-3.0.0-draft.281.tgz"
+  integrity sha512-XDZj/4mf+Q1Whg1AGm+rvpw2EeXarRQPXL4WRdUpgtzyyLQ3Z/RjPEcaqlXQdnbMBBkXDJ5cQk37bpJA82VpUA==
   dependencies:
     "@standard-schema/spec" "^1.0.0"
     openapi3-ts "^4.4.0"

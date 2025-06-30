@@ -5,8 +5,8 @@ export const UserModel = z.object({
   id: z
     .string()
     .uuid()
-    .transform((val) => val as string & { e: typeof EntityType.users }),
-  entityType: z.literal(EntityType.users),
+    .transform((val) => val as string & { e: typeof EntityType.user }),
+  entityType: z.literal(EntityType.user),
   createdAt: z.date(),
   updatedAt: z.date(),
   fullName: z.string(),

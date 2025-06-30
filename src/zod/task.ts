@@ -5,8 +5,8 @@ export const TaskModel = z.object({
   id: z
     .string()
     .uuid()
-    .transform((val) => val as string & { e: typeof EntityType.tasks }),
-  entityType: z.literal(EntityType.tasks),
+    .transform((val) => val as string & { e: typeof EntityType.task }),
+  entityType: z.literal(EntityType.task),
   createdAt: z.date(),
   updatedAt: z.date(),
   title: z.string(),
@@ -15,5 +15,5 @@ export const TaskModel = z.object({
   userId: z
     .string()
     .uuid()
-    .transform((val) => val as string & { e: typeof EntityType.users }),
+    .transform((val) => val as string & { e: typeof EntityType.user }),
 });

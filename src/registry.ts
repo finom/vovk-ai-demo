@@ -27,8 +27,8 @@ interface Registry {
       RecordsToArrays<Omit<Registry, "parse" | "sync" | "values">>
     >,
   ) => RecordsToArrays<Omit<Registry, "parse" | "sync" | "values">>;
-  [EntityType.users]: Record<UserModelType["id"], UserModelType>;
-  [EntityType.tasks]: Record<TaskModelType["id"], TaskModelType>;
+  [EntityType.user]: Record<UserModelType["id"], UserModelType>;
+  [EntityType.task]: Record<TaskModelType["id"], TaskModelType>;
 }
 
 function getEntitiesFromResponse(
@@ -53,8 +53,8 @@ function getEntitiesFromResponse(
 const synced: Partial<Record<EntityType, boolean>> = {};
 
 export const useRegistry = create<Registry>((set, get) => ({
-  [EntityType.users]: {},
-  [EntityType.tasks]: {},
+  [EntityType.user]: {},
+  [EntityType.task]: {},
   parse: (data) => {
     const entities = getEntitiesFromResponse(data);
     set((state) => {

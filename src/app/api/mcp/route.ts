@@ -2,7 +2,7 @@ import { createMcpHandler } from "@vercel/mcp-adapter";
 import { createLLMTools } from "vovk";
 import UserController from "@/modules/user/UserController";
 import TaskController from "@/modules/task/TaskController";
-import { convertJsonSchemaToZod } from 'zod-from-json-schema';
+import { convertJsonSchemaToZod } from "zod-from-json-schema";
 import { mapValues } from "lodash";
 
 const { tools } = createLLMTools({
@@ -12,7 +12,11 @@ const { tools } = createLLMTools({
     TaskController,
   },
   onExecute: (_d, { moduleName, handlerName, body, query, params }) =>
-    console.log(`${moduleName}.${handlerName} executed with`, { body, query, params }),
+    console.log(`${moduleName}.${handlerName} executed with`, {
+      body,
+      query,
+      params,
+    }),
   onError: (e) => console.error("Error", e),
 });
 
@@ -52,7 +56,7 @@ const handler = createMcpHandler(
           description: "Number of sides on the die",
         }),
       },
-     // { sides: jsonSchema({ type: "number", minimum: 2, description: "Number of sides on the die" }) },
+      // { sides: jsonSchema({ type: "number", minimum: 2, description: "Number of sides on the die" }) },
       async ({ sides }) => {
         const value = 1 + Math.floor(Math.random() * sides);
         return {

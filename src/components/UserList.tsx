@@ -6,7 +6,7 @@ import { useRegistry, type UserModelType } from "@/registry";
 import { Button } from "./ui/button";
 import { Pencil, Plus } from "lucide-react";
 import { useEffect } from "react";
-import { UserRPC } from "vovk-client";
+import { UserRPC, DatabasePollRPC } from "vovk-client";
 
 interface Props {
   initialData: UserModelType[];
@@ -14,12 +14,25 @@ interface Props {
 
 const UserList = ({ initialData }: Props) => {
   const users = useRegistry(
-    useShallow((state) => state.values({ users: initialData }).users),
+    useShallow((state) => state.values({ user: initialData }).user),
   );
   useEffect(() => {
-    // useRegistry.getState().sync({ users: initialData });
+    useRegistry.getState().sync({ user: initialData });
   }, [initialData]);
   UserRPC.getUsers.useQuery();
+
+  useEffect(() => {
+    void (async () => {
+      while (true) {
+        using iterable = await DatabasePollRPC.poll();
+
+        for await (const iteration of iterable) {
+          console.log("New DB update:", iteration);
+        }
+      }
+    })();
+  }, []);
+
   return (
     <div className="space-y-4 p-6 max-w-7xl mx-auto">
       <h2 className="text-lg font-semibold text-foreground flex gap-4 items-center">

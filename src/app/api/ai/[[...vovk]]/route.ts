@@ -1,5 +1,5 @@
 import { initSegment } from "vovk";
-import AiSdkController from "@/modules/ai/AiSdkController";
+import AiSdkController from "../../../../modules/ai/AiSdkController";
 
 export const runtime = "nodejs";
 

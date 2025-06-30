@@ -10,16 +10,15 @@ const mcp = createDecorator(
       includeResponse = true,
     }: { successMessage: string; includeResponse?: boolean },
   ) => {
-    const resp = await next();
+    const data = await next();
     const meta = req.vovk.meta<{ header: { isMCP?: true }; isMCP?: true }>();
     const isMCP = meta.isMCP ?? meta.header?.isMCP ?? false;
-    console.log('isMCP meta', meta);
+    console.log("isMCP meta", meta);
     /*
     {
           content: [{ type: "text", text: `🎲 You rolled a ${value}!` }],
         };
         */
-
 
     if (isMCP) {
       return {
@@ -28,12 +27,12 @@ const mcp = createDecorator(
             type: "text",
             text:
               successMessage +
-              (includeResponse ? `\n\nResponse:\n${YAML.stringify(resp)}` : ""),
+              (includeResponse ? `\n\nResponse:\n${YAML.stringify(data)}` : ""),
           },
         ],
       };
     }
-    return resp;
+    return data;
   },
 );
 

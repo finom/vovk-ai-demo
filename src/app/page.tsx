@@ -8,6 +8,8 @@ import TaskController from "@/modules/task/TaskController";
 
 export const runtime = "nodejs";
 
+export const revalidate = 0;
+
 export default async function Home() {
   const [usersInitialData, tasksInitialData] = await Promise.all([
     UserController.getUsers.fn<UserModelType[]>(),
