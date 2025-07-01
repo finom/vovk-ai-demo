@@ -1,6 +1,8 @@
 import { tool } from "ai";
 import { z } from "zod/v3";
 
+// TODO: NOT WORKING. Where to get the QuickChart OpenAPI schema?
+
 // Dataset schema for Chart.js
 const datasetSchema = z
   .object({

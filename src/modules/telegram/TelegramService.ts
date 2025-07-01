@@ -140,7 +140,7 @@ export default class TelegramService {
         {
           role: "system",
           content:
-            'Determine the type of response: "text", "voice" or "photo" depending on the user request and the context. The "processedText" should be the content to send: if it\'s a text message, format it properly for Telegram parse_mode HTML (you can only use these: <a>, <b>, <strong>, <i> and <em>) and include it here, if it\'s a voice message, include the text that will be converted to speech, if it\'s a photo message or generated with QuickChart API, include the URL of the photo but nothing else.',
+            'Determine the type of response: "text", "voice" or "photo" depending on the user request and the context. The "processedText" should be the content to send: if it\'s a text message, format it properly for Telegram parse_mode HTML and include it here, if it\'s a voice message, include the text that will be converted to speech, if it\'s a photo message, include the URL of the photo but nothing else.',
         },
       ],
     });
@@ -149,8 +149,6 @@ export default class TelegramService {
 
     if (type === "voice") {
       await this.sendVoiceMessage(chatId, processedText);
-    } else if (type === "photo") {
-      await this.sendPhoto(chatId, processedText);
     } else {
       await this.sendTextMessage(chatId, processedText);
     }
@@ -362,7 +360,7 @@ export default class TelegramService {
       await this.processUserMessage(
         chatId,
         transcription.text,
-        "You are a helpful assistant in a Telegram chat. The user just sent a voice message. You have access to the conversation history to maintain context. By default, you respond with voice, but if required you can respond with text or a photo (when QuickChart is used).",
+        "You are a helpful assistant in a Telegram chat. The user just sent a voice message. You have access to the conversation history to maintain context. By default, you respond with voice, but if the user requests a text response, you can generate a text message.",
         `🎤 I heard the voice: "${transcription.text}"`,
       );
     } catch (voiceError) {
@@ -396,8 +394,8 @@ export default class TelegramService {
       await this.processUserMessage(
         chatId,
         userMessage,
-        "You are a helpful assistant in a Telegram chat. You have access to the conversation history to maintain context. By default, you respond with text, but if the user requests a voice response, you can generate a voice message, or a photo (when QuickChart tool is used).",
-      ); 
+        "You are a helpful assistant in a Telegram chat. You have access to the conversation history to maintain context. By default, you respond with text, but if the user requests a voice response, you can generate a voice message.",
+      );
     }
     // Handle voice messages
     else if (update.message?.voice) {

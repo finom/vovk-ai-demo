@@ -6251,10 +6251,10 @@ vovk-ajv@^0.0.0-draft.71:
     ajv-formats "^3.0.1"
     ajv-i18n "^4.2.0"
 
-vovk-cli@^0.0.1-draft.253:
-  version "0.0.1-draft.253"
-  resolved "https://registry.npmjs.org/vovk-cli/-/vovk-cli-0.0.1-draft.253.tgz"
-  integrity sha512-pEQguW8ZFiDxhMbCRf8odjG/kK5QhoZ/mxni516BtNWsf6HVSsvfpgaHZ3INGXkW8iTScnTLKWEVYpHsb9Sj0g==
+vovk-cli@^0.0.1-draft.255:
+  version "0.0.1-draft.255"
+  resolved "https://registry.npmjs.org/vovk-cli/-/vovk-cli-0.0.1-draft.255.tgz"
+  integrity sha512-QVoJe5KGLbNfUrZoHsOWwp7FCyH52nOYwJgWAoblsY9GRgymz3oQo2/LAJnDSvUSVjezI9SsCfzbsat2eyUrIQ==
   dependencies:
     "@iarna/toml" "^2.2.5"
     "@inquirer/prompts" "^7.5.3"
