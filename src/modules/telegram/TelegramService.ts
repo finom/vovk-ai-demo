@@ -158,33 +158,6 @@ export default class TelegramService {
     chatId: number,
     text: string,
   ): Promise<void> {
-    /* function escapeMarkdownV2(text: string): string {
-      const escapeMap: Record<string, string> = {
-        _: "\\_",
-        "*": "\\*",
-        "[": "\\[",
-        "]": "\\]",
-        "(": "\\(",
-        ")": "\\)",
-        "~": "\\~",
-        "`": "\\`",
-        ">": "\\>",
-        "#": "\\#",
-        "+": "\\+",
-        "-": "\\-",
-        "=": "\\=",
-        "|": "\\|",
-        "{": "\\{",
-        "}": "\\}",
-        ".": "\\.",
-        "!": "\\!",
-      };
-
-      return text.replace(
-        /[_*\[\]()~`>#+=\-|{}.!]/g,
-        (char) => escapeMap[char],
-      );
-    } */
     await TelegramRPC.sendMessage({
       body: {
         chat_id: chatId,

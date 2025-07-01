@@ -56,6 +56,7 @@ const config = {
       },
       getModuleName: "TelegramRPC",
       getMethodName: ({ path }) => path.replace(/^\//, ""),
+      errorMessageKey: 'description',
     },
   },
 };
