@@ -9,6 +9,7 @@ import { createLLMTools, KnownAny } from "vovk";
 import UserController from "../user/UserController";
 import TaskController from "../task/TaskController";
 import { z } from "zod";
+import { quickChartTool } from "./quickChartTool";
 
 const redis = createClient({
   url: process.env.REDIS_URL,
@@ -131,7 +132,7 @@ export default class TelegramService {
     } = await generateObject({
       model: vercelOpenAI("gpt-4.1"),
       schema: z.object({
-        type: z.enum(["text", "voice"]),
+        type: z.enum(["text", "voice", "photo"]),
         processedText: z.string(),
       }),
       messages: [
@@ -139,7 +140,7 @@ export default class TelegramService {
         {
           role: "system",
           content:
-            'Determine the type of response: "text" or "voice" depending on the user request. The processedText should be the text to send: if it\'s a text message, include it here, if it\'s a voice message, include the text that will be converted to speech. If it\'s a text message, make sure to format it properly for Telegram parse_mode HTML.',
+            'Determine the type of response: "text", "voice" or "photo" depending on the user request and the context. The "processedText" should be the content to send: if it\'s a text message, format it properly for Telegram parse_mode HTML and include it here, if it\'s a voice message, include the text that will be converted to speech, if it\'s a photo message, include the URL of the photo but nothing else.',
         },
       ],
     });
@@ -163,6 +164,19 @@ export default class TelegramService {
         chat_id: chatId,
         text: text,
         parse_mode: "html",
+      },
+      apiRoot,
+    });
+  }
+
+  private static async sendPhoto(
+    chatId: number,
+    photoUrl: string,
+  ): Promise<void> {
+    await TelegramRPC.sendPhoto({
+      body: {
+        chat_id: chatId,
+        photo: photoUrl,
       },
       apiRoot,
     });
@@ -235,16 +249,19 @@ export default class TelegramService {
       maxTokens: 1000,
       temperature: 0.7,
       maxSteps: 20,
-      tools: Object.fromEntries(
-        tools.map(({ name, execute, description, parameters }) => [
-          (console.log(name, parameters), name),
-          tool<KnownAny, KnownAny>({
-            execute,
-            description,
-            parameters: jsonSchema(parameters as KnownAny),
-          }),
-        ]),
-      ),
+      tools: {
+        quickChartTool,
+        ...Object.fromEntries(
+          tools.map(({ name, execute, description, parameters }) => [
+            (console.log(name, parameters), name),
+            tool<KnownAny, KnownAny>({
+              execute,
+              description,
+              parameters: jsonSchema(parameters as KnownAny),
+            }),
+          ]),
+        ),
+      },
     });
 
     const botResponse = text || "I couldn't generate a response.";
