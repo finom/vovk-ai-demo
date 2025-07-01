@@ -136,7 +136,7 @@ export default class TelegramService {
         ...messages,
         {
           role: "system",
-          content: 'Determine the type of response: "text" or "voice" depending on the user request. The processedText should be the text to send: if it\'s a text message, include it here, if it\'s a voice message, include the text that will be converted to speech.',
+          content: 'Determine the type of response: "text" or "voice" depending on the user request. The processedText should be the text to send: if it\'s a text message, include it here, if it\'s a voice message, include the text that will be converted to speech. If it\'s a text message, make sure to format it properly for Telegram MarkdownV2.',
         },
       ],
     });
@@ -370,7 +370,7 @@ export default class TelegramService {
       await this.processUserMessage(
         chatId,
         userMessage,
-        "You are a helpful assistant in a Telegram chat. You have access to the conversation history to maintain context.",
+        "You are a helpful assistant in a Telegram chat. You have access to the conversation history to maintain context. By default, you respond with text, but if the user requests a voice response, you can generate a voice message.",
       );
     }
     // Handle voice messages
