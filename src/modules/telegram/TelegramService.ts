@@ -139,7 +139,7 @@ export default class TelegramService {
         {
           role: "system",
           content:
-            'Determine the type of response: "text" or "voice" depending on the user request. The processedText should be the text to send: if it\'s a text message, include it here, if it\'s a voice message, include the text that will be converted to speech. If it\'s a text message, make sure to format it properly for Telegram MarkdownV2.',
+            'Determine the type of response: "text" or "voice" depending on the user request. The processedText should be the text to send: if it\'s a text message, include it here, if it\'s a voice message, include the text that will be converted to speech. If it\'s a text message, make sure to format it properly for Telegram parse_mode HTML.',
         },
       ],
     });
@@ -158,7 +158,7 @@ export default class TelegramService {
     chatId: number,
     text: string,
   ): Promise<void> {
-    function escapeMarkdownV2(text: string): string {
+    /* function escapeMarkdownV2(text: string): string {
       const escapeMap: Record<string, string> = {
         _: "\\_",
         "*": "\\*",
@@ -184,12 +184,12 @@ export default class TelegramService {
         /[_*\[\]()~`>#+=\-|{}.!]/g,
         (char) => escapeMap[char],
       );
-    }
+    } */
     await TelegramRPC.sendMessage({
       body: {
         chat_id: chatId,
-        text: escapeMarkdownV2(text),
-        parse_mode: "MarkdownV2",
+        text: text,
+        parse_mode: "html",
       },
       apiRoot,
     });
