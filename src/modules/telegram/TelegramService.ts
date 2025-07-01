@@ -189,6 +189,7 @@ export default class TelegramService {
       await TelegramRPC.sendVoice({
         body: formData,
         apiRoot,
+        disableClientValidation: true,
       });
     } catch (error) {
       console.error("Error generating voice message:", error);
