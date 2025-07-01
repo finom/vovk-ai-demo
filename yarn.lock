@@ -6251,10 +6251,10 @@ vovk-ajv@^0.0.0-draft.66:
     ajv-formats "^3.0.1"
     ajv-i18n "^4.2.0"
 
-vovk-cli@^0.0.1-draft.250:
-  version "0.0.1-draft.250"
-  resolved "https://registry.npmjs.org/vovk-cli/-/vovk-cli-0.0.1-draft.250.tgz"
-  integrity sha512-vPcaRs7K9mPdUfLH2KZjhStLVDJBUfegJ18TiTlp4ejUcOvmF+XgAgnV/RC0LVHhc6akPYQJ59PJmB0+2qjqtA==
+vovk-cli@^0.0.1-draft.251:
+  version "0.0.1-draft.251"
+  resolved "https://registry.npmjs.org/vovk-cli/-/vovk-cli-0.0.1-draft.251.tgz"
+  integrity sha512-BoMzOpsHfzWNrxfGgtm/K/z/dfYtNMyOZaoy4tWGsMZ2llIQOoczZ8E4iPGJItiZgwiYqMdBZam3jdsbu72raw==
   dependencies:
     "@iarna/toml" "^2.2.5"
     "@inquirer/prompts" "^7.5.3"
@@ -6337,10 +6337,10 @@ vovk-zod@^1.0.0-draft.113:
     vovk-validate-client-ajv "^0.0.0-beta.3"
     zod-to-json-schema "^3.24.5"
 
-vovk@^3.0.0-beta.0, vovk@^3.0.0-draft.147, vovk@^3.0.0-draft.241, vovk@^3.0.0-draft.284:
-  version "3.0.0-draft.284"
-  resolved "https://registry.npmjs.org/vovk/-/vovk-3.0.0-draft.284.tgz"
-  integrity sha512-+tZ+jmH4lm906KjzceeqW1JxQUiDEZyLJ88naLeeh6vGtPfedOFccaNjMzjCJ+kzSkpSZAjYMe/a2s+YXf/N6A==
+vovk@^3.0.0-beta.0, vovk@^3.0.0-draft.147, vovk@^3.0.0-draft.241, vovk@^3.0.0-draft.285:
+  version "3.0.0-draft.285"
+  resolved "https://registry.npmjs.org/vovk/-/vovk-3.0.0-draft.285.tgz"
+  integrity sha512-g4+cpIJsZ+yXLDLUYJuU6IrLkFhZID+hr5yTQCjlXDuznv8VVBj7F3v528LNBJJlQiaB5rjkY5/qaIuNJjsz5Q==
   dependencies:
     "@standard-schema/spec" "^1.0.0"
     openapi3-ts "^4.4.0"
