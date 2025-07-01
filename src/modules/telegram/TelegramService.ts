@@ -185,7 +185,7 @@ export default class TelegramService {
       await TelegramRPC.sendVoice({
         body: {
           chat_id: chatId,
-          voice: voiceBuffer,
+          voice: voiceBuffer.toString("base64"),
         },
         apiRoot,
       });
