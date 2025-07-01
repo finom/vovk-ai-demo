@@ -141,6 +141,8 @@ export default class TelegramService {
       ],
     });
 
+    console.log(' { type, processedText }:', { type, processedText });
+
     if (type === "voice") {
       await this.sendVoiceMessage(chatId, processedText);
     } else {
