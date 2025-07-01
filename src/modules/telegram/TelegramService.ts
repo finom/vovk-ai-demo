@@ -159,7 +159,7 @@ export default class TelegramService {
       body: {
         chat_id: chatId,
         text,
-        parse_mode: "Markdown",
+        parse_mode: "MarkdownV2",
       },
       apiRoot,
     });
