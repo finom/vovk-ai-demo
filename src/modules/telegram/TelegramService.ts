@@ -181,12 +181,13 @@ export default class TelegramService {
       // Convert the response to a Buffer
       const voiceBuffer = Buffer.from(await speechResponse.arrayBuffer());
 
+      const formData = new FormData();
+      formData.append("chat_id", String(chatId));
+      formData.append("voice", new Blob([voiceBuffer], { type: "audio/ogg" }), "voice.ogg");
+
       // Send the voice message
       await TelegramRPC.sendVoice({
-        body: {
-          chat_id: chatId,
-          voice: voiceBuffer.toString("base64"),
-        },
+        body: formData,
         apiRoot,
       });
     } catch (error) {
