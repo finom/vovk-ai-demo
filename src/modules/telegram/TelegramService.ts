@@ -231,7 +231,7 @@ export default class TelegramService {
         }), */
         ...Object.fromEntries(
           tools.map(({ name, execute, description, parameters }) => [
-            (console.log(name, parameters), name),
+            name,
             tool<KnownAny, KnownAny>({
               execute,
               description,
@@ -321,7 +321,7 @@ export default class TelegramService {
       await this.processUserMessage(
         chatId,
         transcription.text,
-        "You are a helpful assistant in a Telegram chat. The user just sent a voice message. You have access to the conversation history to maintain context.",
+        "You are a helpful assistant in a Telegram chat. The user just sent a message. You have access to the conversation history to maintain context. Respond to the user's message based on the conversation history using sendTextMessage or sendVoiceMessage.",
       );
     } catch (voiceError) {
       console.error("Voice processing error:", voiceError);
