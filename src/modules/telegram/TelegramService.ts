@@ -139,7 +139,7 @@ export default class TelegramService {
         {
           role: "system",
           content:
-            'Determine the type of response: "text" or "voice" depending on the user request. The processedText should be the text to send: if it\'s a text message, include it here, if it\'s a voice message, include the text that will be converted to speech. If it\'s a text message, make sure to format it properly for simple HTML 4',
+            'Determine the type of response: "text" or "voice" depending on the user request. The processedText should be the text to send: if it\'s a text message, include it here, if it\'s a voice message, include the text that will be converted to speech. If it\'s a text message, make sure to format it properly for Telegram parse_mode HTML.',
         },
       ],
     });
@@ -189,7 +189,7 @@ export default class TelegramService {
       body: {
         chat_id: chatId,
         text: text,
-        parse_mode: "HTML",
+        parse_mode: "html",
       },
       apiRoot,
     });
