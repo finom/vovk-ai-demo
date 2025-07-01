@@ -126,7 +126,9 @@ export default class TelegramService {
     text: string,
     messages: CoreMessage[],
   ): Promise<void> {
-    const { object: { type, processedText } } = await generateObject({
+    const {
+      object: { type, processedText },
+    } = await generateObject({
       model: vercelOpenAI("gpt-4.1"),
       schema: z.object({
         type: z.enum(["text", "voice"]),
@@ -136,12 +138,13 @@ export default class TelegramService {
         ...messages,
         {
           role: "system",
-          content: 'Determine the type of response: "text" or "voice" depending on the user request. The processedText should be the text to send: if it\'s a text message, include it here, if it\'s a voice message, include the text that will be converted to speech. If it\'s a text message, make sure to format it properly for Telegram MarkdownV2.',
+          content:
+            'Determine the type of response: "text" or "voice" depending on the user request. The processedText should be the text to send: if it\'s a text message, include it here, if it\'s a voice message, include the text that will be converted to speech. If it\'s a text message, make sure to format it properly for Telegram MarkdownV2.',
         },
       ],
     });
 
-    console.log(' { type, processedText }:', { type, processedText });
+    console.log(" { type, processedText }:", { type, processedText });
 
     if (type === "voice") {
       await this.sendVoiceMessage(chatId, processedText);
@@ -155,10 +158,60 @@ export default class TelegramService {
     chatId: number,
     text: string,
   ): Promise<void> {
+    function escapeMarkdownV2(text: string): string {
+      const markdown = [
+        "_",
+        "*",
+        "[",
+        "]",
+        "(",
+        ")",
+        "~",
+        "`",
+        ">",
+        "#",
+        "+",
+        "-",
+        "=",
+        "|",
+        "{",
+        "}",
+        ".",
+        "!",
+      ];
+
+      const replacements = [
+        "\\_",
+        "\\*",
+        "\\[",
+        "\\]",
+        "\\(",
+        "\\)",
+        "\\~",
+        "\\`",
+        "\\>",
+        "\\#",
+        "\\+",
+        "\\-",
+        "\\=",
+        "\\|",
+        "\\{",
+        "\\}",
+        "\\.",
+        "\\!",
+      ];
+
+      let escapedText = text;
+      for (let i = 0; i < markdown.length; i++) {
+        escapedText = escapedText.split(markdown[i]).join(replacements[i]);
+      }
+
+      return escapedText;
+    }
     await TelegramRPC.sendMessage({
       body: {
         chat_id: chatId,
-        text,
+        text: escapeMarkdownV2(text),
         parse_mode: "MarkdownV2",
       },
       apiRoot,
@@ -183,7 +236,11 @@ export default class TelegramService {
 
       const formData = new FormData();
       formData.append("chat_id", String(chatId));
-      formData.append("voice", new Blob([voiceBuffer], { type: "audio/ogg" }), "voice.ogg");
+      formData.append(
+        "voice",
+        new Blob([voiceBuffer], { type: "audio/ogg" }),
+        "voice.ogg",
+      );
 
       // Send the voice message
       await TelegramRPC.sendVoice({
