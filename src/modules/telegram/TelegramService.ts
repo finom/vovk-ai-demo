@@ -201,10 +201,10 @@ export default class TelegramService {
       temperature: 0.7,
       maxSteps: 20,
       tools: {
-        sendTextMessage: tool<KnownAny, KnownAny>({
+        sendTextMessage: tool({
           execute: this.sendTextMessage.bind(this, chatId),
-          description: "Send a text message to the user",
-          parameters: jsonSchema({
+          description: "Send a text message to the user when tools",
+          parameters: jsonSchema<{ text: string }>({
             type: "object",
             properties: {
               text: {
@@ -213,22 +213,22 @@ export default class TelegramService {
               },
             },
             required: ["text"],
-          } as KnownAny),
+          }),
         }),
-        sendVoiceMessage: tool<KnownAny, KnownAny>({
+        /*sendVoiceMessage: tool({
           execute: this.sendVoiceMessage.bind(this, chatId),
           description: "Send a voice message to the user",
-          parameters: jsonSchema({
+          parameters: jsonSchema<{ text: string }>({
             type: "object",
             properties: {
               text: {
                 type: "string",
-                description: "The text to convert to voice",
+                description: "The text to convert to voice and send as a voice message",
               },
             },
             required: ["text"],
-          } as KnownAny),
-        }),
+          }),
+        }), */
         ...Object.fromEntries(
           tools.map(({ name, execute, description, parameters }) => [
             (console.log(name, parameters), name),
