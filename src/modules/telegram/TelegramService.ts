@@ -335,8 +335,8 @@ export default class TelegramService {
       await this.processUserMessage(
         chatId,
         transcription.text,
-        "You are a helpful assistant in a Telegram chat. The user just sent a voice message. You have access to the conversation history to maintain context.",
-        `🎤 I heard: "${transcription.text}"`,
+        "You are a helpful assistant in a Telegram chat. The user just sent a voice message. You have access to the conversation history to maintain context. By default, you respond with voice, but if the user requests a text response, you can generate a text message.",
+        `🎤 I heard the voice: "${transcription.text}"`,
       );
     } catch (voiceError) {
       console.error("Voice processing error:", voiceError);
