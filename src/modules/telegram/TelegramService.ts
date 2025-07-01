@@ -149,6 +149,8 @@ export default class TelegramService {
 
     if (type === "voice") {
       await this.sendVoiceMessage(chatId, processedText);
+    } else if (type === "photo") {
+      await this.sendPhoto(chatId, processedText);
     } else {
       await this.sendTextMessage(chatId, processedText);
     }
