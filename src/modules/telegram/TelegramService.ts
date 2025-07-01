@@ -3,11 +3,12 @@ import OpenAI from "openai";
 import { TelegramRPC } from "vovk-client";
 import { createClient } from "redis";
 import { openai as vercelOpenAI } from "@ai-sdk/openai";
-import { generateText, jsonSchema, tool } from "ai";
+import { generateObject, generateText, jsonSchema, tool } from "ai";
 import { CoreMessage } from "ai";
 import { createLLMTools, KnownAny } from "vovk";
 import UserController from "../user/UserController";
 import TaskController from "../task/TaskController";
+import { z } from "zod";
 
 const redis = createClient({
   url: process.env.REDIS_URL,
@@ -119,19 +120,26 @@ export default class TelegramService {
     });
   }
 
-   // Send message to user
+  // Send message to user
   private static async sendMessage(
     chatId: number,
     text: string,
+    messages: CoreMessage[],
   ): Promise<void> {
-    await TelegramRPC.sendMessage({
-      body: {
-        chat_id: chatId,
-        text,
-        parse_mode: "Markdown",
-      },
-      apiRoot,
+    const { object: { type } } = await generateObject({
+      model: vercelOpenAI("gpt-4.1"),
+      schema: z.object({
+        type: z.enum(["text", "voice"]),
+      }),
+      messages,
+      prompt: "Determine the type of message to send based on the content.",
     });
+
+    if (type === "voice") {
+      await this.sendVoiceMessage(chatId, text);
+    } else {
+      await this.sendTextMessage(chatId, text);
+    }
   }
 
   // Send message to user
@@ -149,7 +157,7 @@ export default class TelegramService {
     });
   }
 
-   private static async sendVoiceMessage(
+  private static async sendVoiceMessage(
     chatId: number,
     text: string,
   ): Promise<void> {
@@ -185,7 +193,7 @@ export default class TelegramService {
     chatId: number,
     userMessage: string,
     systemPrompt: string,
-  ): Promise<string> {
+  ): Promise<{ botResponse: string; messages: CoreMessage[] }> {
     // Add user message to history
     await this.addToHistory(chatId, "user", userMessage);
 
@@ -228,7 +236,12 @@ export default class TelegramService {
     // Add assistant response to history
     await this.addToHistory(chatId, "assistant", botResponse);
 
-    return botResponse;
+    messages.push({
+      role: "assistant",
+      content: botResponse,
+    });
+
+    return { botResponse, messages };
   }
 
   // Process user message (text or transcribed voice)
@@ -240,7 +253,7 @@ export default class TelegramService {
   ): Promise<void> {
     await this.sendTypingIndicator(chatId);
 
-    const botResponse = await this.generateAIResponse(
+    const { botResponse, messages } = await this.generateAIResponse(
       chatId,
       userMessage,
       systemPrompt,
@@ -250,7 +263,7 @@ export default class TelegramService {
       ? `${responsePrefix}\n\n${botResponse}`
       : botResponse;
 
-    await this.sendMessage(chatId, finalResponse);
+    await this.sendMessage(chatId, finalResponse, messages);
   }
 
   // Handle special commands
@@ -267,7 +280,7 @@ export default class TelegramService {
           ? "Chat history cleared! 🧹"
           : "Hello! I'm your AI assistant. Send me a message or voice note to get started! 👋";
 
-      await this.sendMessage(chatId, responseText);
+      await this.sendTextMessage(chatId, responseText);
       return true;
     }
     return false;
@@ -303,7 +316,7 @@ export default class TelegramService {
 
       // Check if transcription is empty
       if (!transcription.text || transcription.text.trim() === "") {
-        await this.sendMessage(
+        await this.sendTextMessage(
           chatId,
           "I couldn't understand the voice message. Please try again.",
         );
@@ -319,7 +332,7 @@ export default class TelegramService {
       );
     } catch (voiceError) {
       console.error("Voice processing error:", voiceError);
-      await this.sendMessage(
+      await this.sendTextMessage(
         chatId,
         "Sorry, I had trouble processing your voice message. Please try again or send a text message instead.",
       );
@@ -358,7 +371,7 @@ export default class TelegramService {
     // Handle unsupported message types
     else {
       console.error("Received unsupported message type");
-      await this.sendMessage(
+      await this.sendTextMessage(
         chatId,
         "Sorry, I can only process text and voice messages at the moment.",
       );
