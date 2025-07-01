@@ -126,19 +126,25 @@ export default class TelegramService {
     text: string,
     messages: CoreMessage[],
   ): Promise<void> {
-    const { object: { type } } = await generateObject({
+    const { object: { type, processedText } } = await generateObject({
       model: vercelOpenAI("gpt-4.1"),
       schema: z.object({
         type: z.enum(["text", "voice"]),
+        processedText: z.string(),
       }),
-      messages,
-      prompt: "Determine the type of message to send based on the content.",
+      messages: [
+        ...messages,
+        {
+          role: "system",
+          content: 'Determine the type of response: "text" or "voice". Respond with only one of these types. The processedText should be the text to send: if it\'s a text message, include it here, if it\'s a voice message, include the text that will be converted to speech.',
+        },
+      ],
     });
 
     if (type === "voice") {
-      await this.sendVoiceMessage(chatId, text);
+      await this.sendVoiceMessage(chatId, processedText);
     } else {
-      await this.sendTextMessage(chatId, text);
+      await this.sendTextMessage(chatId, processedText);
     }
   }
 
