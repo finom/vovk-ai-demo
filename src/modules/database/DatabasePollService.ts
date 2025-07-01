@@ -8,6 +8,8 @@ export default class PollService {
   static poll(
     resp: JSONLinesResponse<VovkIteration<typeof DatabasePollController.poll>>,
   ) {
+    setTimeout(resp.close, 30_000);
+
     let asOldAs = new Date();
     DatabaseEventsService.emitter.on("db_updates", (changes) => {
       const deleted = changes.filter((change) => change.type === "delete");
@@ -52,9 +54,5 @@ export default class PollService {
         }
       });
     });
-
-    setTimeout(() => {
-      resp.close();
-    }, 30_000);
   }
 }

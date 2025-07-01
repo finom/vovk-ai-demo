@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import OpenAI from "openai";
 import { TelegramRPC } from "vovk-client";
 import { createClient } from "redis";
@@ -120,9 +120,9 @@ export default class TelegramService {
   }
 
   // Send message to user
-  private static async sendMessage(
+  private static async sendTextMessage(
     chatId: number,
-    text: string,
+    { text }: { text: string },
   ): Promise<void> {
     await TelegramRPC.sendMessage({
       body: {
@@ -132,6 +132,41 @@ export default class TelegramService {
       },
       apiRoot,
     });
+
+    await this.addToHistory(chatId, "assistant", text);
+  }
+
+  private static async sendVoiceMessage(
+    chatId: number,
+    { text }: { text: string },
+  ): Promise<void> {
+    try {
+      // Generate speech from text using OpenAI TTS
+      const speechResponse = await openai.audio.speech.create({
+        model: "tts-1",
+        voice: "alloy", // alloy, echo, fable, onyx, nova, shimmer
+        input: text,
+        response_format: "opus", // Telegram supports opus format well
+      });
+
+      // Convert the response to a Buffer
+      const voiceBuffer = Buffer.from(await speechResponse.arrayBuffer());
+
+      // Send the voice message
+      await TelegramRPC.sendVoice({
+        body: {
+          chat_id: chatId,
+          voice: voiceBuffer,
+        },
+        apiRoot,
+      });
+
+      this.addToHistory(chatId, "assistant", text);
+    } catch (error) {
+      console.error("Error generating voice message:", error);
+      // Fallback to text message if voice generation fails
+      await this.sendTextMessage(chatId, { text });
+    }
   }
 
   // Generate AI response with conversation context using Vercel AI SDK
@@ -165,16 +200,46 @@ export default class TelegramService {
       maxTokens: 1000,
       temperature: 0.7,
       maxSteps: 20,
-      tools: Object.fromEntries(
-        tools.map(({ name, execute, description, parameters }) => [
-          (console.log(name, parameters), name),
-          tool<KnownAny, KnownAny>({
-            execute,
-            description,
-            parameters: jsonSchema(parameters as KnownAny),
-          }),
-        ]),
-      ),
+      tools: {
+        sendTextMessage: tool<KnownAny, KnownAny>({
+          execute: this.sendTextMessage.bind(this, chatId),
+          description: "Send a text message to the user",
+          parameters: jsonSchema({
+            type: "object",
+            properties: {
+              text: {
+                type: "string",
+                description: "The text message to send",
+              },
+            },
+            required: ["text"],
+          } as KnownAny),
+        }),
+        sendVoiceMessage: tool<KnownAny, KnownAny>({
+          execute: this.sendVoiceMessage.bind(this, chatId),
+          description: "Send a voice message to the user",
+          parameters: jsonSchema({
+            type: "object",
+            properties: {
+              text: {
+                type: "string",
+                description: "The text to convert to voice",
+              },
+            },
+            required: ["text"],
+          } as KnownAny),
+        }),
+        ...Object.fromEntries(
+          tools.map(({ name, execute, description, parameters }) => [
+            (console.log(name, parameters), name),
+            tool<KnownAny, KnownAny>({
+              execute,
+              description,
+              parameters: jsonSchema(parameters as KnownAny),
+            }),
+          ]),
+        ),
+      },
     });
 
     const botResponse = text || "I couldn't generate a response.";
@@ -190,21 +255,10 @@ export default class TelegramService {
     chatId: number,
     userMessage: string,
     systemPrompt: string,
-    responsePrefix?: string,
   ): Promise<void> {
     await this.sendTypingIndicator(chatId);
 
-    const botResponse = await this.generateAIResponse(
-      chatId,
-      userMessage,
-      systemPrompt,
-    );
-
-    const finalResponse = responsePrefix
-      ? `${responsePrefix}\n\n${botResponse}`
-      : botResponse;
-
-    await this.sendMessage(chatId, finalResponse);
+    await this.generateAIResponse(chatId, userMessage, systemPrompt);
   }
 
   // Handle special commands
@@ -221,7 +275,7 @@ export default class TelegramService {
           ? "Chat history cleared! 🧹"
           : "Hello! I'm your AI assistant. Send me a message or voice note to get started! 👋";
 
-      await this.sendMessage(chatId, responseText);
+      await this.sendTextMessage(chatId, { text: responseText });
       return true;
     }
     return false;
@@ -257,10 +311,9 @@ export default class TelegramService {
 
       // Check if transcription is empty
       if (!transcription.text || transcription.text.trim() === "") {
-        await this.sendMessage(
-          chatId,
-          "I couldn't understand the voice message. Please try again.",
-        );
+        await this.sendTextMessage(chatId, {
+          text: "I couldn't understand the voice message. Please try again.",
+        });
         return;
       }
 
@@ -269,14 +322,12 @@ export default class TelegramService {
         chatId,
         transcription.text,
         "You are a helpful assistant in a Telegram chat. The user just sent a voice message. You have access to the conversation history to maintain context.",
-        `🎤 I heard: "${transcription.text}"`,
       );
     } catch (voiceError) {
       console.error("Voice processing error:", voiceError);
-      await this.sendMessage(
-        chatId,
-        "Sorry, I had trouble processing your voice message. Please try again or send a text message instead.",
-      );
+      await this.sendTextMessage(chatId, {
+        text: "Sorry, I had trouble processing your voice message. Please try again or send a text message instead.",
+      });
     }
   }
 
@@ -285,7 +336,7 @@ export default class TelegramService {
     const chatId = update.message?.chat.id;
 
     if (!chatId) {
-      return NextResponse.json({ success: true });
+      return { success: true };
     }
 
     // Handle text messages
@@ -295,7 +346,7 @@ export default class TelegramService {
       // Check if it's a command
       const isCommand = await this.handleCommand(chatId, userMessage);
       if (isCommand) {
-        return NextResponse.json({ success: true });
+        return { success: true };
       }
 
       // Process regular text message
@@ -312,12 +363,11 @@ export default class TelegramService {
     // Handle unsupported message types
     else {
       console.error("Received unsupported message type");
-      await this.sendMessage(
-        chatId,
-        "Sorry, I can only process text and voice messages at the moment.",
-      );
+      await this.sendTextMessage(chatId, {
+        text: "Sorry, I can only process text and voice messages at the moment.",
+      });
     }
 
-    return NextResponse.json({ success: true });
+    return { success: true };
   }
 }
