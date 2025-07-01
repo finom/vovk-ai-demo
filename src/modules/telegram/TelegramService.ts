@@ -136,7 +136,7 @@ export default class TelegramService {
         ...messages,
         {
           role: "system",
-          content: 'Determine the type of response: "text" or "voice". Respond with only one of these types. The processedText should be the text to send: if it\'s a text message, include it here, if it\'s a voice message, include the text that will be converted to speech.',
+          content: 'Determine the type of response: "text" or "voice" depending on the user request. The processedText should be the text to send: if it\'s a text message, include it here, if it\'s a voice message, include the text that will be converted to speech.',
         },
       ],
     });
