@@ -159,54 +159,31 @@ export default class TelegramService {
     text: string,
   ): Promise<void> {
     function escapeMarkdownV2(text: string): string {
-      const markdown = [
-        "_",
-        "*",
-        "[",
-        "]",
-        "(",
-        ")",
-        "~",
-        "`",
-        ">",
-        "#",
-        "+",
-        "-",
-        "=",
-        "|",
-        "{",
-        "}",
-        ".",
-        "!",
-      ];
+      const escapeMap: Record<string, string> = {
+        _: "\\_",
+        "*": "\\*",
+        "[": "\\[",
+        "]": "\\]",
+        "(": "\\(",
+        ")": "\\)",
+        "~": "\\~",
+        "`": "\\`",
+        ">": "\\>",
+        "#": "\\#",
+        "+": "\\+",
+        "-": "\\-",
+        "=": "\\=",
+        "|": "\\|",
+        "{": "\\{",
+        "}": "\\}",
+        ".": "\\.",
+        "!": "\\!",
+      };
 
-      const replacements = [
-        "\\_",
-        "\\*",
-        "\\[",
-        "\\]",
-        "\\(",
-        "\\)",
-        "\\~",
-        "\\`",
-        "\\>",
-        "\\#",
-        "\\+",
-        "\\-",
-        "\\=",
-        "\\|",
-        "\\{",
-        "\\}",
-        "\\.",
-        "\\!",
-      ];
-
-      let escapedText = text;
-      for (let i = 0; i < markdown.length; i++) {
-        escapedText = escapedText.split(markdown[i]).join(replacements[i]);
-      }
-
-      return escapedText;
+      return text.replace(
+        /[_*\[\]()~`>#+=\-|{}.!]/g,
+        (char) => escapeMap[char],
+      );
     }
     await TelegramRPC.sendMessage({
       body: {
