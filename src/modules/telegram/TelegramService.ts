@@ -174,7 +174,7 @@ export default class TelegramService {
     chatId: number,
     userMessage: string,
     systemPrompt: string,
-  ): Promise<string> {
+  ) {
     // Add user message to history
     await this.addToHistory(chatId, "user", userMessage);
 
@@ -193,13 +193,13 @@ export default class TelegramService {
     });
 
     // Generate a response using Vercel AI SDK
-    const { text } = await generateText({
+    const { text, toolCalls } = await generateText({
       model: vercelOpenAI("gpt-4.1"),
       system: systemPrompt,
       messages,
       maxTokens: 1000,
       temperature: 0.7,
-      maxSteps: 20,
+      maxSteps: 30,
       tools: {
         sendTextMessage: tool({
           execute: this.sendTextMessage.bind(this, chatId),
@@ -242,12 +242,14 @@ export default class TelegramService {
       },
     });
 
-    const botResponse = text || "I couldn't generate a response.";
+    console.log('{ text, toolCalls }:', { text, toolCalls });
+
+    // const botResponse = text || "I couldn't generate a response.";
 
     // Add assistant response to history
-    await this.addToHistory(chatId, "assistant", botResponse);
+    // await this.addToHistory(chatId, "assistant", botResponse);
 
-    return botResponse;
+    // return botResponse;
   }
 
   // Process user message (text or transcribed voice)
