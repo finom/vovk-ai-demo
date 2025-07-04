@@ -6709,10 +6709,10 @@ vary@^1, vary@^1.1.2:
   resolved "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
-vovk-ajv@^0.0.0-draft.71:
-  version "0.0.0-draft.71"
-  resolved "https://registry.npmjs.org/vovk-ajv/-/vovk-ajv-0.0.0-draft.71.tgz"
-  integrity sha512-Sm8FHs0NnPDRR/3AdgPp+9eSy6D6qeJiB2K1BM+MpNo3Uk9ZulqoGgcrb/Z/gnTOgdZnynITeVSRyIPqQKQdiA==
+vovk-ajv@^0.0.0-draft.72:
+  version "0.0.0-draft.72"
+  resolved "https://registry.yarnpkg.com/vovk-ajv/-/vovk-ajv-0.0.0-draft.72.tgz#b82e19dcd734d59442a9aa52896d904b7c99bacb"
+  integrity sha512-kihv4Wn0s4dtWE2nOgks8ERythSt/llonWgC8dh7la0Fp2+k9s8xoGfXZUS5X1jCIslXCcrZn4K3R6Xg0s0Y/g==
   dependencies:
     ajv "^8.17.1"
     ajv-errors "^3.0.0"
