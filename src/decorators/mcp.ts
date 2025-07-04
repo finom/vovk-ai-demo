@@ -11,14 +11,14 @@ const mcp = createDecorator(
     }: { successMessage: string; includeResponse?: boolean },
   ) => {
     const data = await next();
-    const meta = req.vovk.meta<{ header: { isMCP?: true }; isMCP?: true }>();
-    const isMCP = meta.isMCP ?? meta.header?.isMCP ?? false;
+    const meta = req.vovk.meta<{ clientMetaHeader: { isMCP?: true }; isMCP?: true }>();
+    const isMCP = meta.isMCP ?? meta.clientMetaHeader?.isMCP ?? false;
     console.log("isMCP meta", meta);
     /*
     {
-          content: [{ type: "text", text: `🎲 You rolled a ${value}!` }],
-        };
-        */
+      content: [{ type: "text", text: `🎲 You rolled a ${value}!` }],
+    };
+    */
 
     if (isMCP) {
       return {
