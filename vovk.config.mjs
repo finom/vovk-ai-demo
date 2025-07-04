@@ -14,6 +14,7 @@ const config = {
     createRPC: "vovk-react-query",
     fetcher: "./src/lib/fetcher.ts",
   },
+  prettifyClient: true,
   moduleTemplates: {
     service: "vovk-cli/module-templates/Service.ts.ejs",
     controller: "vovk-zod/module-templates/Controller.ts.ejs",
@@ -42,15 +43,14 @@ const config = {
         return camelCase(operationName);
       },
     },
-    openai: {
+    /* openai: {
       source: {
         url: "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml",
       },
       getModuleName: "OpenAIRPC",
       getMethodName: "auto",
-    },
+    }, */
     telegram: {
-      // TODO: Unable to handle circular references
       source: {
         url: "https://raw.githubusercontent.com/sys-001/telegram-bot-api-versions/refs/heads/main/files/openapi/yaml/v183.yaml",
       },

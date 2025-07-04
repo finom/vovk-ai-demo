@@ -12,7 +12,7 @@ const controllers = {
   TaskRPC: TaskController,
   RealtimeRPC: RealtimeController,
   DatabasePollRPC: DatabasePollController,
-  _TelegramRPC: TelegramController,
+  _TelegramRPC_: TelegramController,
 };
 
 export type Controllers = typeof controllers;
