@@ -1,7 +1,7 @@
 import { EntityType } from "@prisma/client";
 import { get, JSONLinesResponse, prefix, VovkIteration } from "vovk";
 import { withZod } from "vovk-zod/v3";
-import { z } from "zod";
+import { z } from "zod/v3";
 import DatabasePollService from "./DatabasePollService";
 import { TaskModel, UserModel } from "@/zod";
 
