@@ -889,10 +889,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@mendable/firecrawl-js@^3.2.0":
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/@mendable/firecrawl-js/-/firecrawl-js-3.2.1.tgz#ccf82279be05f6df4a6787204c62ab5d01005686"
-  integrity sha512-frB9ASFmH1srHfJ04xnVAysGG0yoIgwCVAtEDxk2WQgloyIFOu32gjNChIZ1KKzBkht56E3W5aiQTxX9/Ym+dw==
+"@mendable/firecrawl-js@^1.12.0":
+  version "1.29.3"
+  resolved "https://registry.yarnpkg.com/@mendable/firecrawl-js/-/firecrawl-js-1.29.3.tgz#0d5df17504e1340efea2194d8f355ce78c4acbe7"
+  integrity sha512-+uvDktesJmVtiwxMtimq+3f5bKlsan4T7TokxOI7DbxFkApwrRNss5GYEXbInveMTz8LpGth/9Ch5BTwCqrpfA==
   dependencies:
     axios "^1.11.0"
     typescript-event-target "^1.1.1"
