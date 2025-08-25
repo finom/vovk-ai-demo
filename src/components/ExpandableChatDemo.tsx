@@ -58,8 +58,6 @@ export function ExpandableChatDemo() {
     //
   };
 
-  console.log("messages", messages);
-
   return (
     <div className="h-[600px] relative">
       <ExpandableChat

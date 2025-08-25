@@ -28,7 +28,9 @@
                   "type": "string"
                 }
               },
-              "required": ["search"],
+              "required": [
+                "search"
+              ],
               "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
@@ -44,6 +46,26 @@
         "createUser": {
           "validation": {
             "body": {
+              "type": "object",
+              "properties": {
+                "fullName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "imageUrl": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "fullName",
+                "email"
+              ],
+              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
@@ -58,9 +80,40 @@
         "updateUser": {
           "validation": {
             "body": {
+              "type": "object",
+              "properties": {
+                "fullName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "imageUrl": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "fullName",
+                "email"
+              ],
+              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             },
             "params": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
@@ -75,6 +128,17 @@
         "deleteUser": {
           "validation": {
             "params": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
@@ -112,7 +176,9 @@
                   "type": "string"
                 }
               },
-              "required": ["search"],
+              "required": [
+                "search"
+              ],
               "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
@@ -128,6 +194,35 @@
         "createTask": {
           "validation": {
             "body": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "TODO",
+                    "IN_PROGRESS",
+                    "IN_REVIEW",
+                    "DONE"
+                  ]
+                },
+                "userId": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "required": [
+                "title",
+                "description",
+                "status",
+                "userId"
+              ],
+              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
@@ -142,9 +237,43 @@
         "updateTask": {
           "validation": {
             "body": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "TODO",
+                    "IN_PROGRESS",
+                    "IN_REVIEW",
+                    "DONE"
+                  ]
+                },
+                "userId": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             },
             "params": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
@@ -159,6 +288,17 @@
         "deleteTask": {
           "validation": {
             "params": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
@@ -185,10 +325,18 @@
               "properties": {
                 "voice": {
                   "type": "string",
-                  "enum": ["ash", "ballad", "coral", "sage", "verse"]
+                  "enum": [
+                    "ash",
+                    "ballad",
+                    "coral",
+                    "sage",
+                    "verse"
+                  ]
                 }
               },
-              "required": ["voice"],
+              "required": [
+                "voice"
+              ],
               "additionalProperties": false
             }
           },
