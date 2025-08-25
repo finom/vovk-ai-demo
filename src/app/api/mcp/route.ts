@@ -6,11 +6,11 @@ import { convertJsonSchemaToZod } from "zod-from-json-schema";
 import { mapValues } from "lodash";
 
 const { tools } = createLLMTools({
-  meta: { isMCP: true },
   modules: {
     UserController,
     TaskController,
   },
+  resultFormatter: 'mcp',
   onExecute: (_d, { moduleName, handlerName, body, query, params }) =>
     console.log(`${moduleName}.${handlerName} executed with`, {
       body,
