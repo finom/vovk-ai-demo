@@ -4,76 +4,62 @@ import UserService from "./UserService";
 import { UserModel } from "@/zod";
 import { z } from "zod/v3";
 import { BASE_FIELDS } from "@/constants";
-import mcp from "@/decorators/mcp";
 
 @prefix("users")
 export default class UserController {
   @openapi({
     summary: "Get all users",
     description: "Retrieves a list of all users.",
+    "x-tool-successMessage": "Users retrieved successfully",
   })
   @get()
-  @mcp({
-    successMessage: "Users retrieved successfully",
-  })
   static getUsers = withZod({ handle: UserService.getUsers });
 
   @openapi({
     summary: "Find users by ID, full name, or email",
     description:
       "Retrieves users that match the provided ID, full name, or email. Used to search the users when they need to be updated or deleted.",
+    "x-tool-successMessage": "Users found successfully",
   })
   @get("find")
-  @mcp({
-    successMessage: "Users found successfully",
-  })
   static findUsers = withZod({
     query: z.object({ search: z.string() }),
-    handle: (req) => UserService.findUsers(req.vovk.query().search),
+    handle: ({ vovk }) => UserService.findUsers(vovk.query().search),
   });
 
   @openapi({
     summary: "Create user",
     description: "Creates a new user with the provided details.",
+    "x-tool-successMessage": "User created successfully",
   })
   @post()
-  @mcp({
-    successMessage: "User created successfully",
-  })
   static createUser = withZod({
     body: UserModel.omit(BASE_FIELDS),
-    handle: async (req) => (
-      console.log("META", req.vovk.meta()),
-      UserService.createUser(await req.vovk.body())
-    ),
+    handle: async ({ vovk }) => UserService.createUser(await vovk.body()),
   });
 
   @openapi({
     summary: "Update user",
     description:
       "Updates an existing user with the provided details, such as their email or name.",
+    "x-tool-successMessage": "User updated successfully",
   })
   @put("{id}")
-  @mcp({
-    successMessage: "User updated successfully",
-  })
   static updateUser = withZod({
     body: UserModel.omit(BASE_FIELDS),
     params: UserModel.pick({ id: true }),
-    handle: async (req) =>
-      UserService.updateUser(req.vovk.params().id, await req.vovk.body()),
+    handle: async ({ vovk }) =>
+      UserService.updateUser(vovk.params().id, await vovk.body()),
   });
 
   @openapi({
     summary: "Delete user",
     description: "Deletes a user by ID.",
+    "x-tool-successMessage": "User deleted successfully",
   })
   @del("{id}")
-  @mcp({
-    successMessage: "User deleted successfully",
-  })
   static deleteUser = withZod({
     params: UserModel.pick({ id: true }),
-    handle: (req) => UserService.deleteUser(req.vovk.params().id),
+    handle: async ({ vovk }) => UserService.deleteUser(vovk.params().id),
   });
 }

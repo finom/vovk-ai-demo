@@ -43,13 +43,6 @@ const config = {
         return camelCase(operationName);
       },
     },
-    /* openai: {
-      source: {
-        url: "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml",
-      },
-      getModuleName: "OpenAIRPC",
-      getMethodName: "auto",
-    }, */
     telegram: {
       source: {
         url: "https://raw.githubusercontent.com/sys-001/telegram-bot-api-versions/refs/heads/main/files/openapi/yaml/v183.yaml",

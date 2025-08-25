@@ -8,7 +8,13 @@ import {
   openapi,
   type VovkRequest,
 } from "vovk";
-import { jsonSchema, streamText, tool, type CoreMessage } from "ai";
+import {
+  convertToModelMessages,
+  jsonSchema,
+  streamText,
+  tool,
+  type UIMessage,
+} from "ai";
 import { openai } from "@ai-sdk/openai";
 // import { GithubIssuesRPC } from "vovk-client";
 import UserController from "../user/UserController";
@@ -22,7 +28,7 @@ export default class AiSdkController {
       "Uses [@ai-sdk/openai](https://www.npmjs.com/package/@ai-sdk/openai) and ai packages to call a function",
   })
   @post("function-calling")
-  static async functionCalling(req: VovkRequest<{ messages: CoreMessage[] }>) {
+  static async functionCalling(req: VovkRequest<{ messages: UIMessage[] }>) {
     const { messages } = await req.json();
     const LIMIT = 20;
     /* const githubOptions = {
@@ -52,18 +58,16 @@ export default class AiSdkController {
     }
 
     return streamText({
-      model: openai("gpt-4.1"),
-      toolCallStreaming: true,
-      maxSteps: 20,
+      model: openai("gpt-5-nano"),
       system: "You execute functions sequentially, one by one.",
-      messages,
+      messages: convertToModelMessages(messages),
       tools: Object.fromEntries(
         tools.map(({ name, execute, description, parameters }) => [
           name,
           tool<KnownAny, KnownAny>({
             execute,
             description,
-            parameters: jsonSchema(parameters as KnownAny),
+            inputSchema: jsonSchema(parameters as KnownAny),
           }),
         ]),
       ),
@@ -73,6 +77,6 @@ export default class AiSdkController {
           console.log("Tool calls finished", toolCalls);
         }
       },
-    }).toDataStreamResponse();
+    }).toUIMessageStreamResponse();
   }
 }

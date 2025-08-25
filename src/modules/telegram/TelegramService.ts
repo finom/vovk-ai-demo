@@ -9,7 +9,6 @@ import { createLLMTools, KnownAny } from "vovk";
 import UserController from "../user/UserController";
 import TaskController from "../task/TaskController";
 import { z } from "zod";
-import { quickChartTool } from "./quickChartTool";
 
 const redis = createClient({
   url: process.env.REDIS_URL,
@@ -101,7 +100,7 @@ export default class TelegramService {
   }
 
   // Helper function to download file from Telegram
-  static async downloadTelegramFile(filePath: string): Promise<Buffer> {
+  static async downloadTelegramFile(filePath: string): Promise<BlobPart> {
     const fileUrl = `https://api.telegram.org/file/bot${TELEGRAM_BOT_TOKEN}/${filePath}`;
     const response = await fetch(fileUrl);
     if (!response.ok) {
@@ -243,21 +242,18 @@ export default class TelegramService {
 
     // Generate a response using Vercel AI SDK
     const { text } = await generateText({
-      model: vercelOpenAI("gpt-4.1"),
+      model: vercelOpenAI("gpt-5"),
       system: systemPrompt,
       messages,
-      maxTokens: 1000,
       temperature: 0.7,
-      maxSteps: 20,
       tools: {
-        quickChartTool,
         ...Object.fromEntries(
           tools.map(({ name, execute, description, parameters }) => [
             (console.log(name, parameters), name),
             tool<KnownAny, KnownAny>({
               execute,
               description,
-              parameters: jsonSchema(parameters as KnownAny),
+              inputSchema: jsonSchema(parameters as KnownAny),
             }),
           ]),
         ),

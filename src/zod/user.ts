@@ -1,4 +1,4 @@
-import * as z from "zod";
+import * as z from "zod/v3";
 import { EntityType } from "@prisma/client";
 
 export const UserModel = z.object({

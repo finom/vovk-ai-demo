@@ -21,46 +21,30 @@ import {
   ExpandableChatFooter,
 } from "@/components/ui/expandable-chat";
 import { ChatMessageList } from "@/components/ui/chat-message-list";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRegistry } from "@/registry";
-
-/*
-'use client';
-import { useChat } from 'ai/react';
-
-export default function Page() {
-  const { messages, input, handleSubmit, handleInputChange, isLoading, error } = useChat({
-    api: '/api/ai-sdk/function-calling',
-  });
-
-  return (
-    <form onSubmit={handleSubmit}>
-      {messages.map((message, index) => (
-        <div key={index}>
-          {message.role === 'assistant' ? '🤖' : '👤'} {(message.content as string) || '...'}
-        </div>
-      ))}
-      {error && <div>❌ {error.message}</div>}
-      <div className="input-group">
-        <input type="text" placeholder="Send a message..." value={input} onChange={handleInputChange} />
-        <button disabled={isLoading}>Send</button>
-      </div>
-    </form>
-  );
-}
-*/
+import { DefaultChatTransport } from "ai";
+import { Streamdown } from "streamdown";
 
 export function ExpandableChatDemo() {
-  const { messages, input, handleSubmit, handleInputChange, status, error } =
-    useChat({
+  const [input, setInput] = useState("");
+
+  const { messages, sendMessage, error, status } = useChat({
+    transport: new DefaultChatTransport({
       api: "/api/ai/ai-sdk/function-calling",
-      onToolCall: (toolCall) => {
-        console.log("Tool call initiated:", toolCall);
-      },
-      onResponse: (response) => {
-        console.log("Response received:", response);
-      },
-    });
+    }),
+    onToolCall: (toolCall) => {
+      console.log("Tool call initiated:", toolCall);
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (input.trim()) {
+      sendMessage({ text: input });
+      setInput("");
+    }
+  };
 
   useEffect(() => {
     useRegistry.getState().parse(messages);
@@ -73,6 +57,8 @@ export function ExpandableChatDemo() {
   const handleMicrophoneClick = () => {
     //
   };
+
+  console.log("messages", messages);
 
   return (
     <div className="h-[600px] relative">
@@ -114,11 +100,17 @@ export function ExpandableChatDemo() {
                 <ChatBubbleMessage
                   variant={message.role === "user" ? "sent" : "received"}
                 >
-                  {message.content ||
-                    (status === "ready" &&
-                      message.parts?.some(
-                        (part) => part.type === "tool-invocation",
-                      ) && <em>Function executed successfully</em>)}
+                  {message.parts
+                    .filter((part) => part.type === "text")
+                    .map((part, index) => (
+                      <Streamdown key={index}>{part.text}</Streamdown>
+                    ))}
+                  {status === "ready" &&
+                    message.parts?.some(
+                      (part) => part.type === "tool-invocation",
+                    ) && (
+                      <em className="block">Function executed successfully</em>
+                    )}
                 </ChatBubbleMessage>
               </ChatBubble>
             ))}
@@ -143,7 +135,7 @@ export function ExpandableChatDemo() {
           >
             <ChatInput
               value={input}
-              onChange={handleInputChange}
+              onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey && input.trim()) {
                   e.preventDefault();

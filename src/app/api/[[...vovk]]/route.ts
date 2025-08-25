@@ -5,8 +5,6 @@ import RealtimeController from "../../../modules/realtime/RealtimeController";
 import TelegramController from "../../../modules/telegram/TelegramController";
 import DatabasePollController from "../../../modules/database/DatabasePollController";
 
-export const runtime = "nodejs";
-
 const controllers = {
   UserRPC: UserController,
   TaskRPC: TaskController,

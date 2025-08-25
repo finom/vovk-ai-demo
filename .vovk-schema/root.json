@@ -1,5 +1,5 @@
 {
-  "$schema": "https://vovk.dev/api/spec/v3/segment.json",
+  "$schema": "https://vovk.dev/api/schema/v3/segment.json",
   "emitSchema": true,
   "segmentName": "",
   "segmentType": "segment",
@@ -11,12 +11,13 @@
       "handlers": {
         "getUsers": {
           "validation": {},
-          "path": "",
-          "httpMethod": "GET",
           "openapi": {
             "summary": "Get all users",
-            "description": "Retrieves a list of all users."
-          }
+            "description": "Retrieves a list of all users.",
+            "x-tool-successMessage": "Users retrieved successfully"
+          },
+          "path": "",
+          "httpMethod": "GET"
         },
         "findUsers": {
           "validation": {
@@ -27,123 +28,63 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "search"
-              ],
+              "required": ["search"],
               "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "path": "find",
-          "httpMethod": "GET",
           "openapi": {
             "summary": "Find users by ID, full name, or email",
-            "description": "Retrieves users that match the provided ID, full name, or email. Used to search the users when they need to be updated or deleted."
-          }
+            "description": "Retrieves users that match the provided ID, full name, or email. Used to search the users when they need to be updated or deleted.",
+            "x-tool-successMessage": "Users found successfully"
+          },
+          "path": "find",
+          "httpMethod": "GET"
         },
         "createUser": {
           "validation": {
             "body": {
-              "type": "object",
-              "properties": {
-                "fullName": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
-                "imageUrl": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                }
-              },
-              "required": [
-                "fullName",
-                "email"
-              ],
-              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "path": "",
-          "httpMethod": "POST",
           "openapi": {
             "summary": "Create user",
-            "description": "Creates a new user with the provided details."
-          }
+            "description": "Creates a new user with the provided details.",
+            "x-tool-successMessage": "User created successfully"
+          },
+          "path": "",
+          "httpMethod": "POST"
         },
         "updateUser": {
           "validation": {
             "body": {
-              "type": "object",
-              "properties": {
-                "fullName": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
-                "imageUrl": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                }
-              },
-              "required": [
-                "fullName",
-                "email"
-              ],
-              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             },
             "params": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "required": [
-                "id"
-              ],
-              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "path": "{id}",
-          "httpMethod": "PUT",
           "openapi": {
             "summary": "Update user",
-            "description": "Updates an existing user with the provided details, such as their email or name."
-          }
+            "description": "Updates an existing user with the provided details, such as their email or name.",
+            "x-tool-successMessage": "User updated successfully"
+          },
+          "path": "{id}",
+          "httpMethod": "PUT"
         },
         "deleteUser": {
           "validation": {
             "params": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "required": [
-                "id"
-              ],
-              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "path": "{id}",
-          "httpMethod": "DELETE",
           "openapi": {
             "summary": "Delete user",
-            "description": "Deletes a user by ID."
-          }
+            "description": "Deletes a user by ID.",
+            "x-tool-successMessage": "User deleted successfully"
+          },
+          "path": "{id}",
+          "httpMethod": "DELETE"
         }
       }
     },
@@ -154,12 +95,13 @@
       "handlers": {
         "getTasks": {
           "validation": {},
-          "path": "",
-          "httpMethod": "GET",
           "openapi": {
             "summary": "Get all tasks",
-            "description": "Retrieves a list of all tasks."
-          }
+            "description": "Retrieves a list of all tasks.",
+            "x-tool-successMessage": "Tasks retrieved successfully"
+          },
+          "path": "",
+          "httpMethod": "GET"
         },
         "findTasks": {
           "validation": {
@@ -170,135 +112,63 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "search"
-              ],
+              "required": ["search"],
               "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "path": "find",
-          "httpMethod": "GET",
           "openapi": {
             "summary": "Find tasks by ID, title or description",
-            "description": "Retrieves tasks that match the provided ID, title, or description. Used to search the tasks when they need to be updated or deleted."
-          }
+            "description": "Retrieves tasks that match the provided ID, title, or description. Used to search the tasks when they need to be updated or deleted.",
+            "x-tool-successMessage": "Tasks found successfully"
+          },
+          "path": "find",
+          "httpMethod": "GET"
         },
         "createTask": {
           "validation": {
             "body": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "string",
-                  "enum": [
-                    "TODO",
-                    "IN_PROGRESS",
-                    "IN_REVIEW",
-                    "DONE"
-                  ]
-                },
-                "userId": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "required": [
-                "title",
-                "description",
-                "status",
-                "userId"
-              ],
-              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "path": "",
-          "httpMethod": "POST",
           "openapi": {
             "summary": "Create task",
-            "description": "Creates a new task with the provided details."
-          }
+            "description": "Creates a new task with the provided details.",
+            "x-tool-successMessage": "Task created successfully"
+          },
+          "path": "",
+          "httpMethod": "POST"
         },
         "updateTask": {
           "validation": {
             "body": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "string",
-                  "enum": [
-                    "TODO",
-                    "IN_PROGRESS",
-                    "IN_REVIEW",
-                    "DONE"
-                  ]
-                },
-                "userId": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             },
             "params": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "required": [
-                "id"
-              ],
-              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "path": "{id}",
-          "httpMethod": "PUT",
           "openapi": {
             "summary": "Update task",
-            "description": "Updates an existing task with the provided details, such as its title or description."
-          }
+            "description": "Updates an existing task with the provided details, such as its title or description.",
+            "x-tool-successMessage": "Task updated successfully"
+          },
+          "path": "{id}",
+          "httpMethod": "PUT"
         },
         "deleteTask": {
           "validation": {
             "params": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "required": [
-                "id"
-              ],
-              "additionalProperties": false,
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "path": "{id}",
-          "httpMethod": "DELETE",
           "openapi": {
             "summary": "Delete task",
-            "description": "Deletes a task by ID."
-          }
+            "description": "Deletes a task by ID.",
+            "x-tool-successMessage": "Task deleted successfully"
+          },
+          "path": "{id}",
+          "httpMethod": "DELETE"
         }
       }
     },
@@ -315,18 +185,10 @@
               "properties": {
                 "voice": {
                   "type": "string",
-                  "enum": [
-                    "ash",
-                    "ballad",
-                    "coral",
-                    "sage",
-                    "verse"
-                  ]
+                  "enum": ["ash", "ballad", "coral", "sage", "verse"]
                 }
               },
-              "required": [
-                "voice"
-              ],
+              "required": ["voice"],
               "additionalProperties": false
             }
           },
@@ -343,125 +205,6 @@
         "poll": {
           "validation": {
             "iteration": {
-              "anyOf": [
-                {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "format": "uuid"
-                    },
-                    "entityType": {
-                      "type": "string",
-                      "enum": [
-                        "user",
-                        "task"
-                      ]
-                    },
-                    "__isDeleted": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": [
-                    "id",
-                    "entityType"
-                  ],
-                  "additionalProperties": false
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "format": "uuid"
-                    },
-                    "entityType": {
-                      "type": "string",
-                      "const": "user"
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "fullName": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string"
-                    },
-                    "imageUrl": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "id",
-                    "entityType",
-                    "createdAt",
-                    "updatedAt",
-                    "fullName",
-                    "email"
-                  ],
-                  "additionalProperties": false
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "format": "uuid"
-                    },
-                    "entityType": {
-                      "type": "string",
-                      "const": "task"
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "TODO",
-                        "IN_PROGRESS",
-                        "IN_REVIEW",
-                        "DONE"
-                      ]
-                    },
-                    "userId": {
-                      "type": "string",
-                      "format": "uuid"
-                    }
-                  },
-                  "required": [
-                    "id",
-                    "entityType",
-                    "createdAt",
-                    "updatedAt",
-                    "title",
-                    "description",
-                    "status",
-                    "userId"
-                  ],
-                  "additionalProperties": false
-                }
-              ],
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },

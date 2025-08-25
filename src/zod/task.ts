@@ -1,4 +1,4 @@
-import * as z from "zod";
+import * as z from "zod/v3";
 import { EntityType, TaskStatus } from "@prisma/client";
 
 export const TaskModel = z.object({

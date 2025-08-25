@@ -9,7 +9,7 @@ export default class TaskService {
     DatabaseService.client.task.findMany({
       where: {
         OR: [
-          { id: search }, // exact match (case-sensitive if string)
+          { id: search },
           { title: { contains: search, mode: "insensitive" } },
           { description: { contains: search, mode: "insensitive" } },
         ],
@@ -24,21 +24,16 @@ export default class TaskService {
   static updateTask = async (
     id: VovkParams<typeof TaskController.updateTask>["id"],
     data: VovkBody<typeof TaskController.updateTask>,
-  ) => {
-    return DatabaseService.client.task.update({
+  ) =>
+    DatabaseService.client.task.update({
       where: { id },
       data,
     });
-  };
 
   static deleteTask = async (
     id: VovkParams<typeof TaskController.deleteTask>["id"],
-  ) => {
-    const d = Object.assign(
-      await DatabaseService.client.task.delete({ where: { id } }),
-      { __isDeleted: true },
-    );
-    console.log(d);
-    return d;
-  };
+  ) =>
+    Object.assign(await DatabaseService.client.task.delete({ where: { id } }), {
+      __isDeleted: true,
+    });
 }
