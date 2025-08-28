@@ -1,4 +1,4 @@
-import { prefix, get, put, post, del, openapi } from "vovk";
+import { prefix, get, put, post, del, operation } from "vovk";
 import { withZod } from "vovk-zod/v3";
 import UserService from "./UserService";
 import { UserModel } from "@/zod";
@@ -7,7 +7,7 @@ import { BASE_FIELDS } from "@/constants";
 
 @prefix("users")
 export default class UserController {
-  @openapi({
+  @operation({
     summary: "Get all users",
     description: "Retrieves a list of all users.",
     "x-tool-successMessage": "Users retrieved successfully",
@@ -15,7 +15,7 @@ export default class UserController {
   @get()
   static getUsers = withZod({ handle: UserService.getUsers });
 
-  @openapi({
+  @operation({
     summary: "Find users by ID, full name, or email",
     description:
       "Retrieves users that match the provided ID, full name, or email. Used to search the users when they need to be updated or deleted.",
@@ -27,7 +27,7 @@ export default class UserController {
     handle: ({ vovk }) => UserService.findUsers(vovk.query().search),
   });
 
-  @openapi({
+  @operation({
     summary: "Create user",
     description: "Creates a new user with the provided details.",
     "x-tool-successMessage": "User created successfully",
@@ -38,7 +38,7 @@ export default class UserController {
     handle: async ({ vovk }) => UserService.createUser(await vovk.body()),
   });
 
-  @openapi({
+  @operation({
     summary: "Update user",
     description:
       "Updates an existing user with the provided details, such as their email or name.",
@@ -52,7 +52,7 @@ export default class UserController {
       UserService.updateUser(vovk.params().id, await vovk.body()),
   });
 
-  @openapi({
+  @operation({
     summary: "Delete user",
     description: "Deletes a user by ID.",
     "x-tool-successMessage": "User deleted successfully",

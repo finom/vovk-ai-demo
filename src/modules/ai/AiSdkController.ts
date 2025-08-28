@@ -5,7 +5,7 @@ import {
   KnownAny,
   post,
   prefix,
-  openapi,
+  operation,
   type VovkRequest,
 } from "vovk";
 import {
@@ -22,7 +22,7 @@ import TaskController from "../task/TaskController";
 
 @prefix("ai-sdk")
 export default class AiSdkController {
-  @openapi({
+  @operation({
     summary: "Function Calling",
     description:
       "Uses [@ai-sdk/openai](https://www.npmjs.com/package/@ai-sdk/openai) and ai packages to call a function",

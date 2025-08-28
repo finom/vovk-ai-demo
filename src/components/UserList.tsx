@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { Pencil, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { UserRPC, DatabasePollRPC } from "vovk-client";
+import { useQuery } from "@tanstack/react-query";
 
 interface Props {
   initialData: UserModelType[];
@@ -19,7 +20,11 @@ const UserList = ({ initialData }: Props) => {
   useEffect(() => {
     useRegistry.getState().sync({ user: initialData });
   }, [initialData]);
-  UserRPC.getUsers.useQuery();
+
+  useQuery({
+    queryKey: UserRPC.getUsers.queryKey(),
+    queryFn: () => UserRPC.getUsers(),
+  });
 
   useEffect(() => {
     async function poll(retries = 0) {

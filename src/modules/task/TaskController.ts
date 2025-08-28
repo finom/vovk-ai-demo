@@ -1,4 +1,4 @@
-import { prefix, get, put, post, del, openapi } from "vovk";
+import { prefix, get, put, post, del, operation } from "vovk";
 import { withZod } from "vovk-zod/v3";
 import TaskService from "./TaskService";
 import { TaskModel } from "@/zod";
@@ -7,7 +7,7 @@ import { BASE_FIELDS } from "@/constants";
 
 @prefix("tasks")
 export default class TaskController {
-  @openapi({
+  @operation({
     summary: "Get all tasks",
     description: "Retrieves a list of all tasks.",
     "x-tool-successMessage": "Tasks retrieved successfully",
@@ -15,7 +15,7 @@ export default class TaskController {
   @get()
   static getTasks = withZod({ handle: TaskService.getTasks });
 
-  @openapi({
+  @operation({
     summary: "Find tasks by ID, title or description",
     description:
       "Retrieves tasks that match the provided ID, title, or description. Used to search the tasks when they need to be updated or deleted.",
@@ -26,7 +26,7 @@ export default class TaskController {
     query: z.object({ search: z.string() }),
     handle: async ({ vovk }) => TaskService.findTasks(vovk.query().search),
   });
-  @openapi({
+  @operation({
     summary: "Create task",
     description: "Creates a new task with the provided details.",
     "x-tool-successMessage": "Task created successfully",
@@ -36,7 +36,7 @@ export default class TaskController {
     body: TaskModel.omit(BASE_FIELDS),
     handle: async ({ vovk }) => TaskService.createTask(await vovk.body()),
   });
-  @openapi({
+  @operation({
     summary: "Update task",
     description:
       "Updates an existing task with the provided details, such as its title or description.",
@@ -49,7 +49,7 @@ export default class TaskController {
     handle: async ({ vovk }) =>
       TaskService.updateTask(vovk.params().id, await vovk.body()),
   });
-  @openapi({
+  @operation({
     summary: "Delete task",
     description: "Deletes a task by ID.",
     "x-tool-successMessage": "Task deleted successfully",

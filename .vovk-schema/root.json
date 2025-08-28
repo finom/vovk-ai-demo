@@ -11,7 +11,7 @@
       "handlers": {
         "getUsers": {
           "validation": {},
-          "openapi": {
+          "operationObject": {
             "summary": "Get all users",
             "description": "Retrieves a list of all users.",
             "x-tool-successMessage": "Users retrieved successfully"
@@ -35,7 +35,7 @@
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "openapi": {
+          "operationObject": {
             "summary": "Find users by ID, full name, or email",
             "description": "Retrieves users that match the provided ID, full name, or email. Used to search the users when they need to be updated or deleted.",
             "x-tool-successMessage": "Users found successfully"
@@ -69,7 +69,7 @@
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "openapi": {
+          "operationObject": {
             "summary": "Create user",
             "description": "Creates a new user with the provided details.",
             "x-tool-successMessage": "User created successfully"
@@ -117,7 +117,7 @@
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "openapi": {
+          "operationObject": {
             "summary": "Update user",
             "description": "Updates an existing user with the provided details, such as their email or name.",
             "x-tool-successMessage": "User updated successfully"
@@ -142,7 +142,7 @@
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "openapi": {
+          "operationObject": {
             "summary": "Delete user",
             "description": "Deletes a user by ID.",
             "x-tool-successMessage": "User deleted successfully"
@@ -159,7 +159,7 @@
       "handlers": {
         "getTasks": {
           "validation": {},
-          "openapi": {
+          "operationObject": {
             "summary": "Get all tasks",
             "description": "Retrieves a list of all tasks.",
             "x-tool-successMessage": "Tasks retrieved successfully"
@@ -183,7 +183,7 @@
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "openapi": {
+          "operationObject": {
             "summary": "Find tasks by ID, title or description",
             "description": "Retrieves tasks that match the provided ID, title, or description. Used to search the tasks when they need to be updated or deleted.",
             "x-tool-successMessage": "Tasks found successfully"
@@ -226,7 +226,7 @@
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "openapi": {
+          "operationObject": {
             "summary": "Create task",
             "description": "Creates a new task with the provided details.",
             "x-tool-successMessage": "Task created successfully"
@@ -277,7 +277,7 @@
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "openapi": {
+          "operationObject": {
             "summary": "Update task",
             "description": "Updates an existing task with the provided details, such as its title or description.",
             "x-tool-successMessage": "Task updated successfully"
@@ -302,7 +302,7 @@
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },
-          "openapi": {
+          "operationObject": {
             "summary": "Delete task",
             "description": "Deletes a task by ID.",
             "x-tool-successMessage": "Task deleted successfully"
@@ -353,6 +353,125 @@
         "poll": {
           "validation": {
             "iteration": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "entityType": {
+                      "type": "string",
+                      "enum": [
+                        "user",
+                        "task"
+                      ]
+                    },
+                    "__isDeleted": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "entityType"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "entityType": {
+                      "type": "string",
+                      "const": "user"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "fullName": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "entityType",
+                    "createdAt",
+                    "updatedAt",
+                    "fullName",
+                    "email"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "entityType": {
+                      "type": "string",
+                      "const": "task"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "TODO",
+                        "IN_PROGRESS",
+                        "IN_REVIEW",
+                        "DONE"
+                      ]
+                    },
+                    "userId": {
+                      "type": "string",
+                      "format": "uuid"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "entityType",
+                    "createdAt",
+                    "updatedAt",
+                    "title",
+                    "description",
+                    "status",
+                    "userId"
+                  ],
+                  "additionalProperties": false
+                }
+              ],
               "$schema": "http://json-schema.org/draft-07/schema#"
             }
           },

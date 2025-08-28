@@ -18,6 +18,7 @@ import { TaskModelType, useRegistry, UserModelType } from "@/registry";
 import { useShallow } from "zustand/shallow";
 import { TaskStatus } from "@prisma/client";
 import TaskDialog from "./TaskDialog";
+import { useQuery } from "@tanstack/react-query";
 
 // Utils function
 function cn(...classes: (string | undefined | null | boolean)[]): string {
@@ -232,7 +233,11 @@ const UserKanban = ({ initialData }: Props) => {
   useEffect(() => {
     useRegistry.getState().sync({ task: initialData });
   }, [initialData]);
-  TaskRPC.getTasks.useQuery();
+
+  useQuery({
+    queryKey: TaskRPC.getTasks.queryKey(),
+    queryFn: () => TaskRPC.getTasks(),
+  });
 
   const statuses = useMemo(() => Object.values(TaskStatus), []);
 
