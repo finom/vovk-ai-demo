@@ -17,3 +17,13 @@ services:
       - "5433:80"
     depends_on:
       - postgres
+  redis:
+    image: "redis:7.2-alpine"
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:

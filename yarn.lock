@@ -8885,10 +8885,10 @@ vovk-ajv@^0.0.0-draft.100:
     ajv-formats "^3.0.1"
     ajv-i18n "^4.2.0"
 
-vovk-cli@^0.0.1-draft.364:
-  version "0.0.1-draft.364"
-  resolved "https://registry.yarnpkg.com/vovk-cli/-/vovk-cli-0.0.1-draft.364.tgz#5c0bd0fa6860cfeb7944c1680d8a6e06581c9f81"
-  integrity sha512-JDohJTY/l7aenTXqiZsapncFsuFyK9mR9OGn7bfv+tkvDsCfpnKeqHoRPwpsC1COMwLyxBbF3oB0MZYqSthDVg==
+vovk-cli@^0.0.1-draft.365:
+  version "0.0.1-draft.365"
+  resolved "https://registry.yarnpkg.com/vovk-cli/-/vovk-cli-0.0.1-draft.365.tgz#4d335450035396ef1eab9955a6824173082a105a"
+  integrity sha512-GD2sV/2Q8Q2HrMjWwdfdmTOSgA2RzAsKy5lWYhncS5dK6TheTR62h+uGc9Fi18UcXXKAWh8lKD9H+HIdoOdpWQ==
   dependencies:
     "@iarna/toml" "^2.2.5"
     "@inquirer/prompts" "^7.8.4"

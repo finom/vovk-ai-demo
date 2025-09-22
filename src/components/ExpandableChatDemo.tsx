@@ -66,7 +66,7 @@ export function ExpandableChatDemo() {
         icon={
           <div>
             <div className="absolute text-red-600 -left-18 -top-12 rotate-315 text-lg text-semibold">
-              Chat Here
+              Text Here
             </div>
             <MoveDownRight className="absolute text-red-600 scale-200 -left-4 -top-4" />
             <Bot className="h-6 w-6 scale-150" />
@@ -74,7 +74,7 @@ export function ExpandableChatDemo() {
         }
       >
         <ExpandableChatHeader className="flex-col text-center justify-center">
-          <h1 className="text-xl font-semibold">AI-powered UI ✨</h1>
+          <h1 className="text-xl font-semibold">Real-time UI ✨</h1>
           <p className="text-sm text-muted-foreground">
             Tell it what you want to do: create user, assign tasks etc
           </p>

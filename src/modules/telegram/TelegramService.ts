@@ -3,8 +3,7 @@ import OpenAI from "openai";
 import { TelegramRPC } from "vovk-client";
 import { createClient } from "redis";
 import { openai as vercelOpenAI } from "@ai-sdk/openai";
-import { generateObject, generateText, jsonSchema, tool } from "ai";
-import { CoreMessage } from "ai";
+import { generateObject, generateText, jsonSchema, ModelMessage, tool } from "ai";
 import { createLLMTools, KnownAny } from "vovk";
 import UserController from "../user/UserController";
 import TaskController from "../task/TaskController";
@@ -18,18 +17,8 @@ const redis = createClient({
 redis.on("error", (err) => console.error("Redis Client Error", err));
 redis.connect().catch(console.error);
 
-// Environment variables
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-
-if (!TELEGRAM_BOT_TOKEN || !OPENAI_API_KEY) {
-  throw new Error("Missing environment variables");
-}
-
-const apiRoot = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
-
 // Initialize OpenAI (only for voice transcription)
-const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
+const openai = new OpenAI();
 
 // Constants for chat history
 const MAX_HISTORY_LENGTH = 50;
@@ -42,6 +31,13 @@ interface ChatMessage {
 }
 
 export default class TelegramService {
+  static get apiRoot() {
+    const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+    if (!TELEGRAM_BOT_TOKEN) {
+      throw new Error("Missing TELEGRAM_BOT_TOKEN environment variable");
+    }
+    return `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
+  }
   // Helper function to get chat history key
   private static getChatHistoryKey(chatId: number): string {
     return `tg_chatbot:${chatId}:history`;
@@ -90,9 +86,9 @@ export default class TelegramService {
   // Convert chat history to Vercel AI SDK format
   private static formatHistoryForVercelAI(
     history: ChatMessage[],
-  ): CoreMessage[] {
+  ): ModelMessage[] {
     return history.map(
-      (msg): CoreMessage => ({
+      (msg): ModelMessage => ({
         role: msg.role,
         content: msg.content,
       }),
@@ -101,6 +97,7 @@ export default class TelegramService {
 
   // Helper function to download file from Telegram
   static async downloadTelegramFile(filePath: string): Promise<BlobPart> {
+    const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
     const fileUrl = `https://api.telegram.org/file/bot${TELEGRAM_BOT_TOKEN}/${filePath}`;
     const response = await fetch(fileUrl);
     if (!response.ok) {
@@ -116,7 +113,7 @@ export default class TelegramService {
         chat_id: chatId,
         action: "typing",
       },
-      apiRoot,
+      apiRoot: this.apiRoot,
     });
   }
 
@@ -124,7 +121,7 @@ export default class TelegramService {
   private static async sendMessage(
     chatId: number,
     text: string,
-    messages: CoreMessage[],
+    messages: ModelMessage[],
   ): Promise<void> {
     const {
       object: { type, processedText },
@@ -164,7 +161,7 @@ export default class TelegramService {
         text: text,
         parse_mode: "html",
       },
-      apiRoot,
+      apiRoot: this.apiRoot,
     });
   }
 
@@ -177,7 +174,7 @@ export default class TelegramService {
         chat_id: chatId,
         photo: photoUrl,
       },
-      apiRoot,
+      apiRoot: this.apiRoot,
     });
   }
 
@@ -208,7 +205,7 @@ export default class TelegramService {
       // Send the voice message
       await TelegramRPC.sendVoice({
         body: formData,
-        apiRoot,
+        apiRoot: this.apiRoot,
       });
     } catch (error) {
       console.error("Error generating voice message:", error);
@@ -222,7 +219,7 @@ export default class TelegramService {
     chatId: number,
     userMessage: string,
     systemPrompt: string,
-  ): Promise<{ botResponse: string; messages: CoreMessage[] }> {
+  ): Promise<{ botResponse: string; messages: ModelMessage[] }> {
     // Add user message to history
     await this.addToHistory(chatId, "user", userMessage);
 
@@ -326,7 +323,7 @@ export default class TelegramService {
       // Get file info from Telegram
       const { result: fileInfo } = await TelegramRPC.getFile({
         body: { file_id: fileId },
-        apiRoot,
+        apiRoot: this.apiRoot,
       });
 
       // Download the voice file
