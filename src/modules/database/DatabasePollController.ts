@@ -1,9 +1,9 @@
 import { EntityType } from "@prisma/client";
 import { get, JSONLinesResponse, prefix, VovkIteration } from "vovk";
-import { withZod } from "vovk-zod/v3";
-import { z } from "zod/v3";
+import { z } from "zod";
 import DatabasePollService from "./DatabasePollService";
-import { TaskModel, UserModel } from "@/zod";
+import { TaskSchema, UserSchema } from "../../../prisma/generated/schemas";
+import { withZod } from "@/lib/withZod";
 
 @prefix("poll")
 export default class DatabasePollController {
@@ -11,12 +11,12 @@ export default class DatabasePollController {
   static poll = withZod({
     iteration: z.union([
       z.object({
-        id: z.string().uuid(),
-        entityType: z.nativeEnum(EntityType),
+        id: z.uuid(),
+        entityType: z.enum(EntityType),
         __isDeleted: z.boolean().optional(),
       }),
-      UserModel,
-      TaskModel,
+      UserSchema,
+      TaskSchema,
     ]),
     async handle(req) {
       const response = new JSONLinesResponse<

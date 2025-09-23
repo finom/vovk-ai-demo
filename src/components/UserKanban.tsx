@@ -14,11 +14,12 @@ import { useMemo, useId, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { TaskRPC } from "vovk-client";
-import { TaskModelType, useRegistry, UserModelType } from "@/registry";
+import { useRegistry } from "@/registry";
 import { useShallow } from "zustand/shallow";
 import { TaskStatus } from "@prisma/client";
 import TaskDialog from "./TaskDialog";
 import { useQuery } from "@tanstack/react-query";
+import { TaskModelType, UserModelType } from "../../prisma/generated/schemas";
 
 // Utils function
 function cn(...classes: (string | undefined | null | boolean)[]): string {

@@ -1,8 +1,8 @@
 import { EntityType } from "@prisma/client";
 
 export interface BaseEntity {
-  id: string & { e: string };
-  createdAt: Date;
-  updatedAt: Date;
+  id: string;
+  createdAt: string | Date;
+  updatedAt: string | Date;
   entityType: EntityType;
 }

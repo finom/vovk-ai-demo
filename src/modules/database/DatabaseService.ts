@@ -13,7 +13,7 @@ if (!process.env.VERCEL_ENV) {
 }
 
 export default class DatabaseService {
-  static get client() {
+  static get prisma() {
     return (this.#client ??= this.getClient());
   }
   static #client: ReturnType<typeof DatabaseService.getClient> | null = null;

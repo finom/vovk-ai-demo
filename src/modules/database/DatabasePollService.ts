@@ -37,7 +37,7 @@ export default class PollService {
         );
 
         if (new Date(maxDateItem.date).getTime() > asOldAs.getTime()) {
-          void DatabaseService.client[maxDateItem.entityType as "user"]
+          void DatabaseService.prisma[maxDateItem.entityType as "user"]
             .findMany({
               where: {
                 updatedAt: {

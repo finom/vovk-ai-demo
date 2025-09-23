@@ -14,7 +14,7 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { type TaskModelType, useRegistry } from "@/registry";
+import { useRegistry } from "@/registry";
 import { TaskRPC } from "vovk-client";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
@@ -32,6 +32,7 @@ import {
 import { TaskStatus } from "@prisma/client";
 import { Textarea } from "./ui/textarea";
 import { BASE_KEYS } from "@/constants";
+import { TaskModelType } from "../../prisma/generated/schemas";
 
 interface Props {
   taskId: TaskModelType["id"] | null;

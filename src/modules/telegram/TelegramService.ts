@@ -237,6 +237,7 @@ export default class TelegramService {
       onError: (e) => console.error("Error", e),
     });
 
+
     // Generate a response using Vercel AI SDK
     const { text } = await generateText({
       model: vercelOpenAI("gpt-5"),

@@ -11,6 +11,9 @@ const { tools: llmTools } = createLLMTools({
   modules: { TaskRPC, UserRPC },
 });
 
+    console.log('llmTools', llmTools)
+
+
 const RealTimeDemo = () => {
   // State for voice selection
   const [voice] = useState<"ash" | "ballad" | "coral" | "sage" | "verse">(

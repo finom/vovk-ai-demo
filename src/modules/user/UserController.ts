@@ -1,9 +1,9 @@
 import { prefix, get, put, post, del, operation } from "vovk";
-import { withZod } from "vovk-zod/v3";
 import UserService from "./UserService";
-import { UserModel } from "@/zod";
-import { z } from "zod/v3";
+import { z } from "zod";
 import { BASE_FIELDS } from "@/constants";
+import { UserSchema } from "../../../prisma/generated/schemas";
+import { withZod } from "@/lib/withZod";
 
 @prefix("users")
 export default class UserController {
@@ -34,7 +34,7 @@ export default class UserController {
   })
   @post()
   static createUser = withZod({
-    body: UserModel.omit(BASE_FIELDS),
+    body: UserSchema.omit(BASE_FIELDS),
     handle: async ({ vovk }) => UserService.createUser(await vovk.body()),
   });
 
@@ -46,8 +46,8 @@ export default class UserController {
   })
   @put("{id}")
   static updateUser = withZod({
-    body: UserModel.omit(BASE_FIELDS),
-    params: UserModel.pick({ id: true }),
+    body: UserSchema.omit(BASE_FIELDS).partial(),
+    params: UserSchema.pick({ id: true }),
     handle: async ({ vovk }) =>
       UserService.updateUser(vovk.params().id, await vovk.body()),
   });
@@ -59,7 +59,7 @@ export default class UserController {
   })
   @del("{id}")
   static deleteUser = withZod({
-    params: UserModel.pick({ id: true }),
+    params: UserSchema.pick({ id: true }),
     handle: async ({ vovk }) => UserService.deleteUser(vovk.params().id),
   });
 }

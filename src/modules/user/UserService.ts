@@ -3,10 +3,10 @@ import type UserController from "./UserController";
 import DatabaseService from "../database/DatabaseService";
 
 export default class UserService {
-  static getUsers = () => DatabaseService.client.user.findMany();
+  static getUsers = () => DatabaseService.prisma.user.findMany();
 
   static findUsers = async (search: string) =>
-    DatabaseService.client.user.findMany({
+    DatabaseService.prisma.user.findMany({
       where: {
         OR: [
           { id: search },
@@ -17,7 +17,7 @@ export default class UserService {
     });
 
   static createUser = (data: VovkBody<typeof UserController.createUser>) =>
-    DatabaseService.client.user.create({
+    DatabaseService.prisma.user.create({
       data: {
         ...data,
         imageUrl: `https://i.pravatar.cc/300?u=${data.email}`,
@@ -28,7 +28,7 @@ export default class UserService {
     id: VovkParams<typeof UserController.updateUser>["id"],
     data: VovkBody<typeof UserController.updateUser>,
   ) =>
-    DatabaseService.client.user.update({
+    DatabaseService.prisma.user.update({
       where: { id },
       data,
     });
@@ -36,7 +36,7 @@ export default class UserService {
   static deleteUser = async (
     id: VovkParams<typeof UserController.updateUser>["id"],
   ) =>
-    Object.assign(await DatabaseService.client.user.delete({ where: { id } }), {
+    Object.assign(await DatabaseService.prisma.user.delete({ where: { id } }), {
       __isDeleted: true,
     });
 }

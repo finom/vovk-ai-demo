@@ -9,9 +9,8 @@ generator client {
 }
 
 generator zod {
-  provider      = "zod-prisma"
-  output        = "../src/zod"
-  relationModel = false
+  provider      = "prisma-zod-generator"
+  config   = "./zod-generator.config.json"
 }
 
 datasource db {
@@ -21,9 +20,13 @@ datasource db {
 }
 
 model User {
-  id         String     @id @default(uuid()) /// @zod.custom(z.string().uuid().transform((val) => val as string & { e: typeof EntityType.user }))
-  entityType EntityType @default(user) /// @zod.custom(z.literal(EntityType.user))
+  /// @zod.custom.use(z.uuid().brand<Extract<z.infer<typeof EntityTypeSchema>, 'user'>>())
+  id         String     @id @default(uuid())
+  /// @zod.custom.use(z.literal('user'))
+  entityType EntityType @default(user)
+  /// @zod.custom.use(z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/))
   createdAt  DateTime   @default(now())
+  /// @zod.custom.use(z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/))
   updatedAt  DateTime   @default(now()) @updatedAt
 
   fullName   String
@@ -34,15 +37,18 @@ model User {
 }
 
 model Task {
-  id         String     @id @default(uuid()) /// @zod.custom(z.string().uuid().transform((val) => val as string & { e: typeof EntityType.task }))
-  entityType EntityType @default(task) /// @zod.custom(z.literal(EntityType.task))
+  /// @zod.custom.use(z.uuid().brand<Extract<z.infer<typeof EntityTypeSchema>, 'task'>>())
+  id         String     @id @default(uuid())
+  /// @zod.custom.use(z.literal('task'))
+  entityType EntityType @default(task)
+  /// @zod.custom.use(z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/))
   createdAt  DateTime   @default(now())
+  /// @zod.custom.use(z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/))
   updatedAt  DateTime   @default(now()) @updatedAt
 
   title      String
   description String
   status     TaskStatus @default(TODO)
-  /// @zod.custom(z.string().uuid().transform((val) => val as string & { e: typeof EntityType.user }))
   userId     String
 
   user       User       @relation(fields: [userId], references: [id])

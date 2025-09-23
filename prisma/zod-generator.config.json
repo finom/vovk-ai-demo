@@ -1,0 +1,10 @@
+{
+  "mode": "minimal",
+  "pureModels": true,
+  "dateTimeStrategy": "date",
+  "variants": {
+    "pure": { "enabled": true },
+    "input": { "enabled": false },
+    "result": { "enabled": false }
+  }
+}

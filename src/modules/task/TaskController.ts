@@ -1,9 +1,9 @@
 import { prefix, get, put, post, del, operation } from "vovk";
-import { withZod } from "vovk-zod/v3";
 import TaskService from "./TaskService";
-import { TaskModel } from "@/zod";
-import { z } from "zod/v3";
+import { z } from "zod";
 import { BASE_FIELDS } from "@/constants";
+import { TaskSchema } from "../../../prisma/generated/schemas";
+import { withZod } from "@/lib/withZod";
 
 @prefix("tasks")
 export default class TaskController {
@@ -33,7 +33,7 @@ export default class TaskController {
   })
   @post()
   static createTask = withZod({
-    body: TaskModel.omit(BASE_FIELDS),
+    body: TaskSchema.omit(BASE_FIELDS),
     handle: async ({ vovk }) => TaskService.createTask(await vovk.body()),
   });
   @operation({
@@ -44,8 +44,8 @@ export default class TaskController {
   })
   @put("{id}")
   static updateTask = withZod({
-    body: TaskModel.omit(BASE_FIELDS).partial(),
-    params: TaskModel.pick({ id: true }),
+    body: TaskSchema.omit(BASE_FIELDS).partial(),
+    params: TaskSchema.pick({ id: true }),
     handle: async ({ vovk }) =>
       TaskService.updateTask(vovk.params().id, await vovk.body()),
   });
@@ -56,7 +56,7 @@ export default class TaskController {
   })
   @del("{id}")
   static deleteTask = withZod({
-    params: TaskModel.pick({ id: true }),
+    params: TaskSchema.pick({ id: true }),
     handle: async ({ vovk }) => TaskService.deleteTask(vovk.params().id),
   });
 }

@@ -1,12 +1,8 @@
 import { EntityType } from "@prisma/client";
-import { z } from "zod/v3";
 import { create } from "zustand";
 import fastDeepEqual from "fast-deep-equal";
-import { TaskModel, UserModel } from "./zod";
 import { BaseEntity } from "./types";
-
-export type UserModelType = z.infer<typeof UserModel>;
-export type TaskModelType = z.infer<typeof TaskModel>;
+import { TaskModelType, UserModelType } from "../prisma/generated/schemas";
 
 // Utility type to convert record to array
 type RecordsToArrays<T> = {

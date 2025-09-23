@@ -22,6 +22,7 @@
         "findUsers": {
           "validation": {
             "query": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
               "type": "object",
               "properties": {
                 "search": {
@@ -31,8 +32,7 @@
               "required": [
                 "search"
               ],
-              "additionalProperties": false,
-              "$schema": "http://json-schema.org/draft-07/schema#"
+              "additionalProperties": false
             }
           },
           "operationObject": {
@@ -46,6 +46,7 @@
         "createUser": {
           "validation": {
             "body": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
               "type": "object",
               "properties": {
                 "fullName": {
@@ -55,9 +56,13 @@
                   "type": "string"
                 },
                 "imageUrl": {
-                  "type": [
-                    "string",
-                    "null"
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
                   ]
                 }
               },
@@ -65,8 +70,7 @@
                 "fullName",
                 "email"
               ],
-              "additionalProperties": false,
-              "$schema": "http://json-schema.org/draft-07/schema#"
+              "additionalProperties": false
             }
           },
           "operationObject": {
@@ -80,6 +84,7 @@
         "updateUser": {
           "validation": {
             "body": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
               "type": "object",
               "properties": {
                 "fullName": {
@@ -89,32 +94,32 @@
                   "type": "string"
                 },
                 "imageUrl": {
-                  "type": [
-                    "string",
-                    "null"
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
                   ]
                 }
               },
-              "required": [
-                "fullName",
-                "email"
-              ],
-              "additionalProperties": false,
-              "$schema": "http://json-schema.org/draft-07/schema#"
+              "additionalProperties": false
             },
             "params": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
               "type": "object",
               "properties": {
                 "id": {
                   "type": "string",
-                  "format": "uuid"
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 }
               },
               "required": [
                 "id"
               ],
-              "additionalProperties": false,
-              "$schema": "http://json-schema.org/draft-07/schema#"
+              "additionalProperties": false
             }
           },
           "operationObject": {
@@ -128,18 +133,19 @@
         "deleteUser": {
           "validation": {
             "params": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
               "type": "object",
               "properties": {
                 "id": {
                   "type": "string",
-                  "format": "uuid"
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 }
               },
               "required": [
                 "id"
               ],
-              "additionalProperties": false,
-              "$schema": "http://json-schema.org/draft-07/schema#"
+              "additionalProperties": false
             }
           },
           "operationObject": {
@@ -170,6 +176,7 @@
         "findTasks": {
           "validation": {
             "query": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
               "type": "object",
               "properties": {
                 "search": {
@@ -179,8 +186,7 @@
               "required": [
                 "search"
               ],
-              "additionalProperties": false,
-              "$schema": "http://json-schema.org/draft-07/schema#"
+              "additionalProperties": false
             }
           },
           "operationObject": {
@@ -194,6 +200,7 @@
         "createTask": {
           "validation": {
             "body": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
               "type": "object",
               "properties": {
                 "title": {
@@ -203,6 +210,7 @@
                   "type": "string"
                 },
                 "status": {
+                  "default": "TODO",
                   "type": "string",
                   "enum": [
                     "TODO",
@@ -212,8 +220,7 @@
                   ]
                 },
                 "userId": {
-                  "type": "string",
-                  "format": "uuid"
+                  "type": "string"
                 }
               },
               "required": [
@@ -222,8 +229,7 @@
                 "status",
                 "userId"
               ],
-              "additionalProperties": false,
-              "$schema": "http://json-schema.org/draft-07/schema#"
+              "additionalProperties": false
             }
           },
           "operationObject": {
@@ -237,6 +243,7 @@
         "updateTask": {
           "validation": {
             "body": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
               "type": "object",
               "properties": {
                 "title": {
@@ -246,6 +253,7 @@
                   "type": "string"
                 },
                 "status": {
+                  "default": "TODO",
                   "type": "string",
                   "enum": [
                     "TODO",
@@ -255,26 +263,25 @@
                   ]
                 },
                 "userId": {
-                  "type": "string",
-                  "format": "uuid"
+                  "type": "string"
                 }
               },
-              "additionalProperties": false,
-              "$schema": "http://json-schema.org/draft-07/schema#"
+              "additionalProperties": false
             },
             "params": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
               "type": "object",
               "properties": {
                 "id": {
                   "type": "string",
-                  "format": "uuid"
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 }
               },
               "required": [
                 "id"
               ],
-              "additionalProperties": false,
-              "$schema": "http://json-schema.org/draft-07/schema#"
+              "additionalProperties": false
             }
           },
           "operationObject": {
@@ -288,18 +295,19 @@
         "deleteTask": {
           "validation": {
             "params": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
               "type": "object",
               "properties": {
                 "id": {
                   "type": "string",
-                  "format": "uuid"
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 }
               },
               "required": [
                 "id"
               ],
-              "additionalProperties": false,
-              "$schema": "http://json-schema.org/draft-07/schema#"
+              "additionalProperties": false
             }
           },
           "operationObject": {
@@ -320,7 +328,7 @@
         "session": {
           "validation": {
             "query": {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "$schema": "http://json-schema.org/draft-07/schema#",
               "type": "object",
               "properties": {
                 "voice": {
@@ -353,13 +361,15 @@
         "poll": {
           "validation": {
             "iteration": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
               "anyOf": [
                 {
                   "type": "object",
                   "properties": {
                     "id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                     },
                     "entityType": {
                       "type": "string",
@@ -383,19 +393,21 @@
                   "properties": {
                     "id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                     },
                     "entityType": {
+                      "default": "user",
                       "type": "string",
                       "const": "user"
                     },
                     "createdAt": {
                       "type": "string",
-                      "format": "date-time"
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z$"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "format": "date-time"
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z$"
                     },
                     "fullName": {
                       "type": "string"
@@ -404,9 +416,13 @@
                       "type": "string"
                     },
                     "imageUrl": {
-                      "type": [
-                        "string",
-                        "null"
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
                       ]
                     }
                   },
@@ -425,19 +441,21 @@
                   "properties": {
                     "id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                     },
                     "entityType": {
+                      "default": "task",
                       "type": "string",
                       "const": "task"
                     },
                     "createdAt": {
                       "type": "string",
-                      "format": "date-time"
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z$"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "format": "date-time"
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z$"
                     },
                     "title": {
                       "type": "string"
@@ -446,6 +464,7 @@
                       "type": "string"
                     },
                     "status": {
+                      "default": "TODO",
                       "type": "string",
                       "enum": [
                         "TODO",
@@ -455,8 +474,7 @@
                       ]
                     },
                     "userId": {
-                      "type": "string",
-                      "format": "uuid"
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -471,8 +489,7 @@
                   ],
                   "additionalProperties": false
                 }
-              ],
-              "$schema": "http://json-schema.org/draft-07/schema#"
+              ]
             }
           },
           "path": "",

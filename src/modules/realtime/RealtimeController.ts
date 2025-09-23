@@ -1,8 +1,8 @@
 import { prefix, get } from "vovk";
-import { withZod } from "vovk-zod";
 import { NextResponse } from "next/server";
 import { z } from "zod/v4";
 import DBEventsService from "../database/DatabaseEventsService";
+import { withZod } from "@/lib/withZod";
 
 DBEventsService.emitter.on("db_updates", (change) => {
   console.log("Database change detected:", change);

@@ -5,6 +5,7 @@ export const fetcher = createFetcher({
   transformResponse: async (data) => {
     const state = useRegistry.getState();
     if (
+      data && typeof data === "object" &&
       Symbol.asyncIterator in data &&
       "onIterate" in data &&
       typeof data.onIterate === "function"
