@@ -6,13 +6,13 @@ import { TaskStatusSchema } from '../../enums/TaskStatus.schema';
 export const TaskModelSchema = z.object({
     id: z.string(),
     entityType: EntityTypeSchema,
-    createdAt: z.date(),
-    updatedAt: z.date(),
+    createdAt: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/, "Invalid ISO datetime"),
+    updatedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/, "Invalid ISO datetime"),
     title: z.string(),
     description: z.string(),
     status: TaskStatusSchema,
     userId: z.string(),
-    user: z.unknown()
+    user: z.any()
 }).strict();
 
 export type TaskModelType = z.infer<typeof TaskModelSchema>;

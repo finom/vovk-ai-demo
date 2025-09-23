@@ -5,12 +5,12 @@ import { EntityTypeSchema } from '../../enums/EntityType.schema';
 export const UserModelSchema = z.object({
     id: z.string(),
     entityType: EntityTypeSchema,
-    createdAt: z.date(),
-    updatedAt: z.date(),
+    createdAt: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/, "Invalid ISO datetime"),
+    updatedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/, "Invalid ISO datetime"),
     fullName: z.string(),
     email: z.string(),
     imageUrl: z.string().nullable(),
-    tasks: z.array(z.unknown()).array()
+    tasks: z.array(z.any()).array()
 }).strict();
 
 export type UserModelType = z.infer<typeof UserModelSchema>;

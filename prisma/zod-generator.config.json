@@ -1,7 +1,7 @@
 {
   "mode": "minimal",
   "pureModels": true,
-  "dateTimeStrategy": "date",
+  "jsonSchemaCompatible": true,
   "variants": {
     "pure": { "enabled": true },
     "input": { "enabled": false },
