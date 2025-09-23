@@ -2,12 +2,13 @@
 import { useShallow } from "zustand/shallow";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import UserDialog from "./UserDialog";
-import { useRegistry, type UserModelType } from "@/registry";
+import { useRegistry } from "@/registry";
 import { Button } from "./ui/button";
 import { Pencil, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { UserRPC, DatabasePollRPC } from "vovk-client";
 import { useQuery } from "@tanstack/react-query";
+import { UserModelType } from "../../prisma/generated/schemas";
 
 interface Props {
   initialData: UserModelType[];

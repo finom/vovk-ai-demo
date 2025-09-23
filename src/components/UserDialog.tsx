@@ -14,13 +14,14 @@ import {
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useRegistry, type UserModelType } from "@/registry";
+import { useRegistry } from "@/registry";
 import { UserRPC } from "vovk-client";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useShallow } from "zustand/shallow";
 import { BASE_KEYS } from "@/constants";
+import { UserModelType } from "../../prisma/generated/schemas";
 
 interface Props {
   userId: UserModelType["id"] | null;
