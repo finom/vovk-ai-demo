@@ -32,10 +32,10 @@ import {
 import { TaskStatus } from "@prisma/client";
 import { Textarea } from "./ui/textarea";
 import { BASE_KEYS } from "@/constants";
-import { TaskModelType } from "../../prisma/generated/schemas";
+import { TaskType } from "../../prisma/generated/schemas/models/Task.schema";
 
 interface Props {
-  taskId: TaskModelType["id"] | null;
+  taskId: TaskType["id"] | null;
   children: React.ReactNode;
 }
 

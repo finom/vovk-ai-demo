@@ -45,6 +45,7 @@ model Task {
   title      String
   description String
   status     TaskStatus @default(TODO)
+  /// @zod.custom.use(z.string().uuid().brand<Extract<z.infer<typeof EntityTypeSchema>, 'user'>>())
   userId     String
 
   user       User       @relation(fields: [userId], references: [id])

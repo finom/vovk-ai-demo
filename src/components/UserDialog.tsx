@@ -21,10 +21,10 @@ import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useShallow } from "zustand/shallow";
 import { BASE_KEYS } from "@/constants";
-import { UserModelType } from "../../prisma/generated/schemas";
+import { UserType } from "../../prisma/generated/schemas/models/User.schema";
 
 interface Props {
-  userId: UserModelType["id"] | null;
+  userId: UserType["id"] | null;
   children?: React.ReactNode;
 }
 

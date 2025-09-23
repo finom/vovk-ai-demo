@@ -10,7 +10,7 @@ export const TaskSchema = z.object({
   title: z.string(),
   description: z.string(),
   status: TaskStatusSchema.default("TODO"),
-  userId: z.string(),
+  userId: z.string().uuid().brand<Extract<z.infer<typeof EntityTypeSchema>, 'user'>>(),
 });
 
 export type TaskType = z.infer<typeof TaskSchema>;

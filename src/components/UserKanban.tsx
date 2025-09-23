@@ -19,7 +19,8 @@ import { useShallow } from "zustand/shallow";
 import { TaskStatus } from "@prisma/client";
 import TaskDialog from "./TaskDialog";
 import { useQuery } from "@tanstack/react-query";
-import { TaskModelType, UserModelType } from "../../prisma/generated/schemas";
+import { TaskType } from "../../prisma/generated/schemas/models/Task.schema";
+import { UserType } from "../../prisma/generated/schemas/models/User.schema";
 
 // Utils function
 function cn(...classes: (string | undefined | null | boolean)[]): string {
@@ -64,7 +65,7 @@ export const KanbanBoard = ({ id, children, className }: KanbanBoardProps) => {
 export type KanbanCardProps = {
   index: number;
   parent: string;
-  task: TaskModelType;
+  task: TaskType;
   className?: string;
 };
 
@@ -80,7 +81,7 @@ export const KanbanCard = ({
       data: { index, parent },
     });
   const assignee = useRegistry(
-    useShallow((state) => state.user[task.userId] as UserModelType | undefined),
+    useShallow((state) => state.user[task.userId] as UserType | undefined),
   );
   return (
     <motion.div
@@ -224,7 +225,7 @@ export const KanbanProvider = ({
 };
 
 interface Props {
-  initialData: TaskModelType[];
+  initialData: TaskType[];
 }
 
 const UserKanban = ({ initialData }: Props) => {
@@ -258,7 +259,7 @@ const UserKanban = ({ initialData }: Props) => {
       body: {
         status,
       },
-      params: { id: active.id as TaskModelType["id"] },
+      params: { id: active.id as TaskType["id"] },
     }).catch((error) => {
       console.error("Error updating task:", error);
     });
@@ -270,7 +271,7 @@ const UserKanban = ({ initialData }: Props) => {
         acc[status] = tasks.filter((task) => task.status === status);
         return acc;
       },
-      {} as Record<string, TaskModelType[]>,
+      {} as Record<string, TaskType[]>,
     );
   }, [statuses, tasks]);
 

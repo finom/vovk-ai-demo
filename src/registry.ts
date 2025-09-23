@@ -2,7 +2,8 @@ import { EntityType } from "@prisma/client";
 import { create } from "zustand";
 import fastDeepEqual from "fast-deep-equal";
 import { BaseEntity } from "./types";
-import { TaskModelType, UserModelType } from "../prisma/generated/schemas";
+import { UserType } from "../prisma/generated/schemas/models/User.schema";
+import { TaskType } from "../prisma/generated/schemas/models/Task.schema";
 
 // Utility type to convert record to array
 type RecordsToArrays<T> = {
@@ -23,8 +24,8 @@ interface Registry {
       RecordsToArrays<Omit<Registry, "parse" | "sync" | "values">>
     >,
   ) => RecordsToArrays<Omit<Registry, "parse" | "sync" | "values">>;
-  [EntityType.user]: Record<UserModelType["id"], UserModelType>;
-  [EntityType.task]: Record<TaskModelType["id"], TaskModelType>;
+  [EntityType.user]: Record<UserType["id"], UserType>;
+  [EntityType.task]: Record<TaskType["id"], TaskType>;
 }
 
 function getEntitiesFromResponse(

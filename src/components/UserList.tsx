@@ -8,10 +8,10 @@ import { Pencil, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { UserRPC, DatabasePollRPC } from "vovk-client";
 import { useQuery } from "@tanstack/react-query";
-import { UserModelType } from "../../prisma/generated/schemas";
+import { UserType } from "../../prisma/generated/schemas/models/User.schema";
 
 interface Props {
-  initialData: UserModelType[];
+  initialData: UserType[];
 }
 
 const UserList = ({ initialData }: Props) => {
