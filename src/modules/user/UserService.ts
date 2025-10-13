@@ -57,10 +57,11 @@ export default class UserService {
     // even though we have `ON DELETE CASCADE`, we need to delete tasks explicitly to trigger DB events
     const tasksToDelete = await DatabaseService.prisma.task.findMany({
       where: { userId: id },
+      select: { id: true },
     });
     for (const task of tasksToDelete) {
       await DatabaseService.prisma.task.delete({ where: { id: task.id } });
     }
-    return DatabaseService.prisma.user.delete({ where: { id } });
+    return DatabaseService.prisma.user.delete({ where: { id }, select: { id: true, entityType: true } });
   };
 }
