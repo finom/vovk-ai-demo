@@ -132,7 +132,7 @@ export default class TelegramService {
     const {
       object: { type, processedText },
     } = await generateObject({
-      model: vercelOpenAI("gpt-4.1"),
+      model: vercelOpenAI("gpt-5"),
       schema: z.object({
         type: z.enum(["text", "voice", "photo"]),
         processedText: z.string(),
