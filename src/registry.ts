@@ -1,9 +1,9 @@
 import { EntityType } from "@prisma/client";
 import { create } from "zustand";
 import fastDeepEqual from "fast-deep-equal";
-import { BaseEntity } from "./types";
-import { UserType } from "../prisma/generated/schemas/models/User.schema";
-import { TaskType } from "../prisma/generated/schemas/models/Task.schema";
+import type { BaseEntity } from "./types";
+import type { UserType } from "../prisma/generated/schemas/models/User.schema";
+import type { TaskType } from "../prisma/generated/schemas/models/Task.schema";
 
 // Utility type to convert record to array
 type RecordsToArrays<T> = {

@@ -14,9 +14,9 @@ if (!process.env.VERCEL_ENV) {
 
 export default class DatabaseService {
   static get prisma() {
-    return (this.#client ??= this.getClient());
+    return (this.#prisma ??= this.getClient());
   }
-  static #client: ReturnType<typeof DatabaseService.getClient> | null = null;
+  static #prisma: ReturnType<typeof DatabaseService.getClient> | null = null;
 
   private static getClient() {
     const adapter = new PrismaNeon({
@@ -31,7 +31,7 @@ export default class DatabaseService {
       query: {
         $allModels: {
           async $allOperations({ model, operation, args, query }) {
-            const result = (await query(args)) as BaseEntity;
+            let result = (await query(args)) as BaseEntity;
             if (!result?.entityType) return result;
 
             const now = new Date().toISOString();
@@ -58,7 +58,11 @@ export default class DatabaseService {
                 break;
 
               case "delete":
-                if (result.id) changes.push(makeChange(result, "delete"));
+                if (result.id) {
+                  changes.push(makeChange(result, "delete"));
+                  // Automatically add __isDeleted flag to deletion results
+                  result = Object.assign(result, { __isDeleted: true });
+                }
                 break;
 
               // other operations like deleteMany should be implemented separately

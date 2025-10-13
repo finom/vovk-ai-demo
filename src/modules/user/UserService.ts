@@ -5,7 +5,7 @@ import DatabaseService from "../database/DatabaseService";
 export default class UserService {
   static getUsers = () => DatabaseService.prisma.user.findMany();
 
-  static findUsers = async (search: string) =>
+  static findUsers = (search: string) =>
     DatabaseService.prisma.user.findMany({
       where: {
         OR: [
@@ -33,10 +33,7 @@ export default class UserService {
       data,
     });
 
-  static deleteUser = async (
+  static deleteUser = (
     id: VovkParams<typeof UserController.updateUser>["id"],
-  ) =>
-    Object.assign(await DatabaseService.prisma.user.delete({ where: { id } }), {
-      __isDeleted: true,
-    });
+  ) => DatabaseService.prisma.user.delete({ where: { id } });
 }

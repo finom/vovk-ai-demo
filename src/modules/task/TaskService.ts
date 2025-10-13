@@ -5,7 +5,7 @@ import DatabaseService from "../database/DatabaseService";
 export default class TaskService {
   static getTasks = () => DatabaseService.prisma.task.findMany();
 
-  static findTasks = async (search: string) =>
+  static findTasks = (search: string) =>
     DatabaseService.prisma.task.findMany({
       where: {
         OR: [
@@ -21,7 +21,7 @@ export default class TaskService {
       data,
     });
 
-  static updateTask = async (
+  static updateTask = (
     id: VovkParams<typeof TaskController.updateTask>["id"],
     data: VovkBody<typeof TaskController.updateTask>,
   ) =>
@@ -30,10 +30,7 @@ export default class TaskService {
       data,
     });
 
-  static deleteTask = async (
+  static deleteTask = (
     id: VovkParams<typeof TaskController.deleteTask>["id"],
-  ) =>
-    Object.assign(await DatabaseService.prisma.task.delete({ where: { id } }), {
-      __isDeleted: true,
-    });
+  ) => DatabaseService.prisma.task.delete({ where: { id } });
 }

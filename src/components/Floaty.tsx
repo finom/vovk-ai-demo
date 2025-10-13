@@ -62,33 +62,5 @@ const Floaty = ({
     </div>
   );
 };
-/*
-const FloatyExample = () => {
-  const [showCircle, setShowCircle] = useState(false);
-  const { currentVolume, isSessionActive, handleStartStopClick } = useWebRTCAudioSession('ash');
- 
-  const handleButtonClick = () => {
-    setShowCircle(!showCircle);
-  };
- 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-full gap-4">
-      <button
-        onClick={handleButtonClick}
-        className="px-4 py-2 rounded-lg text-sm shadow-md focus:outline-none border hover:bg-primary-dark transition-colors duration-200 ease-in-out"
-      >
-        Toggle Floaty
-      </button>
-      <p className="text-sm text-muted-foreground">Click to toggle floaty in bottom right corner of the screen.</p>
-      {showCircle && (
-        <FloatingCircle 
-          isActive={isSessionActive} 
-          volumeLevel={currentVolume} 
-          handleClick={handleStartStopClick} 
-        />
-      )}
-    </div>
-  );
-}
- */
+
 export default Floaty;
