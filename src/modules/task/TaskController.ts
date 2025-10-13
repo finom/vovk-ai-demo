@@ -2,7 +2,7 @@ import { prefix, get, put, post, del, operation } from "vovk";
 import TaskService from "./TaskService";
 import { z } from "zod";
 import { BASE_FIELDS } from "@/constants";
-import { TaskSchema } from "../../../prisma/generated/schemas";
+import { TaskSchema, UserSchema } from "../../../prisma/generated/schemas";
 import { withZod } from "@/lib/withZod";
 
 @prefix("tasks")
@@ -21,16 +21,23 @@ export default class TaskController {
       "Retrieves tasks that match the provided ID, title, or description. Used to search the tasks when they need to be updated or deleted.",
     "x-tool-successMessage": "Tasks found successfully",
   })
-  @get("find")
+  @get("search")
   static findTasks = withZod({
     query: z.object({ search: z.string() }),
     handle: async ({ vovk }) => TaskService.findTasks(vovk.query().search),
   });
+
   @operation({
-    summary: "Create task",
-    description: "Creates a new task with the provided details.",
-    "x-tool-successMessage": "Task created successfully",
+    summary: "Get tasks assigned to a specific user",
+    description: "Retrieves all tasks associated with a specific user ID.",
+    "x-tool-successMessage": "Tasks retrieved successfully",
   })
+  @get("by-user/{userId}")
+  static getTasksByUserId = withZod({
+    params: z.object({ userId: UserSchema.shape.id }),
+    handle: async ({ vovk }) => TaskService.getTasksByUserId(vovk.params().userId),
+  });
+
   @post()
   static createTask = withZod({
     body: TaskSchema.omit(BASE_FIELDS),

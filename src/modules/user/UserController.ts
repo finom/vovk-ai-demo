@@ -21,7 +21,7 @@ export default class UserController {
       "Retrieves users that match the provided ID, full name, or email. Used to search the users when they need to be updated or deleted.",
     "x-tool-successMessage": "Users found successfully",
   })
-  @get("find")
+  @get("search")
   static findUsers = withZod({
     query: z.object({ search: z.string() }),
     handle: ({ vovk }) => UserService.findUsers(vovk.query().search),

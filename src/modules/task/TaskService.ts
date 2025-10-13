@@ -4,6 +4,7 @@ import DatabaseService from "../database/DatabaseService";
 import EmbeddingService from "../embedding/EmbeddingService";
 import { TaskType } from "../../../prisma/generated/schemas/models/Task.schema";
 import { EntityType } from "@prisma/client";
+import { UserType } from "../../../prisma/generated/schemas/models/User.schema";
 
 export default class TaskService {
   static getTasks = () => DatabaseService.prisma.task.findMany();
@@ -19,6 +20,11 @@ export default class TaskService {
         ],
       },
     }); */
+
+  static getTasksByUserId = (userId: UserType['id']) =>
+    DatabaseService.prisma.task.findMany({
+      where: { userId },
+    });
 
   static createTask = async (
     data: VovkBody<typeof TaskController.createTask>,
