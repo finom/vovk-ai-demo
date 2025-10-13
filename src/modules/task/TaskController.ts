@@ -10,7 +10,7 @@ export default class TaskController {
   @operation({
     summary: "Get all tasks",
     description: "Retrieves a list of all tasks.",
-    "x-tool-disabled": true, // Make it to be used as an endpoint only, excluding from the list of available tools
+    "x-tool-disable": true, // Make it to be used as an endpoint only, excluding from the list of available tools
   })
   @get()
   static getTasks = withZod({ handle: TaskService.getTasks });

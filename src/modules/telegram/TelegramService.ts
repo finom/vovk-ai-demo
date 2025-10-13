@@ -243,7 +243,10 @@ export default class TelegramService {
       onError: (e) => console.error("Error", e),
     });
 
-    console.log('TOOLS', tools.map((t) => t.name));
+    console.log(
+      "TOOLS",
+      tools.map((t) => t.name),
+    );
 
     // Generate a response using Vercel AI SDK
     const { text } = await generateText({

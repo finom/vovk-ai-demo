@@ -49,5 +49,9 @@ export default class TaskService {
 
   static deleteTask = (
     id: VovkParams<typeof TaskController.deleteTask>["id"],
-  ) => DatabaseService.prisma.task.delete({ where: { id }, select: { id: true, entityType: true } });
+  ) =>
+    DatabaseService.prisma.task.delete({
+      where: { id },
+      select: { id: true, entityType: true },
+    });
 }

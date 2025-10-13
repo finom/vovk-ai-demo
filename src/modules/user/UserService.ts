@@ -4,6 +4,8 @@ import DatabaseService from "../database/DatabaseService";
 import EmbeddingService from "../embedding/EmbeddingService";
 import { UserType } from "../../../prisma/generated/schemas/models/User.schema";
 import { EntityType } from "@prisma/client";
+import TaskService from "../task/TaskService";
+import { TaskType } from "../../../prisma/generated/schemas/models/Task.schema";
 
 export default class UserService {
   static getUsers = () => DatabaseService.prisma.user.findMany();
@@ -60,7 +62,7 @@ export default class UserService {
       select: { id: true },
     });
     for (const task of tasksToDelete) {
-      await DatabaseService.prisma.task.delete({ where: { id: task.id } });
+      await TaskService.deleteTask(task.id as TaskType["id"]);
     }
     return DatabaseService.prisma.user.delete({ where: { id }, select: { id: true, entityType: true } });
   };

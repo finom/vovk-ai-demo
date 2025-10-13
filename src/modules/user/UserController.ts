@@ -10,7 +10,7 @@ export default class UserController {
   @operation({
     summary: "Get all users",
     description: "Retrieves a list of all users.",
-    "x-tool-disabled": true, // Make it to be used as an endpoint only, excluding from the list of available tools
+    "x-tool-disable": true, // Make it to be used as an endpoint only, excluding from the list of available tools
   })
   @get()
   static getUsers = withZod({ handle: UserService.getUsers });
