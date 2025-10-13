@@ -4,6 +4,8 @@ import "dotenv/config";
 
 const { camelCase, startCase } = _;
 
+console.log('process.env.VERCEL', process.env.VERCEL);
+
 /** @type {import('vovk').VovkConfig} */
 const config = {
   generatorConfig: {
