@@ -253,7 +253,7 @@ export default class TelegramService {
       tools: {
         ...Object.fromEntries(
           tools.map(({ name, execute, description, parameters }) => [
-            (console.log(name, parameters), name),
+            name,
             tool<KnownAny, KnownAny>({
               execute,
               description,
