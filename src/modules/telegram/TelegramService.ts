@@ -238,8 +238,8 @@ export default class TelegramService {
         TaskController,
         // GithubIssuesRPC: [GithubIssuesRPC, githubOptions],
       },
-      onExecute: (_d, { moduleName, handlerName }) =>
-        console.log(`${moduleName}.${handlerName} executed`),
+      onExecute: (data, { moduleName, handlerName }) =>
+        console.log(`${moduleName}.${handlerName} executed`, data),
       onError: (e) => console.error("Error", e),
     });
 
