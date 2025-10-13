@@ -64,6 +64,8 @@ const UserDialog = ({ userId, children }: Props) => {
                 } else {
                   await UserRPC.createUser({ body });
                 }
+
+                setOpen(false);
               } catch (error) {
                 console.error(error);
               }
@@ -109,8 +111,9 @@ const UserDialog = ({ userId, children }: Props) => {
                 variant="ghost"
                 size="icon"
                 className="h-6 w-6 text-destructive hover:text-destructive cursor-pointer mr-auto self-center"
-                onMouseDown={(e) => {
+                onClick={(e) => {
                   e.stopPropagation();
+                  e.preventDefault();
                   UserRPC.deleteUser({
                     params: { id: userId },
                   })

@@ -46,16 +46,6 @@ export default class EmbeddingService {
       entityId,
     );
 
-    console.log(
-      "embedding",
-      embedding,
-      "for",
-      entityType,
-      Object.values(omit(entity, BASE_KEYS))
-        .filter((v) => typeof v === "string")
-        .join(" "),
-    );
-
     return embedding;
   };
 

@@ -51,7 +51,16 @@ export default class UserService {
     return user;
   };
 
-  static deleteUser = (
+  static deleteUser = async (
     id: VovkParams<typeof UserController.updateUser>["id"],
-  ) => DatabaseService.prisma.user.delete({ where: { id } });
+  ) => {
+    // even though we have `ON DELETE CASCADE`, we need to delete tasks explicitly to trigger DB events
+    const tasksToDelete = await DatabaseService.prisma.task.findMany({
+      where: { userId: id },
+    });
+    for (const task of tasksToDelete) {
+      await DatabaseService.prisma.task.delete({ where: { id: task.id } });
+    }
+    return DatabaseService.prisma.user.delete({ where: { id } });
+  };
 }

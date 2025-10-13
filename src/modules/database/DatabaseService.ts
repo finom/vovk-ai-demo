@@ -31,8 +31,7 @@ export default class DatabaseService {
       query: {
         $allModels: {
           async $allOperations({ model, operation, args, query }) {
-            let result = (await query(args)) as BaseEntity;
-            if (!result?.entityType) return result;
+            const result = (await query(args)) as BaseEntity | BaseEntity[];
 
             const now = new Date().toISOString();
             const changes: DBChange[] = [];
@@ -50,22 +49,29 @@ export default class DatabaseService {
 
             switch (operation) {
               case "create":
-                if (result.id) changes.push(makeChange(result, "create"));
+                if ("entityType" in result)
+                  changes.push(makeChange(result, "create"));
                 break;
 
               case "update":
-                if (result.id) changes.push(makeChange(result, "update"));
+                if ("entityType" in result)
+                  changes.push(makeChange(result, "update"));
                 break;
 
               case "delete":
-                if (result.id) {
+                if ("entityType" in result) {
                   changes.push(makeChange(result, "delete"));
                   // Automatically add __isDeleted flag to deletion results
-                  result = Object.assign(result, { __isDeleted: true });
+                  Object.assign(result, { __isDeleted: true });
                 }
                 break;
 
-              // other operations like deleteMany should be implemented separately
+              case "findMany":
+              case "findUnique":
+              case "findFirst":
+              case "count":
+                // no events
+                break;
 
               default:
                 console.warn(
