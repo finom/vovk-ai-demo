@@ -4,12 +4,10 @@ import "dotenv/config";
 
 const { camelCase, startCase } = _;
 
-console.log('process.env.VERCEL', process.env.VERCEL);
-
 /** @type {import('vovk').VovkConfig} */
 const config = {
   generatorConfig: {
-    origin: process.env.VERCEL
+    origin: process.env.VERCEL_ENV
       ? `https://vovk-ai-demo.vercel.app`
       : "http://localhost:3000",
     imports: {

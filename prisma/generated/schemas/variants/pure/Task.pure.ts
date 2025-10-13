@@ -1,7 +1,7 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { EntityTypeSchema } from "../../enums/EntityType.schema";
-import { TaskStatusSchema } from "../../enums/TaskStatus.schema";
+import { EntityTypeSchema } from '../../enums/EntityType.schema';
+import { TaskStatusSchema } from '../../enums/TaskStatus.schema';
 // prettier-ignore
 export const TaskModelSchema = z.object({
     id: z.string(),

@@ -6,17 +6,6 @@
         "target": "draft-07"
       }
     },
-    "generatorConfig": {
-      "origin": "http://localhost:3000",
-      "imports": {
-        "validateOnClient": "vovk-ajv",
-        "fetcher": "./src/lib/fetcher.ts"
-      },
-      "segments": {
-        "github": {},
-        "telegram": {}
-      }
-    },
     "$schema": "https://vovk.dev/api/schema/v3/config.json"
   }
 }

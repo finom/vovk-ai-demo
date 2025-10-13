@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { EntityTypeSchema } from "../../enums/EntityType.schema";
+import { EntityTypeSchema } from '../../enums/EntityType.schema';
 // prettier-ignore
 export const UserModelSchema = z.object({
     id: z.string(),

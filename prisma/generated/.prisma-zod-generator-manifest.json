@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "generatorVersion": "0.1.0",
-  "generatedAt": "2025-10-13T16:09:10.687Z",
+  "generatedAt": "2025-10-13T16:45:02.321Z",
   "outputPath": "/Users/finom/Work/vovk-ai-demo/prisma/generated",
   "files": [
     "schemas/enums/TransactionIsolationLevel.schema.ts",
