@@ -27,7 +27,7 @@ const UserList = ({ initialData }: Props) => {
     queryFn: () => UserRPC.getUsers(),
   });
 
-  useEffect(() => {
+  /* useEffect(() => {
     async function poll(retries = 0) {
       try {
         while (true) {
@@ -47,7 +47,7 @@ const UserList = ({ initialData }: Props) => {
     }
 
     void poll();
-  }, []);
+  }, []); */
 
   return (
     <div className="space-y-4 p-6 max-w-7xl mx-auto">

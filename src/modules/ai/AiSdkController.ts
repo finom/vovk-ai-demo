@@ -11,6 +11,7 @@ import {
 import {
   convertToModelMessages,
   jsonSchema,
+  stepCountIs,
   streamText,
   tool,
   type UIMessage,
@@ -50,6 +51,7 @@ export default class AiSdkController {
       onError: (e) => console.error("Error", e),
     });
 
+
     if (messages.filter(({ role }) => role === "user").length > LIMIT) {
       throw new HttpException(
         HttpStatus.BAD_REQUEST,
@@ -58,7 +60,7 @@ export default class AiSdkController {
     }
 
     return streamText({
-      model: openai("gpt-5-nano"),
+      model: openai("gpt-5"),
       system: "You execute functions sequentially, one by one.",
       messages: convertToModelMessages(messages),
       tools: Object.fromEntries(
@@ -71,6 +73,7 @@ export default class AiSdkController {
           }),
         ]),
       ),
+      stopWhen: stepCountIs(10),
       onError: (e) => console.error("streamText error", e),
       onFinish: ({ finishReason, toolCalls }) => {
         if (finishReason === "tool-calls") {

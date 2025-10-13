@@ -71,6 +71,8 @@ export default class EmbeddingService {
     LIMIT ${limit}
   `;
 
-    return results;
+  console.log('Semantic search results:', results.map((item) => omit(item, ["embedding"])));
+
+    return results.map((item) => omit(item, ["embedding"]));
   }
 }

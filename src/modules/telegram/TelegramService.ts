@@ -8,6 +8,7 @@ import {
   generateText,
   jsonSchema,
   ModelMessage,
+  stepCountIs,
   tool,
 } from "ai";
 import { createLLMTools, KnownAny } from "vovk";
@@ -253,6 +254,7 @@ export default class TelegramService {
       model: vercelOpenAI("gpt-5"),
       system: systemPrompt,
       messages,
+      stopWhen: stepCountIs(10),
       tools: {
         ...Object.fromEntries(
           tools.map(({ name, execute, description, parameters }) => [
