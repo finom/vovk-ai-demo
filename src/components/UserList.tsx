@@ -73,7 +73,7 @@ const UserList = ({ initialData }: Props) => {
                     <AvatarImage src={user.imageUrl} alt={user.fullName} />
                   )}
                   <AvatarFallback className="text-xs">
-                    {user.fullName.slice(0, 2).toUpperCase()}
+                    {user.fullName?.slice(0, 2).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
               </div>

@@ -3,7 +3,13 @@ import OpenAI from "openai";
 import { TelegramRPC } from "vovk-client";
 import { createClient } from "redis";
 import { openai as vercelOpenAI } from "@ai-sdk/openai";
-import { generateObject, generateText, jsonSchema, ModelMessage, tool } from "ai";
+import {
+  generateObject,
+  generateText,
+  jsonSchema,
+  ModelMessage,
+  tool,
+} from "ai";
 import { createLLMTools, KnownAny } from "vovk";
 import UserController from "../user/UserController";
 import TaskController from "../task/TaskController";
@@ -236,7 +242,6 @@ export default class TelegramService {
         console.log(`${moduleName}.${handlerName} executed`),
       onError: (e) => console.error("Error", e),
     });
-
 
     // Generate a response using Vercel AI SDK
     const { text } = await generateText({

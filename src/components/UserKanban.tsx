@@ -124,7 +124,7 @@ export const KanbanCard = ({
                   />
                 )}
                 <AvatarFallback className="text-xs">
-                  {assignee?.fullName.slice(0, 2).toUpperCase()}
+                  {assignee?.fullName?.slice(0, 2).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
             </div>

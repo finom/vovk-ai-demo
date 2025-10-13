@@ -10113,20 +10113,15 @@ vovk-python@^0.0.1-draft.70:
   resolved "https://registry.yarnpkg.com/vovk-python/-/vovk-python-0.0.1-draft.70.tgz#d79845d996ca0bf6caee0759288af32b06a9115e"
   integrity sha512-86cVY+aEbpx8tDZKW/pktPEdveBhR187F5AzwYWYFQQw/kXqQWHpXy509xOgSsvPC74fIc/2pQt7Ue3orgfLqA==
 
-vovk-react-query@^0.0.1-draft.89:
-  version "0.0.1-draft.96"
-  resolved "https://registry.yarnpkg.com/vovk-react-query/-/vovk-react-query-0.0.1-draft.96.tgz#e1a44da08fd93563ca8d315d0b7a733d49746c43"
-  integrity sha512-XKv3nsfoCFnMc1IkVyvZp/XXxzG/B/uXIAlCuZYqjOvXZmKBBLnmefsGx9KiglL1e4C9xUbuk1tad6wpm8Fz/w==
-
 vovk-rust@^0.0.1-draft.56:
   version "0.0.1-draft.56"
   resolved "https://registry.yarnpkg.com/vovk-rust/-/vovk-rust-0.0.1-draft.56.tgz#c415ca24a2b91f0ea46208c13df283b6c6709ee8"
   integrity sha512-wKPDw77zut/yWclBvA8yrvQNvyBgYcvj81tjv7eC1eJJJZBBG6vDtOcXnblIKCOayA0ZGLndUr+b3BP6srWxcg==
 
-vovk@^3.0.0-draft.420:
-  version "3.0.0-draft.420"
-  resolved "https://registry.yarnpkg.com/vovk/-/vovk-3.0.0-draft.420.tgz#fabfc1f57af81aa7fee7109a1a1b2312ef160bc9"
-  integrity sha512-QH1uycWU/nFSzr3uSXk3sDYQCErNo6F3+BndMvOe/x2+KomtXJXPE4AM43QKc8X5lzvTgzIQnQQ5LphJw2OFjA==
+vovk@^3.0.0-draft.444:
+  version "3.0.0-draft.444"
+  resolved "https://registry.yarnpkg.com/vovk/-/vovk-3.0.0-draft.444.tgz#cad4514dd6e27758c956faf62910dfdf2772d366"
+  integrity sha512-SsXXqZFTgg8JK/2uiYZ/i6xaGr5kNsAdijgnVxhCU8RmWctM8qBfB6hgkIthGWLUYmwjilbprbQrMfVjUjz10Q==
   dependencies:
     "@standard-schema/spec" "^1.0.0"
     type-fest "*"
@@ -10463,10 +10458,10 @@ zod@^4.0.17:
   resolved "https://registry.yarnpkg.com/zod/-/zod-4.1.1.tgz#73451b42896deaacedfcc8297be87f66a5a2ea8f"
   integrity sha512-SgMZK/h8Tigt9nnKkfJMvB/mKjiJXaX26xegP4sa+0wHIFVFWVlsQGdhklDmuargBD3Hsi3rsQRIzwJIhTPJHA==
 
-zod@^4.1.11:
-  version "4.1.11"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-4.1.11.tgz#4aab62f76cfd45e6c6166519ba31b2ea019f75f5"
-  integrity sha512-WPsqwxITS2tzx1bzhIKsEs19ABD5vmCVa4xBo2tq/SrV4RNZtfws1EnCWQXM6yh8bD08a1idvkB5MZSBiZsjwg==
+zod@^4.1.12:
+  version "4.1.12"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.1.12.tgz#64f1ea53d00eab91853195653b5af9eee68970f0"
+  integrity sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==
 
 zustand@^5.0.8:
   version "5.0.8"

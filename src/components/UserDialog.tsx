@@ -17,7 +17,7 @@ import { Label } from "@/components/ui/label";
 import { useRegistry } from "@/registry";
 import { UserRPC } from "vovk-client";
 import { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useShallow } from "zustand/shallow";
 import { BASE_KEYS } from "@/constants";
@@ -43,13 +43,14 @@ const UserDialog = ({ userId, children }: Props) => {
     defaultValues: user ?? {},
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     reset(user ?? {});
   }, [user, reset]);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form
@@ -103,6 +104,25 @@ const UserDialog = ({ userId, children }: Props) => {
             </div>
           </div>
           <DialogFooter className="mt-4">
+            {!!userId && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6 text-destructive hover:text-destructive cursor-pointer mr-auto self-center"
+                onMouseDown={(e) => {
+                  e.stopPropagation();
+                  UserRPC.deleteUser({
+                    params: { id: userId },
+                  })
+                    .catch((error) => {
+                      console.error("Error deleting user:", error);
+                    })
+                    .then(() => setOpen(false));
+                }}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            )}
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>

@@ -19,7 +19,7 @@ const config = {
         openAPIMixin: {
           source: {
             url: "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json",
-            fallback: '.openapi-cache/github.json'
+            fallback: ".openapi-cache/github.json",
           },
           getModuleName: ({ operationObject }) => {
             const [operationNs] = operationObject.operationId?.split("/") ?? [
@@ -39,7 +39,7 @@ const config = {
         openAPIMixin: {
           source: {
             url: "https://raw.githubusercontent.com/sys-001/telegram-bot-api-versions/refs/heads/main/files/openapi/yaml/v183.yaml",
-            fallback: '.openapi-cache/telegram.yaml'
+            fallback: ".openapi-cache/telegram.yaml",
           },
           getModuleName: "TelegramRPC",
           getMethodName: ({ path }) => path.replace(/^\//, ""),

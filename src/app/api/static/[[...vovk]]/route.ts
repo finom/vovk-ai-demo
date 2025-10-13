@@ -4,7 +4,7 @@ import { openapi } from "vovk-client/openapi";
 class OpenApiController {
   @operation({
     summary: "OpenAPI spec",
-    description: 'Get the OpenAPI spec for the app API',
+    description: "Get the OpenAPI spec for the app API",
   })
   @get("openapi.json")
   static getSpec = () => openapi;

@@ -20,7 +20,7 @@ datasource db {
 }
 
 model User {
-  /// @zod.custom.use(z.uuid().brand<Extract<z.infer<typeof EntityTypeSchema>, 'user'>>())
+  /// @zod.custom.use(z.uuid().brand<{} & Extract<z.infer<typeof EntityTypeSchema>, 'user'>>())
   id         String     @id @default(uuid())
   /// @zod.custom.use(z.literal('user'))
   entityType EntityType @default(user)
@@ -32,6 +32,8 @@ model User {
   imageUrl   String?
 
   tasks      Task[]
+
+  embedding Unsupported("vector(1536)")?
 }
 
 model Task {
@@ -48,7 +50,9 @@ model Task {
   /// @zod.custom.use(z.string().uuid().brand<Extract<z.infer<typeof EntityTypeSchema>, 'user'>>())
   userId     String
 
-  user       User       @relation(fields: [userId], references: [id])
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  embedding Unsupported("vector(1536)")?
 }
 
 enum EntityType {
