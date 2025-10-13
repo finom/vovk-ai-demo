@@ -31,6 +31,19 @@ export default class DatabaseService {
       query: {
         $allModels: {
           async $allOperations({ model, operation, args, query }) {
+            const allowedOperations = [
+              "create",
+              "update",
+              "delete",
+              "findMany",
+              "findUnique",
+              "findFirst",
+              "count",
+            ] as const;
+            type AllowedOperation = (typeof allowedOperations)[number];
+            if (!allowedOperations.includes(operation as AllowedOperation)) {
+              throw new Error(`Unsupported database operation: ${operation}`);
+            }
             const result = (await query(args)) as BaseEntity | BaseEntity[];
 
             const now = new Date().toISOString();
@@ -48,17 +61,17 @@ export default class DatabaseService {
             });
 
             switch (operation) {
-              case "create":
+              case "create" satisfies AllowedOperation:
                 if ("entityType" in result)
                   changes.push(makeChange(result, "create"));
                 break;
 
-              case "update":
+              case "update" satisfies AllowedOperation:
                 if ("entityType" in result)
                   changes.push(makeChange(result, "update"));
                 break;
 
-              case "delete":
+              case "delete" satisfies AllowedOperation:
                 if ("entityType" in result) {
                   changes.push(makeChange(result, "delete"));
                   // Automatically add __isDeleted flag to deletion results
@@ -66,10 +79,10 @@ export default class DatabaseService {
                 }
                 break;
 
-              case "findMany":
-              case "findUnique":
-              case "findFirst":
-              case "count":
+              case "findMany" satisfies AllowedOperation:
+              case "findUnique" satisfies AllowedOperation:
+              case "findFirst" satisfies AllowedOperation:
+              case "count" satisfies AllowedOperation:
                 // no events
                 break;
 
