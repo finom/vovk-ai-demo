@@ -14,7 +14,7 @@
           "operationObject": {
             "summary": "Get all users",
             "description": "Retrieves a list of all users.",
-            "x-tool-disabled": true
+            "x-tool-disable": true
           },
           "path": "",
           "httpMethod": "GET"
@@ -29,7 +29,9 @@
                   "type": "string"
                 }
               },
-              "required": ["search"],
+              "required": [
+                "search"
+              ],
               "additionalProperties": false
             }
           },
@@ -64,7 +66,10 @@
                   ]
                 }
               },
-              "required": ["fullName", "email"],
+              "required": [
+                "fullName",
+                "email"
+              ],
               "additionalProperties": false
             }
           },
@@ -111,7 +116,9 @@
                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 }
               },
-              "required": ["id"],
+              "required": [
+                "id"
+              ],
               "additionalProperties": false
             }
           },
@@ -135,7 +142,9 @@
                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 }
               },
-              "required": ["id"],
+              "required": [
+                "id"
+              ],
               "additionalProperties": false
             }
           },
@@ -159,7 +168,7 @@
           "operationObject": {
             "summary": "Get all tasks",
             "description": "Retrieves a list of all tasks.",
-            "x-tool-disabled": true
+            "x-tool-disable": true
           },
           "path": "",
           "httpMethod": "GET"
@@ -174,7 +183,9 @@
                   "type": "string"
                 }
               },
-              "required": ["search"],
+              "required": [
+                "search"
+              ],
               "additionalProperties": false
             }
           },
@@ -201,7 +212,12 @@
                 "status": {
                   "default": "TODO",
                   "type": "string",
-                  "enum": ["TODO", "IN_PROGRESS", "IN_REVIEW", "DONE"]
+                  "enum": [
+                    "TODO",
+                    "IN_PROGRESS",
+                    "IN_REVIEW",
+                    "DONE"
+                  ]
                 },
                 "userId": {
                   "type": "string",
@@ -209,7 +225,12 @@
                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 }
               },
-              "required": ["title", "description", "status", "userId"],
+              "required": [
+                "title",
+                "description",
+                "status",
+                "userId"
+              ],
               "additionalProperties": false
             }
           },
@@ -236,7 +257,12 @@
                 "status": {
                   "default": "TODO",
                   "type": "string",
-                  "enum": ["TODO", "IN_PROGRESS", "IN_REVIEW", "DONE"]
+                  "enum": [
+                    "TODO",
+                    "IN_PROGRESS",
+                    "IN_REVIEW",
+                    "DONE"
+                  ]
                 },
                 "userId": {
                   "type": "string",
@@ -256,7 +282,9 @@
                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 }
               },
-              "required": ["id"],
+              "required": [
+                "id"
+              ],
               "additionalProperties": false
             }
           },
@@ -280,7 +308,9 @@
                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 }
               },
-              "required": ["id"],
+              "required": [
+                "id"
+              ],
               "additionalProperties": false
             }
           },
@@ -307,10 +337,18 @@
               "properties": {
                 "voice": {
                   "type": "string",
-                  "enum": ["ash", "ballad", "coral", "sage", "verse"]
+                  "enum": [
+                    "ash",
+                    "ballad",
+                    "coral",
+                    "sage",
+                    "verse"
+                  ]
                 }
               },
-              "required": ["voice"],
+              "required": [
+                "voice"
+              ],
               "additionalProperties": false
             }
           },
@@ -339,13 +377,19 @@
                     },
                     "entityType": {
                       "type": "string",
-                      "enum": ["user", "task"]
+                      "enum": [
+                        "user",
+                        "task"
+                      ]
                     },
                     "__isDeleted": {
                       "type": "boolean"
                     }
                   },
-                  "required": ["id", "entityType"],
+                  "required": [
+                    "id",
+                    "entityType"
+                  ],
                   "additionalProperties": false
                 },
                 {
@@ -426,7 +470,12 @@
                     "status": {
                       "default": "TODO",
                       "type": "string",
-                      "enum": ["TODO", "IN_PROGRESS", "IN_REVIEW", "DONE"]
+                      "enum": [
+                        "TODO",
+                        "IN_PROGRESS",
+                        "IN_REVIEW",
+                        "DONE"
+                      ]
                     },
                     "userId": {
                       "type": "string",
