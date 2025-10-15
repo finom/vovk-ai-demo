@@ -442,8 +442,6 @@ export default class TelegramService {
     } catch (error) {
       console.error("Error processing update:", error);
     }
-
-    return { success: true };
   }
 
   static async handle(request: NextRequest) {
@@ -461,12 +459,11 @@ export default class TelegramService {
       console.log(`Update ${updateId} already processed, skipping`);
       return { success: true };
     }
+  
+    await this.processUpdate(update);
 
-    // Mark as processed immediately
     await this.markUpdateProcessed(updateId);
 
-    // Process the update asynchronously (don't await)
-    // This allows us to return immediately to Telegram
-    return this.processUpdate(update);
+    return { success: true };
   }
 }
