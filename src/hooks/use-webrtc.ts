@@ -428,7 +428,7 @@ export default function useWebRTCAudioSession(
 
       // Send SDP offer to OpenAI Realtime
       const baseUrl = "https://api.openai.com/v1/realtime";
-      const model = "gpt-realtime";
+      const model = "gpt-realtime-mini";
       const response = await fetch(`${baseUrl}?model=${model}&voice=${voice}`, {
         method: "POST",
         body: offer.sdp,

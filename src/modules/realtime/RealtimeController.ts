@@ -1,6 +1,6 @@
 import { prefix, get } from "vovk";
 import { NextResponse } from "next/server";
-import { z } from "zod/v4";
+import { z } from "zod";
 import DBEventsService from "../database/DatabaseEventsService";
 import { withZod } from "@/lib/withZod";
 
@@ -29,7 +29,7 @@ export default class RealtimeController {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              model: "gpt-realtime",
+              model: "gpt-realtime-mini",
               voice: req.vovk.query().voice,
               modalities: ["audio", "text"],
               instructions:
