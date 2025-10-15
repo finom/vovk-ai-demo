@@ -41,7 +41,6 @@ const UserList = ({ initialData }: Props) => {
     localStorage.setItem("isPollingEnabled", isPollingEnabled.toString());
     async function poll(retries = 0) {
       if (!isPollingEnabled) {
-        console.log("ABORT", pollingAbortControllerRef.current);
         pollingAbortControllerRef.current?.abort();
         return;
       }
@@ -50,11 +49,6 @@ const UserList = ({ initialData }: Props) => {
           console.log("START POLLING");
           const iterable = await DatabasePollRPC.poll();
           pollingAbortControllerRef.current = iterable.abortController;
-
-          console.log(
-            "iterable.abortControlleriterable.abortController",
-            iterable.abortController,
-          );
 
           for await (const iteration of iterable) {
             console.log("New DB update:", iteration);
