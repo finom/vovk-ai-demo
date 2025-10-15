@@ -7,9 +7,9 @@ const { camelCase, startCase } = _;
 /** @type {import('vovk').VovkConfig} */
 const config = {
   generatorConfig: {
-    origin: process.env.VERCEL_ENV
+    /* origin: process.env.VERCEL_ENV
       ? `https://vovk-ai-demo.vercel.app`
-      : '',
+      : '', */
     imports: {
       validateOnClient: "vovk-ajv",
       fetcher: "./src/lib/fetcher.ts",
