@@ -227,12 +227,10 @@ export default class TelegramService {
     userMessage: string,
     systemPrompt: string,
   ): Promise<{ botResponse: string; messages: ModelMessage[] }> {
-    // Add user message to history
-    await this.addToHistory(chatId, "user", userMessage);
 
     // Get chat history
     const history = await this.getChatHistory(chatId);
-    const messages = this.formatHistoryForVercelAI(history);
+    const messages = [...this.formatHistoryForVercelAI(history), { role: "user", content: userMessage } as const];
     const { tools } = createLLMTools({
       modules: {
         UserController,
@@ -251,7 +249,7 @@ export default class TelegramService {
 
     // Generate a response using Vercel AI SDK
     const { text } = await generateText({
-      model: vercelOpenAI("gpt-5"),
+      model: vercelOpenAI('gpt-5'),
       system: systemPrompt,
       messages,
       stopWhen: stepCountIs(16),
@@ -271,6 +269,8 @@ export default class TelegramService {
 
     const botResponse = text || "I couldn't generate a response.";
 
+    // Add user message to history
+    await this.addToHistory(chatId, "user", userMessage);
     // Add assistant response to history
     await this.addToHistory(chatId, "assistant", botResponse);
 
