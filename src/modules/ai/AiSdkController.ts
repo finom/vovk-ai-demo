@@ -59,7 +59,7 @@ export default class AiSdkController {
     }
 
     return streamText({
-      model: openai("gpt-5-mini"),
+      model: openai("gpt-5"),
       system: "You execute functions sequentially, one by one.",
       messages: convertToModelMessages(messages),
       tools: Object.fromEntries(

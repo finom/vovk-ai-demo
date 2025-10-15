@@ -29,7 +29,7 @@ export default class RealtimeController {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              model: "gpt-realtime-mini",
+              model: "gpt-realtime",
               voice: req.vovk.query().voice,
               modalities: ["audio", "text"],
               instructions:

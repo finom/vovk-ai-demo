@@ -153,7 +153,7 @@ export default class TelegramService {
     const {
       object: { type, processedText },
     } = await generateObject({
-      model: vercelOpenAI('gpt-5-mini'),
+      model: vercelOpenAI('gpt-5'),
       schema: z.object({
         type: z.enum(["text", "voice", "photo"]),
         processedText: z.string(),
@@ -271,7 +271,7 @@ export default class TelegramService {
 
     // Generate a response using Vercel AI SDK
     const { text } = await generateText({
-      model: vercelOpenAI("gpt-5-mini"),
+      model: vercelOpenAI("gpt-5"),
       system: systemPrompt,
       messages,
       stopWhen: stepCountIs(16),
