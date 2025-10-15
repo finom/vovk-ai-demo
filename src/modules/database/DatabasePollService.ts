@@ -11,7 +11,7 @@ export default class PollService {
     setTimeout(resp.close, 30_000);
 
     let asOldAs = new Date();
-    asOldAs.setHours(asOldAs.getHours() - 1);
+    asOldAs.setHours(asOldAs.getHours() - 1); // 1 hour ago
 
     DatabaseEventsService.emitter.on(
       DatabaseEventsService.DB_KEY,
