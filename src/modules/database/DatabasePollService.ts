@@ -11,7 +11,8 @@ export default class PollService {
     setTimeout(resp.close, 30_000);
 
     let asOldAs = new Date();
-    asOldAs.setHours(asOldAs.getHours() - 1); // 1 hour ago
+    // 10 minutes ago; TODO: use latest update date from registry
+    asOldAs.setMinutes(asOldAs.getMinutes() - 10);
 
     DatabaseEventsService.emitter.on(
       DatabaseEventsService.DB_KEY,
