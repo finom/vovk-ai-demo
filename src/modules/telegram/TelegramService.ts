@@ -45,6 +45,26 @@ export default class TelegramService {
     }
     return `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
   }
+
+  // Helper function to check if update was already processed
+  private static async isUpdateProcessed(updateId: number): Promise<boolean> {
+    const key = `tg_update:${updateId}`;
+    const exists = await redis.exists(key);
+    return exists === 1;
+  }
+
+  // Mark update as processed
+  private static async markUpdateProcessed(updateId: number): Promise<void> {
+    const key = `tg_update:${updateId}`;
+    // Store with 24 hour expiry to prevent memory bloat
+    await redis.set(key, "1", {
+      expiration: {
+        type: "EX",
+        value: 60 * 60 * 24, // 24 hours
+      },
+    });
+  }
+
   // Helper function to get chat history key
   private static getChatHistoryKey(chatId: number): string {
     return `tg_chatbot:${chatId}:history`;
@@ -227,10 +247,12 @@ export default class TelegramService {
     userMessage: string,
     systemPrompt: string,
   ): Promise<{ botResponse: string; messages: ModelMessage[] }> {
-
     // Get chat history
     const history = await this.getChatHistory(chatId);
-    const messages = [...this.formatHistoryForVercelAI(history), { role: "user", content: userMessage } as const];
+    const messages = [
+      ...this.formatHistoryForVercelAI(history),
+      { role: "user", content: userMessage } as const,
+    ];
     const { tools } = createLLMTools({
       modules: {
         UserController,
@@ -249,7 +271,7 @@ export default class TelegramService {
 
     // Generate a response using Vercel AI SDK
     const { text } = await generateText({
-      model: vercelOpenAI('gpt-5'),
+      model: vercelOpenAI("gpt-5"),
       system: systemPrompt,
       messages,
       stopWhen: stepCountIs(16),
@@ -377,44 +399,77 @@ export default class TelegramService {
     }
   }
 
+  // Process the update asynchronously (fire and forget)
+  private static async processUpdate(update: KnownAny): Promise<void> { // TODO fix type
+
+    console.log('processUpdate', update);
+    try {
+      const chatId = update.message?.chat.id;
+
+      if (!chatId) {
+        return;
+      }
+
+      // Handle text messages
+      if (update.message?.text) {
+        const userMessage = update.message.text;
+
+        // Check if it's a command
+        const isCommand = await this.handleCommand(chatId, userMessage);
+        if (isCommand) {
+          return;
+        }
+
+        // Process regular text message
+        await this.processUserMessage(
+          chatId,
+          userMessage,
+          "You are a helpful assistant in a Telegram chat. You have access to the conversation history to maintain context. By default, you respond with text, but if the user requests a voice response, you can generate a voice message.",
+        );
+      }
+      // Handle voice messages
+      else if (update.message?.voice) {
+        await this.processVoiceMessage(chatId, update.message.voice.file_id);
+      }
+      // Handle unsupported message types
+      else {
+        console.error("Received unsupported message type");
+        await this.sendTextMessage(
+          chatId,
+          "Sorry, I can only process text and voice messages at the moment.",
+        );
+      }
+    } catch (error) {
+      console.error("Error processing update:", error);
+    }
+  }
+
   static async handle(request: NextRequest) {
     const update = await request.json();
-    const chatId = update.message?.chat.id;
 
-    if (!chatId) {
+    // Check if we have an update_id
+    const updateId = update.update_id;
+    if (!updateId) {
       return { success: true };
     }
 
-    // Handle text messages
-    if (update.message?.text) {
-      const userMessage = update.message.text;
-
-      // Check if it's a command
-      const isCommand = await this.handleCommand(chatId, userMessage);
-      if (isCommand) {
-        return { success: true };
-      }
-
-      // Process regular text message
-      await this.processUserMessage(
-        chatId,
-        userMessage,
-        "You are a helpful assistant in a Telegram chat. You have access to the conversation history to maintain context. By default, you respond with text, but if the user requests a voice response, you can generate a voice message.",
-      );
-    }
-    // Handle voice messages
-    else if (update.message?.voice) {
-      await this.processVoiceMessage(chatId, update.message.voice.file_id);
-    }
-    // Handle unsupported message types
-    else {
-      console.error("Received unsupported message type");
-      await this.sendTextMessage(
-        chatId,
-        "Sorry, I can only process text and voice messages at the moment.",
-      );
+    // Check if this update was already processed
+    const alreadyProcessed = await this.isUpdateProcessed(updateId);
+    if (alreadyProcessed) {
+      console.log(`Update ${updateId} already processed, skipping`);
+      return { success: true };
     }
 
+    // Mark as processed immediately
+    await this.markUpdateProcessed(updateId);
+
+    // Process the update asynchronously (don't await)
+    // This allows us to return immediately to Telegram
+    this.processUpdate(update).catch((error) => {
+      console.error("Error in async processing:", error);
+    });
+
+    // Return immediately to Telegram
     return { success: true };
   }
 }

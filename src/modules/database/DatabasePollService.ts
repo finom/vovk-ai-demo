@@ -14,7 +14,6 @@ export default class PollService {
     DatabaseEventsService.emitter.on(
       DatabaseEventsService.DB_KEY,
       (changes) => {
-        console.log("GALAVA CHANGES", changes);
         const deleted = changes.filter((change) => change.type === "delete");
         const createdOrUpdated = changes.filter(
           (change) => change.type === "create" || change.type === "update",
