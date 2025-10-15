@@ -33,7 +33,7 @@ export default class EmbeddingService {
     const embedding = await this.generateEmbedding(
       Object.values(omit(entity, BASE_KEYS))
         .filter((v) => typeof v === "string")
-        .join(" "),
+        .join(" ").trim().toLowerCase(),
     );
 
     await DatabaseService.prisma.$executeRawUnsafe(
@@ -55,7 +55,7 @@ export default class EmbeddingService {
     limit: number = 10,
     similarityThreshold: number = 0.4,
   ) {
-    const queryEmbedding = await this.generateEmbedding(query);
+    const queryEmbedding = await this.generateEmbedding(query.trim().toLowerCase());
     const capitalizedEntityType = capitalize(entityType);
 
     const results = await DatabaseService.prisma.$queryRaw<
@@ -70,11 +70,6 @@ export default class EmbeddingService {
     ORDER BY embedding <=> ${`[${queryEmbedding.join(",")}]`}::vector
     LIMIT ${limit}
   `;
-
-    console.log(
-      "Semantic search results:",
-      results.map((item) => omit(item, ["embedding"])),
-    );
 
     return results.map((item) => omit(item, ["embedding"]));
   }
