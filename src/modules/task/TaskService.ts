@@ -10,7 +10,7 @@ export default class TaskService {
   static getTasks = () => DatabaseService.prisma.task.findMany();
 
   static findTasks = (search: string) =>
-    EmbeddingService.searchBySemantic<TaskType>(EntityType.task, search);
+    EmbeddingService.vectorSearch<TaskType>(EntityType.task, search);
   /* DatabaseService.prisma.task.findMany({
       where: {
         OR: [

@@ -11,7 +11,7 @@ export default class UserService {
   static getUsers = () => DatabaseService.prisma.user.findMany();
 
   static findUsers = (search: string) =>
-    EmbeddingService.searchBySemantic<UserType>(EntityType.user, search);
+    EmbeddingService.vectorSearch<UserType>(EntityType.user, search);
   /* DatabaseService.prisma.user.findMany({
       where: {
         OR: [

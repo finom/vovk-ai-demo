@@ -49,11 +49,11 @@ export default class EmbeddingService {
     return embedding;
   };
 
-  static async searchBySemantic<T>(
+  static async vectorSearch<T>(
     entityType: EntityType,
     query: string,
     limit: number = 10,
-    similarityThreshold: number = 0.5,
+    similarityThreshold: number = 0.4,
   ) {
     const queryEmbedding = await this.generateEmbedding(query);
     const capitalizedEntityType = capitalize(entityType);
