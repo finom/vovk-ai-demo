@@ -1,8 +1,6 @@
 import { initSegment } from "vovk";
 import AiSdkController from "../../../../modules/ai/AiSdkController";
 
-export const maxDuration = 60;
-
 const controllers = {
   AiSdkRPC: AiSdkController,
 };
