@@ -375,7 +375,7 @@ export default class TelegramService {
       });
 
       // Check if transcription is empty
-      if (!transcription.text || transcription.text.trim() === "") {
+      if (!transcription.text?.trim()) {
         await this.sendTextMessage(
           chatId,
           "I couldn't understand the voice message. Please try again.",
@@ -400,7 +400,7 @@ export default class TelegramService {
   }
 
   // Process the update asynchronously (fire and forget)
-  private static async processUpdate(update: KnownAny): Promise<void> { // TODO fix type
+  private static async processUpdate(update: KnownAny) { // TODO fix type
 
     console.log('processUpdate', update);
     try {
@@ -442,6 +442,8 @@ export default class TelegramService {
     } catch (error) {
       console.error("Error processing update:", error);
     }
+
+    return { success: true };
   }
 
   static async handle(request: NextRequest) {
@@ -465,11 +467,6 @@ export default class TelegramService {
 
     // Process the update asynchronously (don't await)
     // This allows us to return immediately to Telegram
-    this.processUpdate(update).catch((error) => {
-      console.error("Error in async processing:", error);
-    });
-
-    // Return immediately to Telegram
-    return { success: true };
+    return this.processUpdate(update);
   }
 }
