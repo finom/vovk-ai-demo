@@ -39,11 +39,18 @@ export default class TaskController {
       TaskService.getTasksByUserId(vovk.params().userId),
   });
 
+  @operation({
+    summary: "Create a new task",
+    description:
+      "Creates a new task with the provided details, such as its title and description.",
+    "x-tool-successMessage": "Task created successfully",
+  })
   @post()
   static createTask = withZod({
     body: TaskSchema.omit(BASE_FIELDS),
     handle: async ({ vovk }) => TaskService.createTask(await vovk.body()),
   });
+
   @operation({
     summary: "Update task",
     description:
@@ -57,6 +64,7 @@ export default class TaskController {
     handle: async ({ vovk }) =>
       TaskService.updateTask(vovk.params().id, await vovk.body()),
   });
+
   @operation({
     summary: "Delete task",
     description: "Deletes a task by ID.",
