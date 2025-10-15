@@ -21,7 +21,7 @@ export default class TaskService {
       },
     }); */
 
-  static getTasksByUserId = (userId: UserType['id']) =>
+  static getTasksByUserId = (userId: UserType["id"]) =>
     DatabaseService.prisma.task.findMany({
       where: { userId },
     });

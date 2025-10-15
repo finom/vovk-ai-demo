@@ -35,7 +35,8 @@ export default class TaskController {
   @get("by-user/{userId}")
   static getTasksByUserId = withZod({
     params: z.object({ userId: UserSchema.shape.id }),
-    handle: async ({ vovk }) => TaskService.getTasksByUserId(vovk.params().userId),
+    handle: async ({ vovk }) =>
+      TaskService.getTasksByUserId(vovk.params().userId),
   });
 
   @post()

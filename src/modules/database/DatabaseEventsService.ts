@@ -10,7 +10,8 @@ export type DBChange = {
 };
 
 export default class DatabaseEventsService {
-  private static readonly DB_KEY = "db_updates";
+  public static readonly DB_KEY = "db_updates";
+
   private static readonly INTERVAL = 1_000;
   private static lastTimestamp = Date.now();
 
@@ -20,7 +21,7 @@ export default class DatabaseEventsService {
 
   // our in‑process event emitter
   public static emitter = mitt<{
-    db_updates: DBChange[];
+    [DatabaseEventsService.DB_KEY]: DBChange[];
   }>();
 
   // ensure Redis is connected
@@ -67,14 +68,13 @@ export default class DatabaseEventsService {
         now,
       );
 
+      this.lastTimestamp = now;
+
       if (raw.length > 0) {
         const updates = raw.map((s) => JSON.parse(s) as DBChange);
 
-        // advance our cursor
-        this.lastTimestamp = now;
-
-        // emit
-        this.emitter.emit("db_updates", updates);
+        console.log("updates", updates);
+        this.emitter.emit(this.DB_KEY, updates);
       }
     }, this.INTERVAL);
   }

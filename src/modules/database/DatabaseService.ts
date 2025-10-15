@@ -42,7 +42,9 @@ export default class DatabaseService {
             ] as const;
             type AllowedOperation = (typeof allowedOperations)[number];
             if (!allowedOperations.includes(operation as AllowedOperation)) {
-              throw new Error(`Unsupported database operation: ${operation}`);
+              throw new Error(
+                `Unsupported database operation "${operation}" on model "${model}"`,
+              );
             }
             const result = (await query(args)) as BaseEntity | BaseEntity[];
 
@@ -56,7 +58,11 @@ export default class DatabaseService {
               id: entity.id,
               entityType: entity.entityType,
               date:
-                type === "delete" ? now : (entity.updatedAt?.toString() ?? now),
+                type === "delete"
+                  ? now
+                  : entity.updatedAt
+                    ? new Date(entity.updatedAt).toISOString()
+                    : now,
               type,
             });
 

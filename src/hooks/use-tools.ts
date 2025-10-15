@@ -150,7 +150,7 @@ export const useToolsFunctions = () => {
         };
       }
 
-      console.log("xxxx scrapeResult", scrapeResult);
+      console.log("scrapeResult", scrapeResult);
 
       return {
         success: true,

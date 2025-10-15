@@ -51,7 +51,6 @@ export default class AiSdkController {
       onError: (e) => console.error("Error", e),
     });
 
-
     if (messages.filter(({ role }) => role === "user").length > LIMIT) {
       throw new HttpException(
         HttpStatus.BAD_REQUEST,
@@ -73,7 +72,7 @@ export default class AiSdkController {
           }),
         ]),
       ),
-      stopWhen: stepCountIs(10),
+      stopWhen: stepCountIs(16),
       onError: (e) => console.error("streamText error", e),
       onFinish: ({ finishReason, toolCalls }) => {
         if (finishReason === "tool-calls") {

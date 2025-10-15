@@ -64,6 +64,9 @@ export default class UserService {
     for (const task of tasksToDelete) {
       await TaskService.deleteTask(task.id as TaskType["id"]);
     }
-    return DatabaseService.prisma.user.delete({ where: { id }, select: { id: true, entityType: true } });
+    return DatabaseService.prisma.user.delete({
+      where: { id },
+      select: { id: true, entityType: true },
+    });
   };
 }

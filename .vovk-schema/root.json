@@ -29,9 +29,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "search"
-              ],
+              "required": ["search"],
               "additionalProperties": false
             }
           },
@@ -40,7 +38,7 @@
             "description": "Retrieves users that match the provided ID, full name, or email. Used to search the users when they need to be updated or deleted.",
             "x-tool-successMessage": "Users found successfully"
           },
-          "path": "find",
+          "path": "search",
           "httpMethod": "GET"
         },
         "createUser": {
@@ -66,10 +64,7 @@
                   ]
                 }
               },
-              "required": [
-                "fullName",
-                "email"
-              ],
+              "required": ["fullName", "email"],
               "additionalProperties": false
             }
           },
@@ -116,9 +111,7 @@
                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 }
               },
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "additionalProperties": false
             }
           },
@@ -142,9 +135,7 @@
                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 }
               },
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "additionalProperties": false
             }
           },
@@ -183,9 +174,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "search"
-              ],
+              "required": ["search"],
               "additionalProperties": false
             }
           },
@@ -194,7 +183,31 @@
             "description": "Retrieves tasks that match the provided ID, title, or description. Used to search the tasks when they need to be updated or deleted.",
             "x-tool-successMessage": "Tasks found successfully"
           },
-          "path": "find",
+          "path": "search",
+          "httpMethod": "GET"
+        },
+        "getTasksByUserId": {
+          "validation": {
+            "params": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "required": ["userId"],
+              "additionalProperties": false
+            }
+          },
+          "operationObject": {
+            "summary": "Get tasks assigned to a specific user",
+            "description": "Retrieves all tasks associated with a specific user ID.",
+            "x-tool-successMessage": "Tasks retrieved successfully"
+          },
+          "path": "by-user/{userId}",
           "httpMethod": "GET"
         },
         "createTask": {
@@ -212,12 +225,7 @@
                 "status": {
                   "default": "TODO",
                   "type": "string",
-                  "enum": [
-                    "TODO",
-                    "IN_PROGRESS",
-                    "IN_REVIEW",
-                    "DONE"
-                  ]
+                  "enum": ["TODO", "IN_PROGRESS", "IN_REVIEW", "DONE"]
                 },
                 "userId": {
                   "type": "string",
@@ -225,19 +233,9 @@
                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 }
               },
-              "required": [
-                "title",
-                "description",
-                "status",
-                "userId"
-              ],
+              "required": ["title", "description", "status", "userId"],
               "additionalProperties": false
             }
-          },
-          "operationObject": {
-            "summary": "Create task",
-            "description": "Creates a new task with the provided details.",
-            "x-tool-successMessage": "Task created successfully"
           },
           "path": "",
           "httpMethod": "POST"
@@ -257,12 +255,7 @@
                 "status": {
                   "default": "TODO",
                   "type": "string",
-                  "enum": [
-                    "TODO",
-                    "IN_PROGRESS",
-                    "IN_REVIEW",
-                    "DONE"
-                  ]
+                  "enum": ["TODO", "IN_PROGRESS", "IN_REVIEW", "DONE"]
                 },
                 "userId": {
                   "type": "string",
@@ -282,9 +275,7 @@
                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 }
               },
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "additionalProperties": false
             }
           },
@@ -308,9 +299,7 @@
                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 }
               },
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "additionalProperties": false
             }
           },
@@ -337,18 +326,10 @@
               "properties": {
                 "voice": {
                   "type": "string",
-                  "enum": [
-                    "ash",
-                    "ballad",
-                    "coral",
-                    "sage",
-                    "verse"
-                  ]
+                  "enum": ["ash", "ballad", "coral", "sage", "verse"]
                 }
               },
-              "required": [
-                "voice"
-              ],
+              "required": ["voice"],
               "additionalProperties": false
             }
           },
@@ -377,19 +358,13 @@
                     },
                     "entityType": {
                       "type": "string",
-                      "enum": [
-                        "user",
-                        "task"
-                      ]
+                      "enum": ["user", "task"]
                     },
                     "__isDeleted": {
                       "type": "boolean"
                     }
                   },
-                  "required": [
-                    "id",
-                    "entityType"
-                  ],
+                  "required": ["id", "entityType"],
                   "additionalProperties": false
                 },
                 {
@@ -470,12 +445,7 @@
                     "status": {
                       "default": "TODO",
                       "type": "string",
-                      "enum": [
-                        "TODO",
-                        "IN_PROGRESS",
-                        "IN_REVIEW",
-                        "DONE"
-                      ]
+                      "enum": ["TODO", "IN_PROGRESS", "IN_REVIEW", "DONE"]
                     },
                     "userId": {
                       "type": "string",

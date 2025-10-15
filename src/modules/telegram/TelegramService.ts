@@ -254,7 +254,7 @@ export default class TelegramService {
       model: vercelOpenAI("gpt-5"),
       system: systemPrompt,
       messages,
-      stopWhen: stepCountIs(10),
+      stopWhen: stepCountIs(16),
       tools: {
         ...Object.fromEntries(
           tools.map(({ name, execute, description, parameters }) => [
