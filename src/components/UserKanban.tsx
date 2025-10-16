@@ -7,6 +7,10 @@ import {
   rectIntersection,
   useDraggable,
   useDroppable,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
 } from "@dnd-kit/core";
 import type { DragEndEvent } from "@dnd-kit/core";
 import type { ReactNode } from "react";
@@ -213,8 +217,27 @@ export const KanbanProvider = ({
 }: KanbanProviderProps) => {
   const id = useId();
 
+  // Configure sensors with activation constraints
+  const mouseSensor = useSensor(MouseSensor, {
+    // Require the mouse to move by 2 pixels before activating drag
+    activationConstraint: {
+      distance: 2,
+    },
+  });
+
+  const touchSensor = useSensor(TouchSensor, {
+    // Require touch to be held for 200ms before activating drag
+    activationConstraint: {
+      delay: 200,
+      tolerance: 5,
+    },
+  });
+
+  const sensors = useSensors(mouseSensor, touchSensor);
+
   return (
     <DndContext
+      sensors={sensors}
       collisionDetection={rectIntersection}
       onDragEnd={onDragEnd}
       id={id}
