@@ -9,4 +9,4 @@ export const BASE_FIELDS = {
 
 export const BASE_KEYS = Object.keys(
   BASE_FIELDS,
-) as (keyof typeof BASE_FIELDS)[];
+) as (keyof BaseEntity)[];

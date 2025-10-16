@@ -50,14 +50,20 @@
               "type": "object",
               "properties": {
                 "fullName": {
+                  "example": "John Doe",
+                  "description": "Full name of the user",
                   "type": "string"
                 },
                 "email": {
+                  "example": "john.doe@example.com",
+                  "description": "Email address of the user",
                   "type": "string"
                 },
                 "imageUrl": {
                   "anyOf": [
                     {
+                      "example": "https://example.com/image.jpg",
+                      "description": "Profile image URL of the user",
                       "type": "string"
                     },
                     {
@@ -88,14 +94,20 @@
               "type": "object",
               "properties": {
                 "fullName": {
+                  "example": "John Doe",
+                  "description": "Full name of the user",
                   "type": "string"
                 },
                 "email": {
+                  "example": "john.doe@example.com",
+                  "description": "Email address of the user",
                   "type": "string"
                 },
                 "imageUrl": {
                   "anyOf": [
                     {
+                      "example": "https://example.com/image.jpg",
+                      "description": "Profile image URL of the user",
                       "type": "string"
                     },
                     {
@@ -230,12 +242,18 @@
               "type": "object",
               "properties": {
                 "title": {
+                  "example": "Implement authentication",
+                  "description": "Title of the task",
                   "type": "string"
                 },
                 "description": {
+                  "example": "Implement user authentication using JWT",
+                  "description": "Description of the task",
                   "type": "string"
                 },
                 "status": {
+                  "example": "TODO",
+                  "description": "Status of the task",
                   "default": "TODO",
                   "type": "string",
                   "enum": [
@@ -246,6 +264,8 @@
                   ]
                 },
                 "userId": {
+                  "example": "a3bb189e-8bf9-3888-9912-ace4e6543002",
+                  "description": "ID of the user who owns the task",
                   "type": "string",
                   "format": "uuid",
                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
@@ -275,12 +295,18 @@
               "type": "object",
               "properties": {
                 "title": {
+                  "example": "Implement authentication",
+                  "description": "Title of the task",
                   "type": "string"
                 },
                 "description": {
+                  "example": "Implement user authentication using JWT",
+                  "description": "Description of the task",
                   "type": "string"
                 },
                 "status": {
+                  "example": "TODO",
+                  "description": "Status of the task",
                   "default": "TODO",
                   "type": "string",
                   "enum": [
@@ -291,6 +317,8 @@
                   ]
                 },
                 "userId": {
+                  "example": "a3bb189e-8bf9-3888-9912-ace4e6543002",
+                  "description": "ID of the user who owns the task",
                   "type": "string",
                   "format": "uuid",
                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
@@ -440,14 +468,20 @@
                       "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
                     },
                     "fullName": {
+                      "example": "John Doe",
+                      "description": "Full name of the user",
                       "type": "string"
                     },
                     "email": {
+                      "example": "john.doe@example.com",
+                      "description": "Email address of the user",
                       "type": "string"
                     },
                     "imageUrl": {
                       "anyOf": [
                         {
+                          "example": "https://example.com/image.jpg",
+                          "description": "Profile image URL of the user",
                           "type": "string"
                         },
                         {
@@ -488,12 +522,18 @@
                       "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
                     },
                     "title": {
+                      "example": "Implement authentication",
+                      "description": "Title of the task",
                       "type": "string"
                     },
                     "description": {
+                      "example": "Implement user authentication using JWT",
+                      "description": "Description of the task",
                       "type": "string"
                     },
                     "status": {
+                      "example": "TODO",
+                      "description": "Status of the task",
                       "default": "TODO",
                       "type": "string",
                       "enum": [
@@ -504,6 +544,8 @@
                       ]
                     },
                     "userId": {
+                      "example": "a3bb189e-8bf9-3888-9912-ace4e6543002",
+                      "description": "ID of the user who owns the task",
                       "type": "string",
                       "format": "uuid",
                       "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
