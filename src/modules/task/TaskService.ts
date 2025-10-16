@@ -11,15 +11,6 @@ export default class TaskService {
 
   static findTasks = (search: string) =>
     EmbeddingService.vectorSearch<TaskType>(EntityType.task, search);
-  /* DatabaseService.prisma.task.findMany({
-      where: {
-        OR: [
-          { id: search },
-          { title: { contains: search, mode: "insensitive" } },
-          { description: { contains: search, mode: "insensitive" } },
-        ],
-      },
-    }); */
 
   static getTasksByUserId = (userId: UserType["id"]) =>
     DatabaseService.prisma.task.findMany({

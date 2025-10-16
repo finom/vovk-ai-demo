@@ -11,6 +11,8 @@ type RecordsToArrays<T> = {
 };
 
 interface Registry {
+  [EntityType.user]: Record<UserType["id"], UserType>;
+  [EntityType.task]: Record<TaskType["id"], TaskType>;
   parse: (data: unknown) => Partial<{
     [key in EntityType]: BaseEntity[];
   }>;
@@ -24,8 +26,6 @@ interface Registry {
       RecordsToArrays<Omit<Registry, "parse" | "sync" | "values">>
     >,
   ) => RecordsToArrays<Omit<Registry, "parse" | "sync" | "values">>;
-  [EntityType.user]: Record<UserType["id"], UserType>;
-  [EntityType.task]: Record<TaskType["id"], TaskType>;
 }
 
 function getEntitiesFromResponse(
@@ -60,12 +60,13 @@ export const useRegistry = create<Registry>((set, get) => ({
         const type = entityType as EntityType;
         const descriptors = Object.getOwnPropertyDescriptors(state[type] ?? {});
         entityList.forEach((entity) => {
+          const descriptorValue = descriptors[entity.id]?.value;
+          const value = { ...descriptorValue, ...entity };
           descriptors[entity.id] =
-            descriptors[entity.id]?.value &&
-            fastDeepEqual(descriptors[entity.id]?.value, entity)
+            descriptorValue && fastDeepEqual(descriptorValue, value)
               ? descriptors[entity.id]
               : ({
-                  value: { ...descriptors[entity.id]?.value, ...entity },
+                  value,
                   configurable: true,
                   writable: false,
                 } satisfies PropertyDescriptor);
@@ -76,6 +77,7 @@ export const useRegistry = create<Registry>((set, get) => ({
       const resultState = { ...state, ...newState };
       return resultState;
     });
+
     return entities;
   },
   sync: (initialData) => {

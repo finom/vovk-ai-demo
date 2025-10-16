@@ -27,11 +27,11 @@ model User {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @default(now()) @updatedAt
 
-  /// @zod.custom.use(z.string().meta({ example: "John Doe", description: "Full name of the user" }))
+  /// @zod.custom.use(z.string().meta({ examples: ["John Doe"], description: "Full name of the user" }))
   fullName   String
-  /// @zod.custom.use(z.string().meta({ example: "john.doe@example.com", description: "Email address of the user" }))
+  /// @zod.custom.use(z.string().meta({ examples: ["john.doe@example.com"], description: "Email address of the user" }))
   email      String    @unique
-  /// @zod.custom.use(z.string().meta({ example: "https://example.com/image.jpg", description: "Profile image URL of the user" }))
+  /// @zod.custom.use(z.string().meta({ examples: ["https://example.com/image.jpg"], description: "Profile image URL of the user" }))
   imageUrl   String?
 
   tasks      Task[]
@@ -47,13 +47,13 @@ model Task {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @default(now()) @updatedAt
 
-  /// @zod.custom.use(z.string().meta({ example: "Implement authentication", description: "Title of the task" }))
+  /// @zod.custom.use(z.string().meta({ examples: ["Implement authentication"], description: "Title of the task" }))
   title      String
-  /// @zod.custom.use(z.string().meta({ example: "Implement user authentication using JWT", description: "Description of the task" }))
+  /// @zod.custom.use(z.string().meta({ examples: ["Implement user authentication using JWT"], description: "Description of the task" }))
   description String
-  /// @zod.custom.use(TaskStatusSchema.default("TODO").meta({ example: "TODO", description: "Status of the task" }))
+  /// @zod.custom.use(TaskStatusSchema.default("TODO").meta({ examples: ["TODO"], description: "Status of the task" }))
   status     TaskStatus @default(TODO)
-  /// @zod.custom.use(z.uuid().brand<Extract<z.infer<typeof EntityTypeSchema>, 'user'>>().meta({ example: "a3bb189e-8bf9-3888-9912-ace4e6543002", description: "ID of the user who owns the task" }))
+  /// @zod.custom.use(z.uuid().brand<Extract<z.infer<typeof EntityTypeSchema>, 'user'>>().meta({ examples: ["a3bb189e-8bf9-3888-9912-ace4e6543002"], description: "ID of the user who owns the task" }))
   userId     String
 
   user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)

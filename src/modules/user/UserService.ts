@@ -12,15 +12,6 @@ export default class UserService {
 
   static findUsers = (search: string) =>
     EmbeddingService.vectorSearch<UserType>(EntityType.user, search);
-  /* DatabaseService.prisma.user.findMany({
-      where: {
-        OR: [
-          { id: search },
-          { fullName: { contains: search, mode: "insensitive" } },
-          { email: { contains: search, mode: "insensitive" } },
-        ],
-      },
-    }); */
 
   static createUser = async (
     data: VovkBody<typeof UserController.createUser>,

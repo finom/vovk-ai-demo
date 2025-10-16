@@ -153,7 +153,7 @@ export default class TelegramService {
     const {
       object: { type, processedText },
     } = await generateObject({
-      model: vercelOpenAI('gpt-5'),
+      model: vercelOpenAI("gpt-5"),
       schema: z.object({
         type: z.enum(["text", "voice", "photo"]),
         processedText: z.string(),
@@ -400,9 +400,10 @@ export default class TelegramService {
   }
 
   // Process the update asynchronously (fire and forget)
-  private static async processUpdate(update: KnownAny) { // TODO fix type
+  private static async processUpdate(update: KnownAny) {
+    // TODO fix type
 
-    console.log('processUpdate', update);
+    console.log("processUpdate", update);
     try {
       const chatId = update.message?.chat.id;
 
@@ -459,7 +460,7 @@ export default class TelegramService {
       console.log(`Update ${updateId} already processed, skipping`);
       return { success: true };
     }
-  
+
     await this.processUpdate(update);
 
     await this.markUpdateProcessed(updateId);

@@ -33,7 +33,9 @@ export default class EmbeddingService {
     const embedding = await this.generateEmbedding(
       Object.values(omit(entity, BASE_KEYS))
         .filter((v) => typeof v === "string")
-        .join(" ").trim().toLowerCase(),
+        .join(" ")
+        .trim()
+        .toLowerCase(),
     );
 
     await DatabaseService.prisma.$executeRawUnsafe(
@@ -55,7 +57,9 @@ export default class EmbeddingService {
     limit: number = 10,
     similarityThreshold: number = 0.4,
   ) {
-    const queryEmbedding = await this.generateEmbedding(query.trim().toLowerCase());
+    const queryEmbedding = await this.generateEmbedding(
+      query.trim().toLowerCase(),
+    );
     const capitalizedEntityType = capitalize(entityType);
 
     const results = await DatabaseService.prisma.$queryRaw<
