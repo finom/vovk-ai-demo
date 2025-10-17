@@ -23,7 +23,7 @@ export default class TaskController {
   })
   @get("search")
   static findTasks = withZod({
-    query: z.object({ search: z.string() }),
+    query: z.object({ search: z.string().meta({ description: "Search term for tasks", examples: ["bug", "feature"] }) }),
     handle: async ({ vovk }) => TaskService.findTasks(vovk.query().search),
   });
 

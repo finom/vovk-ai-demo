@@ -23,7 +23,7 @@ export default class UserController {
   })
   @get("search")
   static findUsers = withZod({
-    query: z.object({ search: z.string() }),
+    query: z.object({ search: z.string().meta({ description: "Search term for users", examples: ["john.doe", "Jane"] }) }),
     handle: ({ vovk }) => UserService.findUsers(vovk.query().search),
   });
 

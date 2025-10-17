@@ -66,18 +66,18 @@ export default class DatabaseService {
               type,
             });
 
-            switch (operation) {
-              case "create" satisfies AllowedOperation:
+            switch (operation as AllowedOperation) {
+              case "create":
                 if ("entityType" in result)
                   changes.push(makeChange(result, "create"));
                 break;
 
-              case "update" satisfies AllowedOperation:
+              case "update":
                 if ("entityType" in result)
                   changes.push(makeChange(result, "update"));
                 break;
 
-              case "delete" satisfies AllowedOperation:
+              case "delete":
                 if ("entityType" in result) {
                   changes.push(makeChange(result, "delete"));
                   // Automatically add __isDeleted flag to deletion results
@@ -85,10 +85,10 @@ export default class DatabaseService {
                 }
                 break;
 
-              case "findMany" satisfies AllowedOperation:
-              case "findUnique" satisfies AllowedOperation:
-              case "findFirst" satisfies AllowedOperation:
-              case "count" satisfies AllowedOperation:
+              case "findMany":
+              case "findUnique":
+              case "findFirst":
+              case "count":
                 // no events
                 break;
 
