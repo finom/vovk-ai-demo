@@ -19,7 +19,6 @@ export default class DatabaseEventsService {
     url: process.env.REDIS_URL,
   });
 
-  // our in‑process event emitter
   public static emitter = mitt<{
     [DatabaseEventsService.DB_KEY]: DBChange[];
   }>();
@@ -35,7 +34,7 @@ export default class DatabaseEventsService {
   }
 
   // push one update into our ZSET, with score = timestamp
-  public static async write(changes: DBChange[]) {
+  public static async createChanges(changes: DBChange[]) {
     if (changes.length === 0) return;
 
     await this.connect();
@@ -54,14 +53,13 @@ export default class DatabaseEventsService {
       .exec();
   }
 
-  // start polling loop
-  public static startPolling() {
+  public static beginEmitting() {
     setInterval(async () => {
       await this.connect();
 
       const now = Date.now();
 
-      // 1 single command: get everything with score ∈ (lastTimestamp, now]
+      // get everything with score ∈ (lastTimestamp, now]
       const raw = await this.redisClient.zRangeByScore(
         this.DB_KEY,
         this.lastTimestamp + 1,
@@ -72,8 +70,6 @@ export default class DatabaseEventsService {
 
       if (raw.length > 0) {
         const updates = raw.map((s) => JSON.parse(s) as DBChange);
-
-        console.log("updates", updates);
         this.emitter.emit(this.DB_KEY, updates);
       }
     }, this.INTERVAL);

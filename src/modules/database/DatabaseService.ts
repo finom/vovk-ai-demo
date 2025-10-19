@@ -1,9 +1,8 @@
-// prismaService.ts
 import { PrismaClient } from "@prisma/client";
 import { PrismaNeon } from "@prisma/adapter-neon";
 import { neonConfig } from "@neondatabase/serverless";
-import DBEventsService, { DBChange } from "./DatabaseEventsService";
-import { BaseEntity } from "@/types";
+import DatabaseEventsService, { type DBChange } from "./DatabaseEventsService";
+import type { BaseEntity } from "@/types";
 
 if (!process.env.VERCEL_ENV) {
   neonConfig.wsProxy = (host) => `${host}:5433/v1`;
@@ -19,12 +18,13 @@ export default class DatabaseService {
   static #prisma: ReturnType<typeof DatabaseService.getClient> | null = null;
 
   private static getClient() {
-    const adapter = new PrismaNeon({
-      connectionString: `${process.env.DATABASE_URL}`,
+    const prisma = new PrismaClient({
+      adapter: new PrismaNeon({
+        connectionString: `${process.env.DATABASE_URL}`,
+      }),
     });
-    const prisma = new PrismaClient({ adapter });
 
-    DBEventsService.startPolling();
+    DatabaseEventsService.beginEmitting();
 
     return prisma.$extends({
       name: "events",
@@ -49,7 +49,7 @@ export default class DatabaseService {
             const result = (await query(args)) as BaseEntity | BaseEntity[];
 
             const now = new Date().toISOString();
-            const changes: DBChange[] = [];
+            let change: DBChange | null = null;
 
             const makeChange = (
               entity: BaseEntity,
@@ -69,17 +69,17 @@ export default class DatabaseService {
             switch (operation as AllowedOperation) {
               case "create":
                 if ("entityType" in result)
-                  changes.push(makeChange(result, "create"));
+                  change = makeChange(result, "create");
                 break;
 
               case "update":
                 if ("entityType" in result)
-                  changes.push(makeChange(result, "update"));
+                  change = makeChange(result, "update");
                 break;
 
               case "delete":
                 if ("entityType" in result) {
-                  changes.push(makeChange(result, "delete"));
+                  change = makeChange(result, "delete");
                   // Automatically add __isDeleted flag to deletion results
                   Object.assign(result, { __isDeleted: true });
                 }
@@ -99,8 +99,8 @@ export default class DatabaseService {
                 break;
             }
 
-            if (changes.length) {
-              await DBEventsService.write(changes);
+            if (change) {
+              await DatabaseEventsService.createChanges([change]);
             }
 
             return result;
