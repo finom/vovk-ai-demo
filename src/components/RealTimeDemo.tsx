@@ -7,7 +7,7 @@ import { createLLMTools } from "vovk";
 import { TaskRPC, UserRPC } from "vovk-client";
 import Floaty from "./Floaty";
 
-const { tools: llmTools } = createLLMTools({
+const { tools: rpcTools } = createLLMTools({
   modules: { TaskRPC, UserRPC },
 });
 
@@ -23,11 +23,8 @@ const RealTimeDemo = () => {
     isSessionActive,
     registerFunction,
     handleStartStopClick,
-    // msgs,
-    // conversation,
-    // sendTextMessage,
     currentVolume,
-  } = useWebRTCAudioSession(voice, [...tools, ...llmTools]);
+  } = useWebRTCAudioSession(voice, [...tools, ...rpcTools]);
 
   // Get all tools functions
   const toolsFunctions = useToolsFunctions();
@@ -44,35 +41,19 @@ const RealTimeDemo = () => {
       registerFunction(functionNames[name], func);
     });
 
-    // Register all LLM tools functions
-    llmTools.forEach(({ name, execute }) => {
+    // Register all LLM RPC tool functions
+    rpcTools.forEach(({ name, execute }) => {
       registerFunction(name, execute);
     });
   }, [registerFunction, toolsFunctions]);
 
   return (
     <div>
-      {/* <VoiceSelector value={voice} onValueChange={setVoice} /> */}
       <Floaty
         isActive={isSessionActive}
         volumeLevel={currentVolume}
         handleClick={handleStartStopClick}
       />
-      {/* <Button
-        variant={isSessionActive ? "destructive" : "default"}
-        className="w-full py-6 text-lg font-medium flex items-center justify-center gap-2 motion-preset-shake"
-        onClick={handleStartStopClick}
-      >
-        {isSessionActive && (
-          <Badge
-            variant="secondary"
-            className="animate-pulse bg-red-100 text-red-700"
-          >
-            Live
-          </Badge>
-        )}
-        {isSessionActive ? "End Broadcast" : "Start Broadcast"}
-      </Button> */}
     </div>
   );
 };
