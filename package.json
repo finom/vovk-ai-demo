@@ -64,6 +64,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@next/bundle-analyzer": "^15.5.3",
+    "@prisma/nextjs-monorepo-workaround-plugin": "^6.18.0",
     "@tailwindcss/postcss": "^4",
     "@types/lodash": "^4.17.20",
     "@types/node": "^24",
