@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
-import { decrypt } from "./session";
 import { cache } from "react";
 import { redirect } from "next/navigation";
 import crypto from "crypto";
+import { decrypt } from "./session";
 
 const getSession = async () => {
   const cookie = (await cookies()).get("session")?.value;
