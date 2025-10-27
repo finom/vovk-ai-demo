@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vovk dev --next-dev",
     "build": "next build",
-    "prebuild": "prisma migrate deploy && npm run generate",
+    "prebuild": "prisma migrate deploy && npx vovk generate",
     "start": "next start",
     "lint": "next lint",
     "generate": "npx prisma generate && npx vovk generate"
