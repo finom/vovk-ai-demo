@@ -12,14 +12,12 @@ export async function login(
   const password = formData.get("password");
 
   if (!process.env.PASSWORD) {
-    throw new Error("PASSWORD environment variable is not set.");
+    return { message: "PASSWORD environment variable is not set." };
   }
 
   // 2. Prepare data
   if (password !== process.env.PASSWORD) {
-    return {
-      message: "Invalid credentials.",
-    };
+    return { message: "Invalid credentials." };
   }
 
   const userId = crypto.createHash("md5").update(password).digest("hex");

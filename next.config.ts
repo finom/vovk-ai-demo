@@ -1,9 +1,5 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-    outputFileTracingIncludes: {
-        '/*': ['./node_modules/.prisma/client/*.wasm']
-    },
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;
