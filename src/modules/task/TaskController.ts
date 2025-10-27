@@ -4,6 +4,7 @@ import { z } from "zod";
 import { BASE_FIELDS } from "@/constants";
 import { TaskSchema, UserSchema } from "../../../prisma/generated/schemas";
 import { withZod } from "@/lib/withZod";
+import { sessionGuard } from "@/decorators/sessionGuard";
 
 @prefix("tasks")
 export default class TaskController {
@@ -13,6 +14,7 @@ export default class TaskController {
     "x-tool-disable": true, // Make it to be used as an endpoint only, excluding from the list of available tools
   })
   @get()
+  @sessionGuard()
   static getTasks = withZod({ handle: TaskService.getTasks });
 
   @operation({
@@ -22,6 +24,7 @@ export default class TaskController {
     "x-tool-successMessage": "Tasks found successfully",
   })
   @get("search")
+  @sessionGuard()
   static findTasks = withZod({
     query: z.object({
       search: z.string().meta({
@@ -38,6 +41,7 @@ export default class TaskController {
     "x-tool-successMessage": "Tasks retrieved successfully",
   })
   @get("by-user/{userId}")
+  @sessionGuard()
   static getTasksByUserId = withZod({
     params: z.object({ userId: UserSchema.shape.id }),
     handle: async ({ vovk }) =>
@@ -51,6 +55,7 @@ export default class TaskController {
     "x-tool-successMessage": "Task created successfully",
   })
   @post()
+  @sessionGuard()
   static createTask = withZod({
     body: TaskSchema.omit(BASE_FIELDS),
     handle: async ({ vovk }) => TaskService.createTask(await vovk.body()),
@@ -63,6 +68,7 @@ export default class TaskController {
     "x-tool-successMessage": "Task updated successfully",
   })
   @put("{id}")
+  @sessionGuard()
   static updateTask = withZod({
     body: TaskSchema.omit(BASE_FIELDS).partial(),
     params: TaskSchema.pick({ id: true }),
@@ -76,6 +82,7 @@ export default class TaskController {
     "x-tool-successMessage": "Task deleted successfully",
   })
   @del("{id}")
+  @sessionGuard()
   static deleteTask = withZod({
     params: TaskSchema.pick({ id: true }),
     handle: async ({ vovk }) => TaskService.deleteTask(vovk.params().id),

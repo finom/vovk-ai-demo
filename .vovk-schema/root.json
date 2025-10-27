@@ -26,6 +26,8 @@
               "type": "object",
               "properties": {
                 "search": {
+                  "description": "Search term for users",
+                  "examples": ["john.doe", "Jane"],
                   "type": "string"
                 }
               },
@@ -183,6 +185,8 @@
               "type": "object",
               "properties": {
                 "search": {
+                  "description": "Search term for tasks",
+                  "examples": ["bug", "feature"],
                   "type": "string"
                 }
               },

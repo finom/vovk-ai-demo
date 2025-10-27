@@ -1,21 +1,18 @@
 // @ts-check
-import _ from "lodash";
+// import _ from "lodash";
 import "dotenv/config";
 
-const { camelCase, startCase } = _;
+// const { camelCase, startCase } = _;
 
 /** @type {import('vovk').VovkConfig} */
 const config = {
-  generatorConfig: {
-    /* origin: process.env.VERCEL_ENV
-      ? `https://vovk-ai-demo.vercel.app`
-      : '', */
+  outputConfig: {
     imports: {
       validateOnClient: "vovk-ajv",
       fetcher: "./src/lib/fetcher.ts",
     },
     segments: {
-      github: {
+      /* github: {
         openAPIMixin: {
           source: {
             url: "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json",
@@ -34,7 +31,7 @@ const config = {
             return camelCase(operationName);
           },
         },
-      },
+      }, */
       telegram: {
         openAPIMixin: {
           source: {

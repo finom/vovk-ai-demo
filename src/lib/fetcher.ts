@@ -1,11 +1,9 @@
 import { useRegistry } from "@/registry";
-import { createFetcher } from "vovk";
+import { createFetcher, HttpStatus } from "vovk";
 
 export const fetcher = createFetcher({
   transformResponse: async (data) => {
     const state = useRegistry.getState();
-
-    console.log("data", data);
     if (
       data &&
       typeof data === "object" &&
@@ -13,14 +11,16 @@ export const fetcher = createFetcher({
       "onIterate" in data &&
       typeof data.onIterate === "function"
     ) {
-      data.onIterate((item: unknown) => {
-        console.log("POLL ITEM", item);
-        state.parse(item);
-      }); // handle each item in the async iterable
+      data.onIterate(state.parse); // handle each item in the async iterable
       return data;
     }
 
     state.parse(data); // parse regular JSON data
     return data;
+  },
+  onError: (error) => {
+    if (error.statusCode === HttpStatus.UNAUTHORIZED) {
+      document.location.href = "/login";
+    }
   },
 });

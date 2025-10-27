@@ -20,6 +20,7 @@ import { openai } from "@ai-sdk/openai";
 // import { GithubIssuesRPC } from "vovk-client";
 import UserController from "../user/UserController";
 import TaskController from "../task/TaskController";
+import { sessionGuard } from "@/decorators/sessionGuard";
 
 @prefix("ai-sdk")
 export default class AiSdkController {
@@ -29,6 +30,7 @@ export default class AiSdkController {
       "Uses [@ai-sdk/openai](https://www.npmjs.com/package/@ai-sdk/openai) and ai packages to call a function",
   })
   @post("function-calling")
+  @sessionGuard()
   static async functionCalling(req: VovkRequest<{ messages: UIMessage[] }>) {
     const { messages } = await req.json();
     const LIMIT = 20;

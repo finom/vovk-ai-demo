@@ -1,4 +1,4 @@
-import { createMcpHandler } from "@vercel/mcp-adapter";
+import { createMcpHandler } from "mcp-handler";
 import { createLLMTools } from "vovk";
 import UserController from "@/modules/user/UserController";
 import TaskController from "@/modules/task/TaskController";
@@ -36,4 +36,4 @@ const handler = createMcpHandler(
   { basePath: "/api" },
 );
 
-export { handler as GET, handler as POST, handler as DELETE };
+export { handler as GET, handler as POST };

@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import DBEventsService from "../database/DatabaseEventsService";
 import { withZod } from "@/lib/withZod";
+import { sessionGuard } from "@/decorators/sessionGuard";
 
 DBEventsService.emitter.on("db_updates", (change) => {
   console.log("Database change detected:", change);
@@ -11,6 +12,7 @@ DBEventsService.emitter.on("db_updates", (change) => {
 @prefix("realtime")
 export default class RealtimeController {
   @get("session")
+  @sessionGuard()
   static session = withZod({
     query: z.object({
       voice: z.enum(["ash", "ballad", "coral", "sage", "verse"]),
