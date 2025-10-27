@@ -6,10 +6,11 @@
   "scripts": {
     "dev": "vovk dev --next-dev",
     "build": "next build",
-    "prebuild": "prisma migrate deploy && npm run generate",
+    "prebuild": "prisma migrate deploy",
     "start": "next start",
     "lint": "next lint",
-    "generate": "npx prisma generate && npx vovk generate"
+    "generate": "npx prisma generate && npx vovk generate",
+    "postinstall": "npm run generate"
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.53",
