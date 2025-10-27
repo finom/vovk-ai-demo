@@ -1,4 +1,4 @@
-import { EntityType } from "@prisma/client";
+import { EntityType } from "../prisma/generated/client";
 import { create } from "zustand";
 import fastDeepEqual from "fast-deep-equal";
 import type { BaseEntity } from "./types";

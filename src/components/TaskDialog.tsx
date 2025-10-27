@@ -29,7 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { TaskStatus } from "@prisma/client";
+import { TaskStatus } from "../../prisma/generated/client";
 import { Textarea } from "./ui/textarea";
 import { BASE_KEYS } from "@/constants";
 import { TaskType } from "../../prisma/generated/schemas/models/Task.schema";

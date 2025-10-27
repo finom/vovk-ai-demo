@@ -1,4 +1,4 @@
-import { EntityType } from "@prisma/client";
+import { EntityType } from "../prisma/generated/client";
 
 export interface BaseEntity {
   id: string;

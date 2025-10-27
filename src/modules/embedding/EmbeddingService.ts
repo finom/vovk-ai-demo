@@ -6,7 +6,7 @@ import { EntityType } from "../../../prisma/generated/schemas";
 import { TaskType } from "../../../prisma/generated/schemas/models/Task.schema";
 import { capitalize, omit } from "lodash";
 import { BASE_KEYS } from "@/constants";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../../../prisma/generated/client";
 
 export default class EmbeddingService {
   static async generateEmbedding(value: string): Promise<number[]> {

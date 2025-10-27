@@ -1,4 +1,4 @@
-import { EntityType } from "@prisma/client";
+import { EntityType } from "../../../prisma/generated/client";
 import mitt from "mitt";
 import { createClient } from "redis";
 

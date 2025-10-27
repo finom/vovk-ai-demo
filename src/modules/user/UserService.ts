@@ -3,7 +3,7 @@ import type UserController from "./UserController";
 import DatabaseService from "../database/DatabaseService";
 import EmbeddingService from "../embedding/EmbeddingService";
 import { UserType } from "../../../prisma/generated/schemas/models/User.schema";
-import { EntityType } from "@prisma/client";
+import { EntityType } from "../../../prisma/generated/client";
 import TaskService from "../task/TaskService";
 import { TaskType } from "../../../prisma/generated/schemas/models/Task.schema";
 

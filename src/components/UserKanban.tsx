@@ -20,7 +20,7 @@ import { Pencil, Plus, Trash2 } from "lucide-react";
 import { TaskRPC } from "vovk-client";
 import { useRegistry } from "@/registry";
 import { useShallow } from "zustand/shallow";
-import { TaskStatus } from "@prisma/client";
+import { TaskStatus } from "../../prisma/generated/client";
 import TaskDialog from "./TaskDialog";
 import { useQuery } from "@tanstack/react-query";
 import { TaskType } from "../../prisma/generated/schemas/models/Task.schema";

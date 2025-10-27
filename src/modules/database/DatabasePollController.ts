@@ -1,4 +1,4 @@
-import { EntityType } from "@prisma/client";
+import { EntityType } from "../../../prisma/generated/client";
 import { get, JSONLinesResponse, prefix, type VovkIteration } from "vovk";
 import { z } from "zod";
 import DatabasePollService from "./DatabasePollService";
