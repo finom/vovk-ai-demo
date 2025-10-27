@@ -27,11 +27,16 @@
               "properties": {
                 "search": {
                   "description": "Search term for users",
-                  "examples": ["john.doe", "Jane"],
+                  "examples": [
+                    "john.doe",
+                    "Jane"
+                  ],
                   "type": "string"
                 }
               },
-              "required": ["search"],
+              "required": [
+                "search"
+              ],
               "additionalProperties": false
             }
           },
@@ -50,20 +55,14 @@
               "type": "object",
               "properties": {
                 "fullName": {
-                  "examples": ["John Doe"],
-                  "description": "Full name of the user",
                   "type": "string"
                 },
                 "email": {
-                  "examples": ["john.doe@example.com"],
-                  "description": "Email address of the user",
                   "type": "string"
                 },
                 "imageUrl": {
                   "anyOf": [
                     {
-                      "examples": ["https://example.com/image.jpg"],
-                      "description": "Profile image URL of the user",
                       "type": "string"
                     },
                     {
@@ -72,7 +71,10 @@
                   ]
                 }
               },
-              "required": ["fullName", "email"],
+              "required": [
+                "fullName",
+                "email"
+              ],
               "additionalProperties": false
             }
           },
@@ -91,20 +93,14 @@
               "type": "object",
               "properties": {
                 "fullName": {
-                  "examples": ["John Doe"],
-                  "description": "Full name of the user",
                   "type": "string"
                 },
                 "email": {
-                  "examples": ["john.doe@example.com"],
-                  "description": "Email address of the user",
                   "type": "string"
                 },
                 "imageUrl": {
                   "anyOf": [
                     {
-                      "examples": ["https://example.com/image.jpg"],
-                      "description": "Profile image URL of the user",
                       "type": "string"
                     },
                     {
@@ -120,12 +116,12 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "string",
-                  "format": "uuid",
-                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                  "type": "string"
                 }
               },
-              "required": ["id"],
+              "required": [
+                "id"
+              ],
               "additionalProperties": false
             }
           },
@@ -144,12 +140,12 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "string",
-                  "format": "uuid",
-                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                  "type": "string"
                 }
               },
-              "required": ["id"],
+              "required": [
+                "id"
+              ],
               "additionalProperties": false
             }
           },
@@ -186,11 +182,16 @@
               "properties": {
                 "search": {
                   "description": "Search term for tasks",
-                  "examples": ["bug", "feature"],
+                  "examples": [
+                    "bug",
+                    "feature"
+                  ],
                   "type": "string"
                 }
               },
-              "required": ["search"],
+              "required": [
+                "search"
+              ],
               "additionalProperties": false
             }
           },
@@ -209,12 +210,12 @@
               "type": "object",
               "properties": {
                 "userId": {
-                  "type": "string",
-                  "format": "uuid",
-                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                  "type": "string"
                 }
               },
-              "required": ["userId"],
+              "required": [
+                "userId"
+              ],
               "additionalProperties": false
             }
           },
@@ -233,31 +234,31 @@
               "type": "object",
               "properties": {
                 "title": {
-                  "examples": ["Implement authentication"],
-                  "description": "Title of the task",
                   "type": "string"
                 },
                 "description": {
-                  "examples": ["Implement user authentication using JWT"],
-                  "description": "Description of the task",
                   "type": "string"
                 },
                 "status": {
-                  "examples": ["TODO"],
-                  "description": "Status of the task",
                   "default": "TODO",
                   "type": "string",
-                  "enum": ["TODO", "IN_PROGRESS", "IN_REVIEW", "DONE"]
+                  "enum": [
+                    "TODO",
+                    "IN_PROGRESS",
+                    "IN_REVIEW",
+                    "DONE"
+                  ]
                 },
                 "userId": {
-                  "examples": ["a3bb189e-8bf9-3888-9912-ace4e6543002"],
-                  "description": "ID of the user who owns the task",
-                  "type": "string",
-                  "format": "uuid",
-                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                  "type": "string"
                 }
               },
-              "required": ["title", "description", "status", "userId"],
+              "required": [
+                "title",
+                "description",
+                "status",
+                "userId"
+              ],
               "additionalProperties": false
             }
           },
@@ -276,28 +277,23 @@
               "type": "object",
               "properties": {
                 "title": {
-                  "examples": ["Implement authentication"],
-                  "description": "Title of the task",
                   "type": "string"
                 },
                 "description": {
-                  "examples": ["Implement user authentication using JWT"],
-                  "description": "Description of the task",
                   "type": "string"
                 },
                 "status": {
-                  "examples": ["TODO"],
-                  "description": "Status of the task",
                   "default": "TODO",
                   "type": "string",
-                  "enum": ["TODO", "IN_PROGRESS", "IN_REVIEW", "DONE"]
+                  "enum": [
+                    "TODO",
+                    "IN_PROGRESS",
+                    "IN_REVIEW",
+                    "DONE"
+                  ]
                 },
                 "userId": {
-                  "examples": ["a3bb189e-8bf9-3888-9912-ace4e6543002"],
-                  "description": "ID of the user who owns the task",
-                  "type": "string",
-                  "format": "uuid",
-                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                  "type": "string"
                 }
               },
               "additionalProperties": false
@@ -307,12 +303,12 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "string",
-                  "format": "uuid",
-                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                  "type": "string"
                 }
               },
-              "required": ["id"],
+              "required": [
+                "id"
+              ],
               "additionalProperties": false
             }
           },
@@ -331,12 +327,12 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "string",
-                  "format": "uuid",
-                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                  "type": "string"
                 }
               },
-              "required": ["id"],
+              "required": [
+                "id"
+              ],
               "additionalProperties": false
             }
           },
@@ -363,10 +359,18 @@
               "properties": {
                 "voice": {
                   "type": "string",
-                  "enum": ["ash", "ballad", "coral", "sage", "verse"]
+                  "enum": [
+                    "ash",
+                    "ballad",
+                    "coral",
+                    "sage",
+                    "verse"
+                  ]
                 }
               },
-              "required": ["voice"],
+              "required": [
+                "voice"
+              ],
               "additionalProperties": false
             }
           },
@@ -395,25 +399,28 @@
                     },
                     "entityType": {
                       "type": "string",
-                      "enum": ["user", "task"]
+                      "enum": [
+                        "user",
+                        "task"
+                      ]
                     },
                     "__isDeleted": {
                       "type": "boolean"
                     }
                   },
-                  "required": ["id", "entityType"],
+                  "required": [
+                    "id",
+                    "entityType"
+                  ],
                   "additionalProperties": false
                 },
                 {
                   "type": "object",
                   "properties": {
                     "id": {
-                      "type": "string",
-                      "format": "uuid",
-                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                      "type": "string"
                     },
                     "entityType": {
-                      "default": "user",
                       "type": "string",
                       "const": "user"
                     },
@@ -426,20 +433,14 @@
                       "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
                     },
                     "fullName": {
-                      "examples": ["John Doe"],
-                      "description": "Full name of the user",
                       "type": "string"
                     },
                     "email": {
-                      "examples": ["john.doe@example.com"],
-                      "description": "Email address of the user",
                       "type": "string"
                     },
                     "imageUrl": {
                       "anyOf": [
                         {
-                          "examples": ["https://example.com/image.jpg"],
-                          "description": "Profile image URL of the user",
                           "type": "string"
                         },
                         {
@@ -462,12 +463,9 @@
                   "type": "object",
                   "properties": {
                     "id": {
-                      "type": "string",
-                      "format": "uuid",
-                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                      "type": "string"
                     },
                     "entityType": {
-                      "default": "task",
                       "type": "string",
                       "const": "task"
                     },
@@ -480,28 +478,23 @@
                       "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
                     },
                     "title": {
-                      "examples": ["Implement authentication"],
-                      "description": "Title of the task",
                       "type": "string"
                     },
                     "description": {
-                      "examples": ["Implement user authentication using JWT"],
-                      "description": "Description of the task",
                       "type": "string"
                     },
                     "status": {
-                      "examples": ["TODO"],
-                      "description": "Status of the task",
                       "default": "TODO",
                       "type": "string",
-                      "enum": ["TODO", "IN_PROGRESS", "IN_REVIEW", "DONE"]
+                      "enum": [
+                        "TODO",
+                        "IN_PROGRESS",
+                        "IN_REVIEW",
+                        "DONE"
+                      ]
                     },
                     "userId": {
-                      "examples": ["a3bb189e-8bf9-3888-9912-ace4e6543002"],
-                      "description": "ID of the user who owns the task",
-                      "type": "string",
-                      "format": "uuid",
-                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                      "type": "string"
                     }
                   },
                   "required": [
